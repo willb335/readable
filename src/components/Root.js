@@ -8,6 +8,7 @@ class Root extends Component {
       <Grid>
         <Row className="show-category">
           <Col xs={12} md={12}>
+            Testing
             <Category />
           </Col>
         </Row>
