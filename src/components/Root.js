@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Grid, Row, Col } from "react-bootstrap";
+import Category from "./Category";
 
 class Root extends Component {
   render() {
@@ -7,7 +8,7 @@ class Root extends Component {
       <Grid>
         <Row className="show-category">
           <Col xs={12} md={12}>
-            {"Filler"}
+            <Category />
           </Col>
         </Row>
       </Grid>
