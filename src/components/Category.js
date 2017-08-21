@@ -7,16 +7,7 @@ class Category extends Component {
     return (
       <Panel
         header={
-          <div
-            className="container"
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "nowrap",
-              justifyContent: "space-between",
-              alignItems: "center"
-            }}
-          >
+          <div className="category-container">
             <div>Category</div>
             <div>Filler</div>
             <div>Filler</div>

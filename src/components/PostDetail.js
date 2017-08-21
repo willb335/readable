@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Well, Panel } from "react-bootstrap";
+import { Well, Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
+import PostModal from "./PostModal";
 
 class PostDetail extends Component {
   render() {
@@ -20,7 +21,6 @@ class PostDetail extends Component {
             <strong>Votes</strong>
           </div>
           <hr style={{ borderWidth: "2px" }} />
-          {/* </Panel> */}
           This is where all the text will goThis is where all the text will
           goThis is where all the text will goThis is where all the text will
           goThis is where all the text will goThis is where all the text will
@@ -45,16 +45,47 @@ class PostDetail extends Component {
           text will goThis is where all the text will goThis is where all the
           text will goThis is where all the text will go
           <hr style={{ borderWidth: "2px" }} />
-          <Panel>
-            <div>
-              Comments will be in here Comments will be in here Comments will be
-              in here Comments will be in here Comments will be in here Comments
-              will be in here Comments will be in here Comments will be in here
-              Comments will be in here Comments will be in here Comments will be
-              in here Comments will be in here Comments will be in here Comments
-              will be in here Comments will be in here Comments will be in here
-              Comments will be in here Comments will be in here
-            </div>
+          <Panel
+            header={
+              <div className="comment-container">
+                <div>
+                  <Button bsStyle="primary">Primary</Button>
+                </div>
+                <div>
+                  <Button bsStyle="primary">Primary</Button>
+                </div>
+                <div className="edit-comment">
+                  <Button bsStyle="primary" onClick={console.log("clicked")}>
+                    New Post
+                  </Button>
+                  <PostModal onHide={console.log("hidden")} />
+                </div>
+              </div>
+            }
+            style={{ textAlign: "left" }}
+          >
+            <ListGroup fill>
+              <ListGroupItem>
+                Comments will be in here Comments will be in here Comments will
+                be in here Comments will be in here Comments will be in here
+                Comments will be in here Comments will be in here Comments will
+                be in here Comments will be in here Comments will be in here
+                Comments will be in here Comments will be in here Comments will
+                be in here Comments will be in here Comments will be in here
+                Comments will be in here Comments will be in here Comments will
+                be in here
+              </ListGroupItem>
+              <ListGroupItem>
+                Comments will be in here Comments will be in here Comments will
+                be in here Comments will be in here Comments will be in here
+                Comments will be in here Comments will be in here Comments will
+                be in here Comments will be in here Comments will be in here
+                Comments will be in here Comments will be in here Comments will
+                be in here Comments will be in here Comments will be in here
+                Comments will be in here Comments will be in here Comments will
+                be in here
+              </ListGroupItem>
+            </ListGroup>
           </Panel>
         </Well>
       </div>
