@@ -5,5 +5,5 @@ import App from "./components/App";
 import registerServiceWorker from "./registerServiceWorker";
 import PostDetail from "./components/PostDetail";
 
-ReactDOM.render(<PostDetail />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));
 registerServiceWorker();
