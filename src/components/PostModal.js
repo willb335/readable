@@ -6,7 +6,7 @@ class PostModal extends Component {
     return (
       <div>
         <Modal
-          show={true}
+          show={false}
           bsSize="large"
           aria-labelledby="contained-modal-title-lg"
         >

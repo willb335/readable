@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Well, Panel } from "react-bootstrap";
 
-class Post extends Component {
+class PostDetail extends Component {
   render() {
     return (
       <div className="user-post">
@@ -49,4 +49,4 @@ class Post extends Component {
   }
 }
 
-export default Post;
+export default PostDetail;
