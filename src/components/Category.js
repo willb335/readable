@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
+import PostModal from "./PostModal";
 
 class Category extends Component {
   render() {
@@ -27,7 +28,10 @@ class Category extends Component {
               <Button bsStyle="primary">Primary</Button>
             </div>
             <div>
-              <Button bsStyle="primary">New Post</Button>
+              <Button bsStyle="primary" onClick={console.log("clicked")}>
+                New Post
+              </Button>
+              <PostModal onHide={console.log("hidden")} />
             </div>
           </div>
         }
