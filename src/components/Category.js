@@ -17,11 +17,17 @@ class Category extends Component {
             }}
           >
             <div>Category</div>
+            <div>Filler</div>
+            <div>Filler</div>
+
             <div>
               <Button bsStyle="primary">Primary</Button>
             </div>
-            <div style={{ float: "right" }}>
+            <div>
               <Button bsStyle="primary">Primary</Button>
+            </div>
+            <div>
+              <Button bsStyle="primary">New Post</Button>
             </div>
           </div>
         }
