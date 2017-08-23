@@ -33,10 +33,11 @@ export function addPost({
   };
 }
 
-export function removePost({ id }) {
+export function removePost({ id, deleted }) {
   return {
     type: REMOVE_POST,
-    id
+    id,
+    deleted
   };
 }
 

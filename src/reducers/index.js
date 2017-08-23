@@ -28,28 +28,30 @@ function post(state = {}, action) {
           voteScore,
           deleted
         }
-      }
-      case REMOVE_POST:
+      };
+    case REMOVE_POST:
       return {
         ...state,
         [id]: {
-          id,
-          timestamp,
-          title,
-          body,
-          author,
-          category,
-          voteScore,
-          deleted: true;
+          deleted: true
         }
-      }
-
+      };
+    case EDIT_POST:
+      return {
+        ...state,
+        id,
+        timestamp,
+        title,
+        body,
+        author,
+        category,
+        voteScore,
+        deleted
+      };
 
     default:
       return state;
   }
 }
-
-
 
 export default combineReducers({});
