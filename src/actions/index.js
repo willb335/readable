@@ -10,12 +10,26 @@ export const REORDER_POST_BY_TIMESTAMP = "REORDER_POST_BY_TIMESTAMP";
 export const REORDER_COMMENT_BY_SCORE = "REORDER_COMMENT_BY_SCORE";
 export const REORDER_COMMENT_BY_TIMESTAMP = "REORDER_COMMENT_BY_TIMESTAMP";
 
-export function addRecipe({ day, recipe, meal }) {
+export function addPost({
+  id,
+  timestamp,
+  title,
+  body,
+  author,
+  category,
+  voteScore,
+  deleted
+}) {
   return {
-    type: ADD_RECIPE,
-    recipe,
-    day,
-    meal
+    type: ADD_POST,
+    id,
+    timestamp,
+    title,
+    body,
+    author,
+    category,
+    voteScore,
+    deleted
   };
 }
 
