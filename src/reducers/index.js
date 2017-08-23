@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 
 import { ADD_POST, EDIT_POST, REMOVE_POST } from "../actions";
 
-function post(state = {}, action) {
+function posts(state = {}, action) {
   switch (action.type) {
     case ADD_POST:
       const {
@@ -54,4 +54,4 @@ function post(state = {}, action) {
   }
 }
 
-export default combineReducers({ post });
+export default combineReducers({ posts });

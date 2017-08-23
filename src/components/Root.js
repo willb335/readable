@@ -16,11 +16,27 @@ class Root extends Component {
       voteScore: 6,
       deleted: false
     });
+    this.getCategoryCount();
   }
+  getCategoryCount = () => {
+    return fetch("http://localhost:5001/categories", {
+      headers: { Authorization: "will3" }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        console.log("json", data.categories.length);
+        return data.categories.length;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
   render() {
-    const { post, addPost, removePost, editPost } = this.props;
+    const { posts, addPost, removePost, editPost } = this.props;
 
-    console.log("post prop", post);
+    console.log("post prop", posts);
 
     return (
       <Grid>
@@ -34,9 +50,9 @@ class Root extends Component {
   }
 }
 
-function mapStateToProps({ post }) {
+function mapStateToProps({ posts }) {
   return {
-    post
+    posts
   };
 }
 
