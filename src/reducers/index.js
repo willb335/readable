@@ -15,6 +15,22 @@ function newPost(state = {}, action) {
         voteScore,
         deleted
       } = action;
+
+      return {
+        ...state,
+        [id]: {
+          id,
+          timestamp,
+          title,
+          body,
+          author,
+          category,
+          voteScore,
+          deleted
+        }
+      };
+    default:
+      return state;
   }
 }
 
