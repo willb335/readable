@@ -33,10 +33,30 @@ export function addPost({
   };
 }
 
-export function removeFromCalendar({ day, meal }) {
+export function removePost({ id }) {
   return {
-    type: REMOVE_FROM_CALENDAR,
-    day,
-    meal
+    type: REMOVE_POST,
+    id
+  };
+}
+
+export function editPost({
+  timestamp,
+  title,
+  body,
+  author,
+  category,
+  voteScore,
+  deleted
+}) {
+  return {
+    type: EDIT_POST,
+    timestamp,
+    title,
+    body,
+    author,
+    category,
+    voteScore,
+    deleted
   };
 }
