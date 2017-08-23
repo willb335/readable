@@ -54,4 +54,4 @@ function post(state = {}, action) {
   }
 }
 
-export default combineReducers({});
+export default combineReducers({ post });

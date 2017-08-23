@@ -5,6 +5,7 @@ import Category from "./Category";
 
 class Root extends Component {
   render() {
+    const { id, addPost, removePost, editPost } = this.props;
     return (
       <Grid>
         <Row className="show-category">
