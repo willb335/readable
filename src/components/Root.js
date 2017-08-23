@@ -5,7 +5,7 @@ import Category from "./Category";
 
 class Root extends Component {
   render() {
-    const { id, addPost, removePost, editPost } = this.props;
+    const { post, addPost, removePost, editPost } = this.props;
     return (
       <Grid>
         <Row className="show-category">
@@ -18,26 +18,9 @@ class Root extends Component {
   }
 }
 
-function mapStateToProps({ food, calendar }) {
-  const dayOrder = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday"
-  ];
-
+function mapStateToProps({ post }) {
   return {
-    calendar: dayOrder.map(day => ({
-      day,
-      meals: Object.keys(calendar[day]).reduce((meals, meal) => {
-        meals[meal] = calendar[day][meal] ? food[calendar[day][meal]] : null;
-
-        return meals;
-      }, {})
-    }))
+    post
   };
 }
 
