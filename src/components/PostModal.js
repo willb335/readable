@@ -28,14 +28,37 @@ class PostModal extends Component {
             <Modal.Title id="contained-modal-title-lg">New Post</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h4>Wrapped Text</h4>
             <form>
               <FormGroup controlId="formBasicText">
-                <ControlLabel>Working example without validation</ControlLabel>
+                <ControlLabel>Name</ControlLabel>
                 <FormControl
                   type="text"
                   value={this.state.value}
-                  placeholder="Enter text"
+                  placeholder="Enter name"
+                  onChange={this.handleChange}
+                />
+                <FormControl.Feedback />
+              </FormGroup>
+            </form>
+            <form>
+              <FormGroup controlId="formBasicText">
+                <ControlLabel>Title</ControlLabel>
+                <FormControl
+                  type="text"
+                  value={this.state.value}
+                  placeholder="Enter title"
+                  onChange={this.handleChange}
+                />
+                <FormControl.Feedback />
+              </FormGroup>
+            </form>
+            <form>
+              <FormGroup controlId="formBasicText">
+                <ControlLabel>Post</ControlLabel>
+                <FormControl
+                  type="text"
+                  value={this.state.value}
+                  placeholder="Enter post"
                   onChange={this.handleChange}
                 />
                 <FormControl.Feedback />
