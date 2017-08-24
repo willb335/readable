@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import PostModal from "./PostModal";
+import { isModalOpen } from "../actions/modalActions";
 
 class Category extends Component {
   render() {
+    const { modal } = this.props;
     return (
       <Panel
         header={
@@ -22,7 +24,7 @@ class Category extends Component {
               <Button bsStyle="primary" onClick={console.log("clicked")}>
                 New Post
               </Button>
-              <PostModal onHide={console.log("hidden")} />
+              <PostModal onHide={console.log("hidden")} isOpen={this} />
             </div>
           </div>
         }
@@ -36,5 +38,17 @@ class Category extends Component {
     );
   }
 }
+function mapStateToProps({ modal }) {
+  return {
+    modal
+  };
+}
 
-export default Category;
+function mapDispatchToProps(dispatch) {
+  return {
+    addPost: data => dispatch(addPost(data)),
+    isModalOpen: data => dispatch(isModalOpen(data))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Category);
