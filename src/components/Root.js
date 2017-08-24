@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addPost, removePost, editPost } from "../actions/postActions";
-import { isFetchRequestComplete } from "../actions/fetchActions";
+import { isFetchRequestComplete, getCategories } from "../actions/fetchActions";
 import { Grid, Row, Col } from "react-bootstrap";
 import Category from "./Category";
 
 class Root extends Component {
-  categoryData;
   componentDidMount() {
     this.props.addPost({
       id: "8xf0y6ziyjabvozdd253nd",
@@ -30,16 +29,10 @@ class Root extends Component {
       })
       .then(data => {
         this.props.isFetchRequestComplete({ isComplete: true });
-
-        console.log(
-          "post check",
-          this.props.posts["8xf0y6ziyjabvozdd253nd"].title
-        );
-
         return data.categories.map(c => c.name);
       })
-      .then(() => {
-        console.log("is complete check?", this.props.fetchRequests.isComplete);
+      .then(array => {
+        this.props.getCategories({ categories: array });
       });
   };
 
@@ -50,15 +43,26 @@ class Root extends Component {
       addPost,
       removePost,
       editPost,
-      isFetchRequestComplete
+      isFetchRequestComplete,
+      getCategories
     } = this.props;
+    const categoryList = () => {
+      if (fetchRequests.categories !== undefined) {
+        return fetchRequests.categories.map(c =>
+          <div key={c}>
+            <Category name={c} />
+          </div>
+        );
+      }
+    };
+    console.log("categories", fetchRequests.categories);
+    console.log("is complete on render", fetchRequests.isComplete);
+
     return (
       <Grid>
         <Row className="show-category">
           <Col xs={12} md={12}>
-            <div>
-              <Category />
-            </div>
+            {fetchRequests.isComplete && categoryList()}
           </Col>
         </Row>
       </Grid>
@@ -78,7 +82,8 @@ function mapDispatchToProps(dispatch) {
     addPost: data => dispatch(addPost(data)),
     removePost: data => dispatch(removePost(data)),
     editPost: data => dispatch(editPost(data)),
-    isFetchRequestComplete: data => dispatch(isFetchRequestComplete(data))
+    isFetchRequestComplete: data => dispatch(isFetchRequestComplete(data)),
+    getCategories: data => dispatch(getCategories(data))
   };
 }
 
