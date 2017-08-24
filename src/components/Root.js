@@ -18,8 +18,7 @@ class Root extends Component {
       voteScore: 6,
       deleted: false
     });
-    this.categoryData = this.getCategoryTypes();
-    this.props.isFetchRequestComplete({ isComplete: true });
+    this.getCategoryTypes();
   }
 
   getCategoryTypes = () => {
@@ -30,8 +29,20 @@ class Root extends Component {
         return response.json();
       })
       .then(data => {
-        console.log("cats", data.categories.map(c => c.name));
+        this.props.isFetchRequestComplete({ isComplete: true });
+
+        console.log(
+          "post check",
+          this.props.posts["8xf0y6ziyjabvozdd253nd"].title
+        );
+
         return data.categories.map(c => c.name);
+      })
+      .then(() => {
+        console.log(
+          "is complete check?",
+          this.props.isFetchRequestComplete.isComplete
+        );
       });
   };
 
@@ -43,9 +54,6 @@ class Root extends Component {
       editPost,
       isFetchRequestComplete
     } = this.props;
-
-    console.log("post prop", posts);
-
     return (
       <Grid>
         <Row className="show-category">
@@ -60,9 +68,10 @@ class Root extends Component {
   }
 }
 
-function mapStateToProps({ posts }) {
+function mapStateToProps({ posts, isFetchRequestComplete }) {
   return {
-    posts
+    posts,
+    isFetchRequestComplete
   };
 }
 
