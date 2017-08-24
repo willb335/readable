@@ -1,8 +1,8 @@
-const IS_GET_REQUEST_COMPLETE = "IS_GET_REQUEST_COMPLETE";
+export const IS_FETCH_REQUEST_COMPLETE = "IS_FETCH_REQUEST_COMPLETE";
 
-export function isGetRequestComplete({ isComplete }) {
+export function isFetchRequestComplete({ isComplete }) {
   return {
-    type: IS_GET_REQUEST_COMPLETE,
+    type: IS_FETCH_REQUEST_COMPLETE,
     isComplete
   };
 }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addPost, removePost, editPost } from "../actions/postActions";
+import { isFetchRequestComplete } from "../actions/fetchActions";
 import { Grid, Row, Col } from "react-bootstrap";
 import Category from "./Category";
 
@@ -18,6 +19,7 @@ class Root extends Component {
       deleted: false
     });
     this.categoryData = this.getCategoryTypes();
+    this.props.isFetchRequestComplete({ isComplete: true });
   }
 
   getCategoryTypes = () => {
@@ -34,10 +36,15 @@ class Root extends Component {
   };
 
   render() {
-    const { posts, addPost, removePost, editPost } = this.props;
+    const {
+      posts,
+      addPost,
+      removePost,
+      editPost,
+      isFetchRequestComplete
+    } = this.props;
 
     console.log("post prop", posts);
-    console.log("populating categs", this.getCategoryTypes());
 
     return (
       <Grid>
@@ -63,7 +70,8 @@ function mapDispatchToProps(dispatch) {
   return {
     addPost: data => dispatch(addPost(data)),
     removePost: data => dispatch(removePost(data)),
-    editPost: data => dispatch(editPost(data))
+    editPost: data => dispatch(editPost(data)),
+    isFetchRequestComplete: data => dispatch(isFetchRequestComplete(data))
   };
 }
 
