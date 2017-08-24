@@ -5,6 +5,7 @@ import { Grid, Row, Col } from "react-bootstrap";
 import Category from "./Category";
 
 class Root extends Component {
+  categoryData;
   componentDidMount() {
     this.props.addPost({
       id: "8xf0y6ziyjabvozdd253nd",
@@ -16,9 +17,10 @@ class Root extends Component {
       voteScore: 6,
       deleted: false
     });
-    this.getCategoryCount();
+    this.categoryData = this.getCategoryTypes();
   }
-  getCategoryCount = () => {
+
+  getCategoryTypes = () => {
     return fetch("http://localhost:5001/categories", {
       headers: { Authorization: "will3" }
     })
@@ -26,23 +28,27 @@ class Root extends Component {
         return response.json();
       })
       .then(data => {
-        console.log("json", data.categories.length);
-        return data.categories.length;
-      })
-      .catch(error => {
-        console.log(error);
+        console.log("cats", data.categories.map(c => c.name));
+        return data.categories.map(c => c.name);
       });
   };
+
   render() {
     const { posts, addPost, removePost, editPost } = this.props;
 
     console.log("post prop", posts);
+    console.log("populating categs", this.getCategoryTypes());
+    const listCategories =
+      this.categoryData !== undefined &&
+      this.categoryData.map(c => <Category name={c} />);
 
     return (
       <Grid>
         <Row className="show-category">
           <Col xs={12} md={12}>
-            <Category />
+            <div>
+              {listCategories !== undefined && listCategories}
+            </div>
           </Col>
         </Row>
       </Grid>
