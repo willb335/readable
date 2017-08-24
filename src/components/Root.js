@@ -39,16 +39,14 @@ class Root extends Component {
         return data.categories.map(c => c.name);
       })
       .then(() => {
-        console.log(
-          "is complete check?",
-          this.props.isFetchRequestComplete.isComplete
-        );
+        console.log("is complete check?", this.props.fetchRequests.isComplete);
       });
   };
 
   render() {
     const {
       posts,
+      fetchRequests,
       addPost,
       removePost,
       editPost,
@@ -68,10 +66,10 @@ class Root extends Component {
   }
 }
 
-function mapStateToProps({ posts, isFetchRequestComplete }) {
+function mapStateToProps({ posts, fetchRequests }) {
   return {
     posts,
-    isFetchRequestComplete
+    fetchRequests
   };
 }
 
