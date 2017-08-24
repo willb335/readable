@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import PostModal from "./PostModal";
 import { isModalOpen } from "../actions/modalActions";
 
 class Category extends Component {
   render() {
-    const { modal } = this.props;
+    const { modal, isModalOpen } = this.props;
     return (
       <Panel
         header={
@@ -21,10 +22,16 @@ class Category extends Component {
               <Button bsStyle="primary">Primary</Button>
             </div>
             <div>
-              <Button bsStyle="primary" onClick={console.log("clicked")}>
+              <Button
+                bsStyle="primary"
+                onClick={() => isModalOpen({ isModalOpen: true })}
+              >
                 New Post
               </Button>
-              <PostModal onHide={console.log("hidden")} isOpen={this} />
+              <PostModal
+                onHide={console.log("hidden")}
+                isOpen={modal.isModalOpen}
+              />
             </div>
           </div>
         }
@@ -46,7 +53,6 @@ function mapStateToProps({ modal }) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addPost: data => dispatch(addPost(data)),
     isModalOpen: data => dispatch(isModalOpen(data))
   };
 }

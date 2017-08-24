@@ -3,10 +3,11 @@ import { Modal, Button } from "react-bootstrap";
 
 class PostModal extends Component {
   render() {
+    const { isOpen } = this.props;
     return (
       <div>
         <Modal
-          show={false}
+          show={isOpen}
           bsSize="large"
           aria-labelledby="contained-modal-title-lg"
         >
