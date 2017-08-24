@@ -38,16 +38,13 @@ class Root extends Component {
 
     console.log("post prop", posts);
     console.log("populating categs", this.getCategoryTypes());
-    const listCategories =
-      this.categoryData !== undefined &&
-      this.categoryData.map(c => <Category name={c} />);
 
     return (
       <Grid>
         <Row className="show-category">
           <Col xs={12} md={12}>
             <div>
-              {listCategories !== undefined && listCategories}
+              <Category />
             </div>
           </Col>
         </Row>
