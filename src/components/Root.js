@@ -37,15 +37,7 @@ class Root extends Component {
   };
 
   render() {
-    const {
-      posts,
-      fetchRequests,
-      addPost,
-      removePost,
-      editPost,
-      isFetchRequestComplete,
-      getCategories
-    } = this.props;
+    const { fetchRequests } = this.props;
     const categoryList = () => {
       if (fetchRequests.categories !== undefined) {
         return fetchRequests.categories.map(c =>
@@ -55,8 +47,6 @@ class Root extends Component {
         );
       }
     };
-    console.log("categories", fetchRequests.categories);
-    console.log("is complete on render", fetchRequests.isComplete);
 
     return (
       <Grid>
