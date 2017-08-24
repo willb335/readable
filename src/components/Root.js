@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addPost, removePost, editPost } from "../actions";
+import { addPost, removePost, editPost } from "../actions/postActions";
 import { Grid, Row, Col } from "react-bootstrap";
 import Category from "./Category";
 
