@@ -22,7 +22,8 @@ class PostModal extends Component {
   };
 
   onSubmit = () => {
-    this.currentPost.id = uuidv4();
+    const randomId = uuidv4();
+    this.currentPost.id = randomId;
     this.currentPost.timestamp = Date.now();
     this.currentPost.category = this.props.category.currentCategory;
     this.currentPost.deleted = false;
@@ -30,6 +31,12 @@ class PostModal extends Component {
     this.props.addPost(this.currentPost);
     this.props.isModalOpen({
       isModalOpen: false
+    });
+    console.log("new post random", this.props.posts[this.currentPost.id]);
+    fetch("http://localhost:5001/posts", {
+      method: "post",
+      body: JSON.stringify(this.props.posts[randomId]),
+      headers: { Authorization: "will3" }
     });
     this.currentPost = {};
   };
@@ -47,6 +54,8 @@ class PostModal extends Component {
   };
 
   render() {
+    console.log("new post", this.props.posts[this.currentPost.id]);
+
     const { isOpen } = this.props;
     return (
       <div>
