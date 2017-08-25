@@ -12,28 +12,26 @@ import { addPost } from "../actions/postActions";
 import uuidv4 from "uuid/v4";
 
 class PostModal extends Component {
-  currentPost = {
-    id: uuidv4(),
-    timestamp: Date.now(),
-    category: "Test",
-    voteScore: 6,
-    deleted: false,
-    title: this.handleTitleChange,
-    author: this.handleAuthorChange,
-    body: this.hanglePostBodyChange
-  };
+  currentPost = {};
 
   onClose = () => {
     this.props.isModalOpen({
       isModalOpen: false
     });
+    this.currentPost = {};
   };
 
   onSubmit = () => {
+    this.currentPost.id = uuidv4();
+    this.currentPost.timestamp = Date.now();
+    this.currentPost.category = "cat";
+    this.currentPost.deleted = false;
+    this.currentPost.voteScore = 0;
     this.props.addPost(this.currentPost);
     this.props.isModalOpen({
       isModalOpen: false
     });
+    this.currentPost = {};
   };
 
   handleAuthorChange = event => {
