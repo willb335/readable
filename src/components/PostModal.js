@@ -17,7 +17,18 @@ class PostModal extends Component {
 
   onClose = () => {};
 
-  onSubmit = () => {};
+  onSubmit = () => {
+    this.props.addPost({
+      id: "8xf0y6ziyjabvozdd253nd",
+      timestamp: 1467166872634,
+      title: "",
+      body: "",
+      author: "",
+      category: "",
+      voteScore: 6,
+      deleted: false
+    });
+  };
 
   handleChange = e => {
     this.setState({ value: e.target.value });

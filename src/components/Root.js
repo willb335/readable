@@ -33,6 +33,10 @@ class Root extends Component {
       })
       .then(data => {
         this.props.getCategories({ categories: data });
+        console.log(
+          "getting title",
+          this.props.posts["8xf0y6ziyjabvozdd253nd"].title
+        );
       });
   };
 
