@@ -52,16 +52,14 @@ class PostModal extends Component {
                 <FormControl.Feedback />
               </FormGroup>
             </form>
-            <form>
-              <FormGroup controlId="formBasicText">
-                <ControlLabel>Post</ControlLabel>
+            <form className="form-input-area">
+              <FormGroup controlId="formControlsTextarea">
+                <ControlLabel>Enter Post</ControlLabel>
                 <FormControl
-                  type="text"
-                  value={this.state.value}
-                  placeholder="Enter post"
-                  onChange={this.handleChange}
+                  style={{ height: "500px" }}
+                  componentClass="textarea"
+                  placeholder="textarea"
                 />
-                <FormControl.Feedback />
               </FormGroup>
             </form>
           </Modal.Body>
