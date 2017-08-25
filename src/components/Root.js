@@ -47,7 +47,7 @@ class Root extends Component {
         return fetchRequests.categories.map(c =>
           <Row className="show-category" key={c}>
             <Col xs={12} md={12}>
-              <Category name={c} />
+              <Category catName={c} />
             </Col>
           </Row>
         );

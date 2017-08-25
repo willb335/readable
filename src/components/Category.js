@@ -6,12 +6,14 @@ import { isModalOpen } from "../actions/modalActions";
 
 class Category extends Component {
   render() {
-    const { modal, isModalOpen } = this.props;
+    const { modal, isModalOpen, catName } = this.props;
     return (
       <Panel
         header={
           <div className="category-container">
-            <div>Category</div>
+            <div>
+              {catName}
+            </div>
             <div>Filler</div>
             <div>Filler</div>
 

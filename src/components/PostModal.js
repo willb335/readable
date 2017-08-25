@@ -47,7 +47,7 @@ class PostModal extends Component {
   };
 
   render() {
-    const { isOpen, isModalOpen, posts } = this.props;
+    const { isOpen } = this.props;
     return (
       <div>
         <Modal
