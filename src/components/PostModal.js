@@ -18,9 +18,9 @@ class PostModal extends Component {
     category: "Test",
     voteScore: 6,
     deleted: false,
-    title: "",
-    author: "",
-    body: ""
+    title: this.handleTitleChange,
+    author: this.handleAuthorChange,
+    body: this.hanglePostBodyChange
   };
 
   onClose = () => {
