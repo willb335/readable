@@ -6,6 +6,7 @@ import {
   ControlLabel,
   FormControl
 } from "react-bootstrap";
+import { connect } from "react-redux";
 
 class PostModal extends Component {
   state = {
@@ -56,14 +57,17 @@ class PostModal extends Component {
               <FormGroup controlId="formControlsTextarea">
                 <ControlLabel>Enter Post</ControlLabel>
                 <FormControl
-                  style={{ height: "500px" }}
+                  style={{ height: "300px" }}
                   componentClass="textarea"
-                  placeholder="textarea"
+                  placeholder="Enter Post"
                 />
               </FormGroup>
             </form>
           </Modal.Body>
           <Modal.Footer>
+            <Button bsStyle="primary" onClick={console.log("submit")}>
+              Submit
+            </Button>
             <Button onClick={console.log("close")}>Close</Button>
           </Modal.Footer>
         </Modal>
