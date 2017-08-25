@@ -45,20 +45,18 @@ class Root extends Component {
     const categoryList = () => {
       if (fetchRequests.categories !== undefined) {
         return fetchRequests.categories.map(c =>
-          <div key={c}>
-            <Category name={c} />
-          </div>
+          <Row className="show-category" key={c}>
+            <Col xs={12} md={12}>
+              <Category name={c} />
+            </Col>
+          </Row>
         );
       }
     };
 
     return (
       <Grid>
-        <Row className="show-category">
-          <Col xs={12} md={12}>
-            {fetchRequests.isComplete && categoryList()}
-          </Col>
-        </Row>
+        {fetchRequests.isComplete && categoryList()}
       </Grid>
     );
   }
