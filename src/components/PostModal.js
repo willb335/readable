@@ -24,7 +24,7 @@ class PostModal extends Component {
   onSubmit = () => {
     this.currentPost.id = uuidv4();
     this.currentPost.timestamp = Date.now();
-    this.currentPost.category = "cat";
+    this.currentPost.category = this.props.category.currentCategory;
     this.currentPost.deleted = false;
     this.currentPost.voteScore = 0;
     this.props.addPost(this.currentPost);
@@ -110,10 +110,11 @@ class PostModal extends Component {
   }
 }
 
-function mapStateToProps({ modal, posts }) {
+function mapStateToProps({ modal, posts, category }) {
   return {
     modal,
-    posts
+    posts,
+    category
   };
 }
 

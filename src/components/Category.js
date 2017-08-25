@@ -3,8 +3,14 @@ import { connect } from "react-redux";
 import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import PostModal from "./PostModal";
 import { isModalOpen } from "../actions/modalActions";
+import { setCurrentCategory } from "../actions/categories";
 
 class Category extends Component {
+  clickNewPost = () => {
+    this.props.isModalOpen({ isModalOpen: true });
+    this.props.setCurrentCategory({ currentCategory: this.props.catName });
+  };
+
   render() {
     const { modal, isModalOpen, catName } = this.props;
     return (
@@ -24,10 +30,7 @@ class Category extends Component {
               <Button bsStyle="primary">Primary</Button>
             </div>
             <div>
-              <Button
-                bsStyle="primary"
-                onClick={() => isModalOpen({ isModalOpen: true })}
-              >
+              <Button bsStyle="primary" onClick={this.clickNewPost}>
                 New Post
               </Button>
               <PostModal
@@ -55,7 +58,8 @@ function mapStateToProps({ modal }) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    isModalOpen: data => dispatch(isModalOpen(data))
+    isModalOpen: data => dispatch(isModalOpen(data)),
+    setCurrentCategory: data => dispatch(setCurrentCategory(data))
   };
 }
 
