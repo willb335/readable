@@ -9,32 +9,47 @@ import {
 import { connect } from "react-redux";
 import { isModalOpen } from "../actions/modalActions";
 import { addPost } from "../actions/postActions";
+import uuidv4 from "uuid/v4";
 
 class PostModal extends Component {
-  state = {
-    value: ""
+  currentPost = {
+    id: uuidv4(),
+    timestamp: Date.now(),
+    category: "Test",
+    voteScore: 6,
+    deleted: false,
+    title: "",
+    author: "",
+    body: ""
   };
 
-  onClose = () => {};
-
-  onSubmit = () => {
-    this.props.addPost({
-      id: "8xf0y6ziyjabvozdd253nd",
-      timestamp: 1467166872634,
-      title: "",
-      body: "",
-      author: "",
-      category: "",
-      voteScore: 6,
-      deleted: false
+  onClose = () => {
+    this.props.isModalOpen({
+      isModalOpen: false
     });
   };
 
-  handleChange = e => {
-    this.setState({ value: e.target.value });
+  onSubmit = () => {
+    this.props.addPost(this.currentPost);
+    this.props.isModalOpen({
+      isModalOpen: false
+    });
   };
+
+  handleAuthorChange = event => {
+    this.currentPost.author = event.target.value;
+  };
+
+  handleTitleChange = event => {
+    this.currentPost.title = event.target.value;
+  };
+
+  hanglePostBodyChange = event => {
+    this.currentPost.body = event.target.value;
+  };
+
   render() {
-    const { isOpen, isModalOpen } = this.props;
+    const { isOpen, isModalOpen, posts } = this.props;
     return (
       <div>
         <Modal
@@ -51,9 +66,9 @@ class PostModal extends Component {
                 <ControlLabel>Name</ControlLabel>
                 <FormControl
                   type="text"
-                  value={this.state.value}
+                  value={this.currentPost.author}
                   placeholder="Enter name"
-                  onChange={this.handleChange}
+                  onChange={this.handleAuthorChange}
                 />
                 <FormControl.Feedback />
               </FormGroup>
@@ -63,9 +78,9 @@ class PostModal extends Component {
                 <ControlLabel>Title</ControlLabel>
                 <FormControl
                   type="text"
-                  value={this.state.value}
+                  value={this.currentPost.title}
                   placeholder="Enter title"
-                  onChange={this.handleChange}
+                  onChange={this.handleTitleChange}
                 />
                 <FormControl.Feedback />
               </FormGroup>
@@ -74,23 +89,20 @@ class PostModal extends Component {
               <FormGroup controlId="formControlsTextarea">
                 <ControlLabel>Enter Post</ControlLabel>
                 <FormControl
+                  value={this.currentPost.body}
                   style={{ height: "300px" }}
                   componentClass="textarea"
                   placeholder="Enter Post"
+                  onChange={this.hanglePostBodyChange}
                 />
               </FormGroup>
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <Button
-              bsStyle="primary"
-              onClick={() => isModalOpen({ isModalOpen: false })}
-            >
+            <Button bsStyle="primary" onClick={this.onSubmit}>
               Submit
             </Button>
-            <Button onClick={() => isModalOpen({ isModalOpen: false })}>
-              Close
-            </Button>
+            <Button onClick={this.onClose}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>
@@ -100,8 +112,8 @@ class PostModal extends Component {
 
 function mapStateToProps({ modal, posts }) {
   return {
-    posts,
-    modal
+    modal,
+    posts
   };
 }
 
