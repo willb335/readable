@@ -66,6 +66,7 @@ class PostModal extends Component {
                 <ControlLabel>Name</ControlLabel>
                 <FormControl
                   type="text"
+                  componentClass="textarea"
                   value={this.currentPost.author}
                   placeholder="Enter name"
                   onChange={this.handleAuthorChange}
@@ -78,6 +79,7 @@ class PostModal extends Component {
                 <ControlLabel>Title</ControlLabel>
                 <FormControl
                   type="text"
+                  componentClass="textarea"
                   value={this.currentPost.title}
                   placeholder="Enter title"
                   onChange={this.handleTitleChange}
