@@ -7,17 +7,23 @@ import {
   FormControl
 } from "react-bootstrap";
 import { connect } from "react-redux";
+import { isModalOpen } from "../actions/modalActions";
+import { addPost } from "../actions/postActions";
 
 class PostModal extends Component {
   state = {
     value: ""
   };
 
+  onClose = () => {};
+
+  onSubmit = () => {};
+
   handleChange = e => {
     this.setState({ value: e.target.value });
   };
   render() {
-    const { isOpen } = this.props;
+    const { isOpen, isModalOpen } = this.props;
     return (
       <div>
         <Modal
@@ -65,10 +71,15 @@ class PostModal extends Component {
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <Button bsStyle="primary" onClick={console.log("submit")}>
+            <Button
+              bsStyle="primary"
+              onClick={() => isModalOpen({ isModalOpen: false })}
+            >
               Submit
             </Button>
-            <Button onClick={console.log("close")}>Close</Button>
+            <Button onClick={() => isModalOpen({ isModalOpen: false })}>
+              Close
+            </Button>
           </Modal.Footer>
         </Modal>
       </div>
@@ -76,4 +87,18 @@ class PostModal extends Component {
   }
 }
 
-export default PostModal;
+function mapStateToProps({ modal, posts }) {
+  return {
+    posts,
+    modal
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addPost: data => dispatch(addPost(data)),
+    isModalOpen: data => dispatch(isModalOpen(data))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostModal);
