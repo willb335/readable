@@ -32,27 +32,34 @@ class PostModal extends Component {
         deleted: false,
         voteScore: 0
       };
-      console.log("payload is...", payload);
       resolve(payload);
     });
   };
 
   addPostToStore = payload => {
-    this.props.addPost(payload);
+    return new Promise(resolve => {
+      this.props.addPost(payload);
+      resolve(payload);
+    });
   };
 
   postPayloadToBackEnd = payload => {
     return new Promise(resolve => {
       fetch("http://localhost:5001/posts", {
         method: "post",
-        body: JSON.stringify(payload),
         headers: {
-          Authorization: "will3"
-        }
-      }).then(response =>
-        console.log("response from fetch post", response.json())
-      );
-      resolve(payload);
+          Authorization: "will335"
+        },
+        body: JSON.stringify({
+          timestamp: 10,
+          category: "this",
+          deleted: false,
+          title: "Hi there"
+        })
+      }).then(response => {
+        console.log("response from fetch post", response.json());
+        resolve(payload);
+      });
     });
   };
 
@@ -72,8 +79,6 @@ class PostModal extends Component {
       .then(this.removeCurrentPayload)
       .then(payload => {
         this.props.isModalOpen({ isModalOpen: false });
-        console.log("Is payload removed?", payload);
-        console.log("is this.currentPost empty", this.currentPost);
       });
   };
 

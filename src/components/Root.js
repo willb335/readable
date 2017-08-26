@@ -22,7 +22,7 @@ class Root extends Component {
 
   getCategoryTypes = () => {
     return fetch("http://localhost:5001/categories", {
-      headers: { Authorization: "will3" }
+      headers: { Authorization: "will335" }
     })
       .then(response => {
         return response.json();
