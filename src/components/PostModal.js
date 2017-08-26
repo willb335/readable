@@ -54,7 +54,6 @@ class PostModal extends Component {
         },
         body: JSON.stringify(payload)
       }).then(response => {
-        console.log("response from fetch post", response.json());
         resolve(payload);
       });
     });
@@ -74,7 +73,7 @@ class PostModal extends Component {
       .then(this.addPostToStore)
       .then(this.postPayloadToBackEnd)
       .then(this.removeCurrentPayload)
-      .then(payload => {
+      .then(() => {
         this.props.isModalOpen({ isModalOpen: false });
       });
   };
