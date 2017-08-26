@@ -48,14 +48,11 @@ class PostModal extends Component {
       fetch("http://localhost:5001/posts", {
         method: "post",
         headers: {
-          Authorization: "will335"
+          Authorization: "will335",
+          Accept: "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          timestamp: 10,
-          category: "this",
-          deleted: false,
-          title: "Hi there"
-        })
+        body: JSON.stringify(payload)
       }).then(response => {
         console.log("response from fetch post", response.json());
         resolve(payload);
