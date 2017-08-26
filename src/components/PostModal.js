@@ -14,40 +14,67 @@ import uuidv4 from "uuid/v4";
 class PostModal extends Component {
   currentPost = {};
 
-  onClose = () => {
+  onClose = payload => {
     this.props.isModalOpen({
       isModalOpen: false
     });
-    this.currentPost = {};
+    payload = {};
+  };
+
+  buildPayload = cP => {
+    return new Promise(resolve => {
+      const randomId = uuidv4();
+      const payload = {
+        ...cP,
+        id: randomId,
+        timestamp: Date.now(),
+        category: this.props.currentCategory,
+        deleted: false,
+        voteScore: 0
+      };
+      console.log("payload is...", payload);
+      resolve(payload);
+    });
+  };
+
+  addPostToStore = payload => {
+    this.props.addPost(payload);
+  };
+
+  postPayloadToBackEnd = payload => {
+    return new Promise(resolve => {
+      fetch("http://localhost:5001/posts", {
+        method: "post",
+        body: JSON.stringify(payload),
+        headers: {
+          Authorization: "will3"
+        }
+      }).then(response =>
+        console.log("response from fetch post", response.json())
+      );
+      resolve(payload);
+    });
+  };
+
+  removeCurrentPayload = payload => {
+    return new Promise(resolve => {
+      payload = {};
+      this.currentPost = {};
+      resolve(payload);
+    });
   };
 
   onSubmit = () => {
-    const randomId = uuidv4();
-
-    return new Promise(resolve => {
-      this.currentPost.id = randomId;
-      this.currentPost.timestamp = Date.now();
-      this.currentPost.category = this.props.category.currentCategory;
-      this.currentPost.deleted = false;
-      this.currentPost.voteScore = 0;
-      this.props.addPost(this.currentPost);
-      this.props.isModalOpen({
-        isModalOpen: false
+    Promise.resolve(this.currentPost)
+      .then(this.buildPayload)
+      .then(this.addPostToStore)
+      .then(this.postPayloadToBackEnd)
+      .then(this.removeCurrentPayload)
+      .then(payload => {
+        this.props.isModalOpen({ isModalOpen: false });
+        console.log("Is payload removed?", payload);
+        console.log("is this.currentPost empty", this.currentPost);
       });
-      resolve(this.currentPost);
-    })
-      .then(post => {
-        console.log("post here!", post);
-
-        fetch("http://localhost:5001/posts", {
-          method: "post",
-          body: JSON.stringify(post),
-          headers: {
-            Authorization: "will3"
-          }
-        }).then(response => console.log("response is", response.json()));
-      })
-      .then(() => (this.currentPost = {}));
   };
 
   handleAuthorChange = event => {
