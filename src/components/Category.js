@@ -43,10 +43,12 @@ class Category extends Component {
         style={{ textAlign: "left" }}
       >
         <ListGroup fill>
-          {posts.map(p =>
-            <ListGroupItem>
-              {p.category === catName && p.title}
-            </ListGroupItem>
+          {posts.map(
+            p =>
+              p.category === catName &&
+              <ListGroupItem>
+                {p.title}
+              </ListGroupItem>
           )}
         </ListGroup>
       </Panel>
