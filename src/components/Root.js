@@ -12,8 +12,7 @@ class Root extends Component {
         headers: { Authorization: "will335" }
       })
         .then(response => {
-          console.log(response);
-          return response.json();
+          resolve(response.json());
         })
         .then(json => resolve(json));
     });

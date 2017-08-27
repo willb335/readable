@@ -12,7 +12,7 @@ class Category extends Component {
   };
 
   render() {
-    const { modal, isModalOpen, catName } = this.props;
+    const { modal, isModalOpen, catName, posts } = this.props;
     return (
       <Panel
         header={
@@ -43,16 +43,20 @@ class Category extends Component {
         style={{ textAlign: "left" }}
       >
         <ListGroup fill>
-          <ListGroupItem>Post 1</ListGroupItem>
-          <ListGroupItem>Post 2</ListGroupItem>
+          {posts.map(p =>
+            <ListGroupItem>
+              {p.title}
+            </ListGroupItem>
+          )}
         </ListGroup>
       </Panel>
     );
   }
 }
-function mapStateToProps({ modal }) {
+function mapStateToProps({ modal, posts }) {
   return {
-    modal
+    modal,
+    posts: Object.values(posts)
   };
 }
 
