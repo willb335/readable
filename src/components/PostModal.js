@@ -28,7 +28,7 @@ class PostModal extends Component {
         ...cP,
         id: randomId,
         timestamp: Date.now(),
-        category: this.props.currentCategory,
+        category: this.props.category.currentCategory,
         deleted: false,
         voteScore: 0
       };
