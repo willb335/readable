@@ -6,18 +6,33 @@ import { Grid, Row, Col } from "react-bootstrap";
 import Category from "./Category";
 
 class Root extends Component {
-  componentDidMount() {
-    this.props.addPost({
-      id: "8xf0y6ziyjabvozdd253nd",
-      timestamp: 1467166872634,
-      title: "Udacity is the best place to learn React",
-      body: "Everyone says so after all.",
-      author: "thingtwo",
-      category: "react",
-      voteScore: 6,
-      deleted: false
+  getPostsFromServer = () => {
+    return new Promise(resolve => {
+      fetch("http://localhost:5001/posts", {
+        headers: { Authorization: "will335" }
+      })
+        .then(response => {
+          console.log(response);
+          return response.json();
+        })
+        .then(json => resolve(json));
     });
+  };
+
+  addPostsToStore = posts => {
+    return new Promise(resolve => {
+      posts.forEach(p => {
+        this.props.addPost(p);
+      });
+      resolve();
+    });
+  };
+
+  componentDidMount() {
     this.getCategoryTypes();
+    Promise.resolve("Start")
+      .then(this.getPostsFromServer)
+      .then(this.addPostsToStore);
   }
 
   getCategoryTypes = () => {
@@ -33,10 +48,6 @@ class Root extends Component {
       })
       .then(data => {
         this.props.getCategories({ categories: data });
-        console.log(
-          "getting title",
-          this.props.posts["8xf0y6ziyjabvozdd253nd"].title
-        );
       });
   };
 
