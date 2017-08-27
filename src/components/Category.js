@@ -45,7 +45,7 @@ class Category extends Component {
         <ListGroup fill>
           {posts.map(p =>
             <ListGroupItem>
-              {p.title}
+              {p.category === catName && p.title}
             </ListGroupItem>
           )}
         </ListGroup>
