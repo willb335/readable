@@ -58,7 +58,7 @@ class Root extends Component {
         return (
           <div>
             {postDetail.isPostDetailOpen || category.isCategoryOpen
-              ? <Category />
+              ? <Category catName={category.currentCategory} />
               : fetchRequests.categories.map(c =>
                   <Row className="show-category" key={c}>
                     <Col xs={12} md={12}>

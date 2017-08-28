@@ -20,6 +20,7 @@ class Category extends Component {
 
   clickCategory = () => {
     this.props.isCategoryOpen({ isCategoryOpen: true });
+    this.props.setCurrentCategory({ currentCategory: this.props.catName });
   };
 
   render() {
