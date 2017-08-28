@@ -6,6 +6,7 @@ import { isFetchRequestComplete, getCategories } from "../actions/fetchActions";
 import { Grid, Row, Col } from "react-bootstrap";
 import Category from "./Category";
 import { isCategoryOpen } from "../actions/categories";
+import { isBackButtonClicked } from "../actions/backButtonAction";
 
 class Root extends Component {
   getPostsFromServer = () => {
@@ -53,32 +54,36 @@ class Root extends Component {
   };
 
   render() {
-    const { fetchRequests, postDetail, category } = this.props;
+    const {
+      fetchRequests,
+      postDetail,
+      category,
+      isBackButtonClicked,
+      backButton
+    } = this.props;
     const categoryList = () => {
       if (fetchRequests.categories !== undefined) {
         return (
           <div>
-            {postDetail.isPostDetailOpen || category.isCategoryOpen
+            {(postDetail.isPostDetailOpen || category.isCategoryOpen) &&
+            !backButton.isBackButtonClicked
               ? <Route
                   exact
                   path={`/${category.currentCategory}`}
-                  render={({ history }) =>
-                    <Category
-                      catName={category.currentCategory}
-                      history={history}
-                    />}
+                  render={() => <Category catName={category.currentCategory} />}
                 />
               : fetchRequests.categories.map(c =>
                   <Route
                     key={c}
                     exact
                     path="/"
-                    render={({ history }) => {
+                    render={() => {
+                      // isBackButtonClicked({ isBackButtonClicked: true });
                       return (
                         <Row className="show-category" key={c}>
                           <Col xs={12} md={12}>
                             <div>
-                              <Category catName={c} history={history} />
+                              <Category catName={c} />
                             </div>
                           </Col>
                         </Row>
@@ -99,12 +104,19 @@ class Root extends Component {
   }
 }
 
-function mapStateToProps({ posts, fetchRequests, postDetail, category }) {
+function mapStateToProps({
+  posts,
+  fetchRequests,
+  postDetail,
+  category,
+  backButton
+}) {
   return {
     posts,
     fetchRequests,
     postDetail,
-    category
+    category,
+    backButton
   };
 }
 
@@ -115,7 +127,8 @@ function mapDispatchToProps(dispatch) {
     editPost: data => dispatch(editPost(data)),
     isFetchRequestComplete: data => dispatch(isFetchRequestComplete(data)),
     getCategories: data => dispatch(getCategories(data)),
-    isCategoryOpen: data => dispatch(isCategoryOpen(data))
+    isCategoryOpen: data => dispatch(isCategoryOpen(data)),
+    isBackButtonClicked: data => dispatch(isBackButtonClicked(data))
   };
 }
 

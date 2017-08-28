@@ -26,8 +26,7 @@ class Category extends Component {
   };
 
   render() {
-    const { modal, catName, posts, postDetail, history } = this.props;
-    console.log("action history in cat", history.action);
+    const { modal, catName, posts, postDetail } = this.props;
 
     return (
       <div>
