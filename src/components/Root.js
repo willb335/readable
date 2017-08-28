@@ -45,8 +45,8 @@ class Root extends Component {
         this.props.isFetchRequestComplete({ isComplete: true });
         return data.categories.map(c => c.name);
       })
-      .then(data => {
-        this.props.getCategories({ categories: data });
+      .then(cats => {
+        this.props.getCategories({ categories: cats });
       });
   };
 
