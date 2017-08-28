@@ -46,7 +46,7 @@ class Category extends Component {
           {posts.map(
             p =>
               p.category === catName &&
-              <ListGroupItem>
+              <ListGroupItem key={p.title}>
                 {p.title}
               </ListGroupItem>
           )}

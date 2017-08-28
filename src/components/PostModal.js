@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { isModalOpen } from "../actions/modalActions";
 import { addPost } from "../actions/postActions";
 import uuidv4 from "uuid/v4";
+import { fs } from "file-system";
 
 class PostModal extends Component {
   currentPost = {};
@@ -59,6 +60,17 @@ class PostModal extends Component {
     });
   };
 
+  copyPostsFromStore = payload => {
+    return new Promise(resolve => {
+      console.log("Post values", Object.values(this.props.posts));
+      fs.writeFile("../test.txt", this.props.posts, function(err) {
+        console.log(err);
+      });
+
+      resolve(payload);
+    });
+  };
+
   removeCurrentPayload = payload => {
     return new Promise(resolve => {
       payload = {};
@@ -72,6 +84,7 @@ class PostModal extends Component {
       .then(this.buildPayload)
       .then(this.addPostToStore)
       .then(this.postPayloadToBackEnd)
+      .then(this.copyPostsFromStore)
       .then(this.removeCurrentPayload)
       .then(() => {
         this.props.isModalOpen({ isModalOpen: false });
