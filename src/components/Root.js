@@ -51,15 +51,23 @@ class Root extends Component {
   };
 
   render() {
-    const { fetchRequests } = this.props;
+    const { fetchRequests, postDetail } = this.props;
     const categoryList = () => {
       if (fetchRequests.categories !== undefined) {
-        return fetchRequests.categories.map(c =>
-          <Row className="show-category" key={c}>
-            <Col xs={12} md={12}>
-              <Category catName={c} />
-            </Col>
-          </Row>
+        return (
+          <div>
+            {postDetail.isPostDetailOpen
+              ? <Category />
+              : fetchRequests.categories.map(c =>
+                  <Row className="show-category" key={c}>
+                    <Col xs={12} md={12}>
+                      <div>
+                        <Category catName={c} />
+                      </div>
+                    </Col>
+                  </Row>
+                )}
+          </div>
         );
       }
     };
@@ -72,10 +80,11 @@ class Root extends Component {
   }
 }
 
-function mapStateToProps({ posts, fetchRequests }) {
+function mapStateToProps({ posts, fetchRequests, postDetail }) {
   return {
     posts,
-    fetchRequests
+    fetchRequests,
+    postDetail
   };
 }
 
