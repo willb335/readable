@@ -24,7 +24,7 @@ class Category extends Component {
   };
 
   render() {
-    const { modal, isModalOpen, catName, posts, postDetail } = this.props;
+    const { modal, catName, posts, postDetail } = this.props;
     return (
       <div>
         {postDetail.isPostDetailOpen
