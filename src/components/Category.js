@@ -63,7 +63,6 @@ class Category extends Component {
                   p =>
                     p.category === catName &&
                     <ListGroupItem key={p.title}>
-                      {console.log("p", p)}
                       <a
                         onClick={() => this.clickPost(p)}
                         style={{ cursor: "pointer" }}
