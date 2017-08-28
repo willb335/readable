@@ -62,21 +62,28 @@ class Root extends Component {
               ? <Route
                   exact
                   path={`/${category.currentCategory}`}
-                  render={() => <Category catName={category.currentCategory} />}
+                  render={({ history }) =>
+                    <Category
+                      catName={category.currentCategory}
+                      history={history}
+                    />}
                 />
               : fetchRequests.categories.map(c =>
                   <Route
                     key={c}
                     exact
                     path="/"
-                    render={() =>
-                      <Row className="show-category" key={c}>
-                        <Col xs={12} md={12}>
-                          <div>
-                            <Category catName={c} />
-                          </div>
-                        </Col>
-                      </Row>}
+                    render={({ history }) => {
+                      return (
+                        <Row className="show-category" key={c}>
+                          <Col xs={12} md={12}>
+                            <div>
+                              <Category catName={c} history={history} />
+                            </div>
+                          </Col>
+                        </Row>
+                      );
+                    }}
                   />
                 )}
           </div>
