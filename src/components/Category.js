@@ -31,7 +31,10 @@ class Category extends Component {
           : <Panel
               header={
                 <div className="category-container">
-                  <a onClick={this.clickCategory}>
+                  <a
+                    onClick={this.clickCategory}
+                    style={{ cursor: "pointer", color: "blue" }}
+                  >
                     {catName}
                   </a>
                   <div>Filler</div>
@@ -58,7 +61,7 @@ class Category extends Component {
                   p =>
                     p.category === catName &&
                     <ListGroupItem key={p.title}>
-                      <a onClick={this.clickPost}>
+                      <a onClick={this.clickPost} style={{ cursor: "pointer" }}>
                         {p.title}
                       </a>
                     </ListGroupItem>

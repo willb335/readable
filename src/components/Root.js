@@ -52,12 +52,12 @@ class Root extends Component {
   };
 
   render() {
-    const { fetchRequests, postDetail } = this.props;
+    const { fetchRequests, postDetail, category } = this.props;
     const categoryList = () => {
       if (fetchRequests.categories !== undefined) {
         return (
           <div>
-            {postDetail.isPostDetailOpen
+            {postDetail.isPostDetailOpen || category.isCategoryOpen
               ? <Category />
               : fetchRequests.categories.map(c =>
                   <Row className="show-category" key={c}>
