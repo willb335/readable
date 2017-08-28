@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import PostModal from "./PostModal";
+import PostDetail from "./PostDetail";
 import { isModalOpen } from "../actions/modalActions";
 import { setCurrentCategory } from "../actions/categories";
+import { isPostDetailOpen } from "../actions/postDetailActions";
 
 class Category extends Component {
   clickNewPost = () => {
@@ -11,60 +13,70 @@ class Category extends Component {
     this.props.setCurrentCategory({ currentCategory: this.props.catName });
   };
 
-  render() {
-    const { modal, isModalOpen, catName, posts } = this.props;
-    return (
-      <Panel
-        header={
-          <div className="category-container">
-            <div>
-              {catName}
-            </div>
-            <div>Filler</div>
-            <div>Filler</div>
+  clickPost = () => {
+    this.props.isPostDetailOpen({ isPostDetailOpen: true });
+  };
 
-            <div>
-              <Button bsStyle="primary">Primary</Button>
-            </div>
-            <div>
-              <Button bsStyle="primary">Primary</Button>
-            </div>
-            <div>
-              <Button bsStyle="primary" onClick={this.clickNewPost}>
-                New Post
-              </Button>
-              <PostModal isOpen={modal.isModalOpen} />
-            </div>
-          </div>
-        }
-        style={{ textAlign: "left" }}
-      >
-        <ListGroup fill>
-          {posts.map(
-            p =>
-              p.category === catName &&
-              <ListGroupItem key={p.title}>
-                <a onClick={console.log("clicked!")}>
-                  {p.title}
-                </a>
-              </ListGroupItem>
-          )}
-        </ListGroup>
-      </Panel>
+  render() {
+    const { modal, isModalOpen, catName, posts, postDetail } = this.props;
+    return (
+      <div>
+        {postDetail.isPostDetailOpen
+          ? <PostDetail />
+          : <Panel
+              header={
+                <div className="category-container">
+                  <div>
+                    {catName}
+                  </div>
+                  <div>Filler</div>
+                  <div>Filler</div>
+
+                  <div>
+                    <Button bsStyle="primary">Primary</Button>
+                  </div>
+                  <div>
+                    <Button bsStyle="primary">Primary</Button>
+                  </div>
+                  <div>
+                    <Button bsStyle="primary" onClick={this.clickNewPost}>
+                      New Post
+                    </Button>
+                    <PostModal isOpen={modal.isModalOpen} />
+                  </div>
+                </div>
+              }
+              style={{ textAlign: "left" }}
+            >
+              <ListGroup fill>
+                {posts.map(
+                  p =>
+                    p.category === catName &&
+                    <ListGroupItem key={p.title}>
+                      <a onClick={this.clickPost}>
+                        {p.title}
+                      </a>
+                    </ListGroupItem>
+                )}
+              </ListGroup>
+            </Panel>}
+      </div>
     );
   }
 }
-function mapStateToProps({ modal, posts }) {
+function mapStateToProps({ modal, posts, postDetail }) {
   return {
     modal,
-    posts: Object.values(posts)
+    posts: Object.values(posts),
+    postDetail
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     isModalOpen: data => dispatch(isModalOpen(data)),
-    setCurrentCategory: data => dispatch(setCurrentCategory(data))
+    setCurrentCategory: data => dispatch(setCurrentCategory(data)),
+    isPostDetailOpen: data => dispatch(isPostDetailOpen(data))
   };
 }
 
