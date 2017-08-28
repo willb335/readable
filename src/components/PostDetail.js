@@ -7,7 +7,6 @@ class PostDetail extends Component {
     return (
       <div className="user-post">
         <Well style={{ maxWidth: "50%", marginTop: "25px" }}>
-          {/* <Panel> */}
           <div>
             <strong>Title</strong>
           </div>

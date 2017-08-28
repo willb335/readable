@@ -33,10 +33,7 @@ class Category extends Component {
               <Button bsStyle="primary" onClick={this.clickNewPost}>
                 New Post
               </Button>
-              <PostModal
-                onHide={console.log("hidden")}
-                isOpen={modal.isModalOpen}
-              />
+              <PostModal isOpen={modal.isModalOpen} />
             </div>
           </div>
         }
@@ -47,7 +44,9 @@ class Category extends Component {
             p =>
               p.category === catName &&
               <ListGroupItem key={p.title}>
-                {p.title}
+                <a onClick={console.log("clicked!")}>
+                  {p.title}
+                </a>
               </ListGroupItem>
           )}
         </ListGroup>
