@@ -4,9 +4,9 @@ import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import PostModal from "./PostModal";
 import PostDetail from "./PostDetail";
 import { isModalOpen } from "../actions/modalActions";
-import { setCurrentCategory } from "../actions/categories";
 import { isPostDetailOpen } from "../actions/postDetailActions";
-import { isCategoryOpen } from "../actions/categories";
+import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
+import { setCurrentPost } from "../actions/postActions";
 
 class Category extends Component {
   clickNewPost = () => {
@@ -14,7 +14,8 @@ class Category extends Component {
     this.props.setCurrentCategory({ currentCategory: this.props.catName });
   };
 
-  clickPost = () => {
+  clickPost = p => {
+    this.props.setCurrentPost({ currentPost: p });
     this.props.isPostDetailOpen({ isPostDetailOpen: true });
   };
 
@@ -62,7 +63,11 @@ class Category extends Component {
                   p =>
                     p.category === catName &&
                     <ListGroupItem key={p.title}>
-                      <a onClick={this.clickPost} style={{ cursor: "pointer" }}>
+                      {console.log("p", p)}
+                      <a
+                        onClick={() => this.clickPost(p)}
+                        style={{ cursor: "pointer" }}
+                      >
                         {p.title}
                       </a>
                     </ListGroupItem>
@@ -73,12 +78,13 @@ class Category extends Component {
     );
   }
 }
-function mapStateToProps({ modal, posts, postDetail, category }) {
+function mapStateToProps({ modal, posts, postDetail, category, currentPost }) {
   return {
     modal,
     posts: Object.values(posts),
     postDetail,
-    category
+    category,
+    currentPost
   };
 }
 
@@ -87,7 +93,8 @@ function mapDispatchToProps(dispatch) {
     isModalOpen: data => dispatch(isModalOpen(data)),
     setCurrentCategory: data => dispatch(setCurrentCategory(data)),
     isPostDetailOpen: data => dispatch(isPostDetailOpen(data)),
-    isCategoryOpen: data => dispatch(isCategoryOpen(data))
+    isCategoryOpen: data => dispatch(isCategoryOpen(data)),
+    setCurrentPost: data => dispatch(setCurrentPost(data))
   };
 }
 

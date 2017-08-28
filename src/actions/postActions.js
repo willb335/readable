@@ -1,4 +1,5 @@
 export const ADD_POST = "ADD_POST";
+export const SET_CURRENT_POST = "SET_CURRENT_POST";
 export const EDIT_POST = "EDIT_POST";
 export const REMOVE_POST = "REMOVE_POST";
 export const ADD_COMMENT = "ADD_COMMENT";
@@ -30,6 +31,13 @@ export function addPost({
     category,
     voteScore,
     deleted
+  };
+}
+
+export function setCurrentPost({ currentPost }) {
+  return {
+    type: SET_CURRENT_POST,
+    currentPost
   };
 }
 
