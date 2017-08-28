@@ -6,6 +6,7 @@ import PostDetail from "./PostDetail";
 import { isModalOpen } from "../actions/modalActions";
 import { setCurrentCategory } from "../actions/categories";
 import { isPostDetailOpen } from "../actions/postDetailActions";
+import { isCategoryOpen } from "../actions/categories";
 
 class Category extends Component {
   clickNewPost = () => {
@@ -16,6 +17,8 @@ class Category extends Component {
   clickPost = () => {
     this.props.isPostDetailOpen({ isPostDetailOpen: true });
   };
+
+  clickCategory = () => {};
 
   render() {
     const { modal, isModalOpen, catName, posts, postDetail } = this.props;
@@ -64,11 +67,12 @@ class Category extends Component {
     );
   }
 }
-function mapStateToProps({ modal, posts, postDetail }) {
+function mapStateToProps({ modal, posts, postDetail, category }) {
   return {
     modal,
     posts: Object.values(posts),
-    postDetail
+    postDetail,
+    category
   };
 }
 
@@ -76,7 +80,8 @@ function mapDispatchToProps(dispatch) {
   return {
     isModalOpen: data => dispatch(isModalOpen(data)),
     setCurrentCategory: data => dispatch(setCurrentCategory(data)),
-    isPostDetailOpen: data => dispatch(isPostDetailOpen(data))
+    isPostDetailOpen: data => dispatch(isPostDetailOpen(data)),
+    isCategoryOpen: data => dispatch(isCategoryOpen(data))
   };
 }
 

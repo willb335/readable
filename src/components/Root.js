@@ -4,7 +4,7 @@ import { addPost, removePost, editPost } from "../actions/postActions";
 import { isFetchRequestComplete, getCategories } from "../actions/fetchActions";
 import { Grid, Row, Col } from "react-bootstrap";
 import Category from "./Category";
-import ( isCategoryOpen ) from "../actions/categories"
+import { isCategoryOpen } from "../actions/categories";
 
 class Root extends Component {
   getPostsFromServer = () => {
