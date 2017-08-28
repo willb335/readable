@@ -18,7 +18,9 @@ class Category extends Component {
     this.props.isPostDetailOpen({ isPostDetailOpen: true });
   };
 
-  clickCategory = () => {};
+  clickCategory = () => {
+    this.props.isCategoryOpen({ isCategoryOpen: true });
+  };
 
   render() {
     const { modal, isModalOpen, catName, posts, postDetail } = this.props;
@@ -29,9 +31,9 @@ class Category extends Component {
           : <Panel
               header={
                 <div className="category-container">
-                  <div>
+                  <a onClick={this.clickCategory}>
                     {catName}
-                  </div>
+                  </a>
                   <div>Filler</div>
                   <div>Filler</div>
 
