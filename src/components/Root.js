@@ -14,7 +14,7 @@ class Root extends Component {
         .then(response => {
           resolve(response.json());
         })
-        .then(json => resolve(json));
+        .then(posts => resolve(posts));
     });
   };
 

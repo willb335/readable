@@ -59,14 +59,6 @@ class PostModal extends Component {
     });
   };
 
-  copyPostsFromStore = payload => {
-    return new Promise(resolve => {
-      console.log("Post values", Object.values(this.props.posts));
-
-      resolve(payload);
-    });
-  };
-
   removeCurrentPayload = payload => {
     return new Promise(resolve => {
       payload = {};
@@ -80,7 +72,6 @@ class PostModal extends Component {
       .then(this.buildPayload)
       .then(this.addPostToStore)
       .then(this.postPayloadToBackEnd)
-      .then(this.copyPostsFromStore)
       .then(this.removeCurrentPayload)
       .then(() => {
         this.props.isModalOpen({ isModalOpen: false });
