@@ -5,6 +5,7 @@ import modal from "./modal";
 import category from "./category";
 import postDetail from "./postDetail";
 import currentPost from "./currentPost";
+import backButton from "./backButton";
 
 export default combineReducers({
   posts,
@@ -12,5 +13,6 @@ export default combineReducers({
   modal,
   category,
   postDetail,
-  currentPost
+  currentPost,
+  backButton
 });
