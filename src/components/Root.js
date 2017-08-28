@@ -4,6 +4,7 @@ import { addPost, removePost, editPost } from "../actions/postActions";
 import { isFetchRequestComplete, getCategories } from "../actions/fetchActions";
 import { Grid, Row, Col } from "react-bootstrap";
 import Category from "./Category";
+import ( isCategoryOpen ) from "../actions/categories"
 
 class Root extends Component {
   getPostsFromServer = () => {
@@ -80,11 +81,12 @@ class Root extends Component {
   }
 }
 
-function mapStateToProps({ posts, fetchRequests, postDetail }) {
+function mapStateToProps({ posts, fetchRequests, postDetail, category }) {
   return {
     posts,
     fetchRequests,
-    postDetail
+    postDetail,
+    category
   };
 }
 
@@ -94,7 +96,8 @@ function mapDispatchToProps(dispatch) {
     removePost: data => dispatch(removePost(data)),
     editPost: data => dispatch(editPost(data)),
     isFetchRequestComplete: data => dispatch(isFetchRequestComplete(data)),
-    getCategories: data => dispatch(getCategories(data))
+    getCategories: data => dispatch(getCategories(data)),
+    isCategoryOpen: data => dispatch(isCategoryOpen(data))
   };
 }
 
