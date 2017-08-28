@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Route } from "react-router-dom";
 import { addPost, removePost, editPost } from "../actions/postActions";
 import { isFetchRequestComplete, getCategories } from "../actions/fetchActions";
 import { Grid, Row, Col } from "react-bootstrap";
@@ -58,15 +59,25 @@ class Root extends Component {
         return (
           <div>
             {postDetail.isPostDetailOpen || category.isCategoryOpen
-              ? <Category catName={category.currentCategory} />
+              ? <Route
+                  exact
+                  path={`/${category.currentCategory}`}
+                  render={() => <Category catName={category.currentCategory} />}
+                />
               : fetchRequests.categories.map(c =>
-                  <Row className="show-category" key={c}>
-                    <Col xs={12} md={12}>
-                      <div>
-                        <Category catName={c} />
-                      </div>
-                    </Col>
-                  </Row>
+                  <Route
+                    key={c}
+                    exact
+                    path="/"
+                    render={() =>
+                      <Row className="show-category" key={c}>
+                        <Col xs={12} md={12}>
+                          <div>
+                            <Category catName={c} />
+                          </div>
+                        </Col>
+                      </Row>}
+                  />
                 )}
           </div>
         );

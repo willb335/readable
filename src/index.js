@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/App";
+import { BrowserRouter } from "react-router-dom";
 // import PostDetail from "./components/PostDetail";
 // import PostModal from "./components/PostModal";
 import registerServiceWorker from "./registerServiceWorker";
@@ -24,7 +25,9 @@ const store = createStore(reducer, composeEnhancers(applyMiddleware()));
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById("root")
 );

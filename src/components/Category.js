@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import PostModal from "./PostModal";
 import PostDetail from "./PostDetail";
@@ -33,12 +34,14 @@ class Category extends Component {
           : <Panel
               header={
                 <div className="category-container">
-                  <a
+                  <Link
+                    to={`/${catName}`}
                     onClick={this.clickCategory}
                     style={{ cursor: "pointer", color: "blue" }}
                   >
                     {catName}
-                  </a>
+                  </Link>
+
                   <div>Filler</div>
                   <div>Filler</div>
 

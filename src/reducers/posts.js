@@ -1,9 +1,4 @@
-import {
-  ADD_POST,
-  EDIT_POST,
-  REMOVE_POST,
-  SET_CURRENT_POST
-} from "../actions/postActions";
+import { ADD_POST, EDIT_POST, REMOVE_POST } from "../actions/postActions";
 
 function posts(state = {}, action) {
   switch (action.type) {
