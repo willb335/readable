@@ -1,11 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Well, Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
+import { isModalOpen } from "../actions/modalActions";
 import PostModal from "./PostModal";
 
 class PostDetail extends Component {
+  onClickEditPost = () => {
+    this.props.isModalOpen({ isModalOpen: true });
+  };
+
   render() {
-    const { currentPost } = this.props;
+    const { currentPost, modal } = this.props;
     return (
       <div className="user-post">
         <Well style={{ maxWidth: "50%", marginTop: "25px" }}>
@@ -42,10 +47,10 @@ class PostDetail extends Component {
                   <Button bsStyle="primary">Primary</Button>
                 </div>
                 <div className="edit-comment">
-                  <Button bsStyle="primary" onClick={console.log("clicked")}>
-                    New Post
+                  <Button bsStyle="primary" onClick={this.onClickEditPost}>
+                    Edit Post
                   </Button>
-                  <PostModal onHide={console.log("hidden")} />
+                  <PostModal isOpen={modal.isModalOpen} />
                 </div>
               </div>
             }
@@ -80,16 +85,17 @@ class PostDetail extends Component {
   }
 }
 
-function mapStateToProps({ currentPost }) {
+function mapStateToProps({ currentPost, modal }) {
   return {
-    currentPost: currentPost.currentPost
+    currentPost: currentPost.currentPost,
+    modal
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     // addPost: data => dispatch(addPost(data)),
-    // isModalOpen: data => dispatch(isModalOpen(data))
+    isModalOpen: data => dispatch(isModalOpen(data))
   };
 }
 

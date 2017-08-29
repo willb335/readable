@@ -11,7 +11,7 @@ import { setCurrentPost } from "../actions/postActions";
 import { withRouter } from "react-router-dom";
 
 class Category extends Component {
-  clickNewPost = () => {
+  onClickNewPost = () => {
     this.props.isModalOpen({ isModalOpen: true });
     this.props.setCurrentCategory({ currentCategory: this.props.catName });
   };
@@ -59,7 +59,7 @@ class Category extends Component {
                 <Button bsStyle="primary">Primary</Button>
               </div>
               <div>
-                <Button bsStyle="primary" onClick={this.clickNewPost}>
+                <Button bsStyle="primary" onClick={this.onClickNewPost}>
                   New Post
                 </Button>
                 <PostModal isOpen={modal.isModalOpen} />
