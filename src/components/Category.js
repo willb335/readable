@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import PostModal from "./PostModal";
 import PostDetail from "./PostDetail";
@@ -27,58 +27,64 @@ class Category extends Component {
   };
 
   render() {
-    const { modal, catName, posts, postDetail, match } = this.props;
-    console.log("match is", match);
+    const {
+      modal,
+      catName,
+      posts,
+      postDetail,
+      match,
+      currentPost
+    } = this.props;
+    console.log("match is", match.url);
 
     return (
       <div>
-        {postDetail.isPostDetailOpen
-          ? <PostDetail />
-          : <Panel
-              header={
-                <div className="category-container">
+        <Panel
+          header={
+            <div className="category-container">
+              <Link
+                to={`/${catName}`}
+                onClick={this.clickCategory}
+                style={{ cursor: "pointer", color: "blue" }}
+              >
+                {catName}
+              </Link>
+
+              <div>Filler</div>
+              <div>Filler</div>
+
+              <div>
+                <Button bsStyle="primary">Primary</Button>
+              </div>
+              <div>
+                <Button bsStyle="primary">Primary</Button>
+              </div>
+              <div>
+                <Button bsStyle="primary" onClick={this.clickNewPost}>
+                  New Post
+                </Button>
+                <PostModal isOpen={modal.isModalOpen} />
+              </div>
+            </div>
+          }
+          style={{ textAlign: "left" }}
+        >
+          <ListGroup fill>
+            {posts.map(
+              p =>
+                p.category === catName &&
+                <ListGroupItem key={p.title}>
                   <Link
-                    to={`/${catName}`}
-                    onClick={this.clickCategory}
-                    style={{ cursor: "pointer", color: "blue" }}
+                    to={`/${catName}/will`}
+                    onClick={() => this.clickPost(p)}
+                    style={{ cursor: "pointer" }}
                   >
-                    {catName}
+                    {p.title}
                   </Link>
-
-                  <div>Filler</div>
-                  <div>Filler</div>
-
-                  <div>
-                    <Button bsStyle="primary">Primary</Button>
-                  </div>
-                  <div>
-                    <Button bsStyle="primary">Primary</Button>
-                  </div>
-                  <div>
-                    <Button bsStyle="primary" onClick={this.clickNewPost}>
-                      New Post
-                    </Button>
-                    <PostModal isOpen={modal.isModalOpen} />
-                  </div>
-                </div>
-              }
-              style={{ textAlign: "left" }}
-            >
-              <ListGroup fill>
-                {posts.map(
-                  p =>
-                    p.category === catName &&
-                    <ListGroupItem key={p.title}>
-                      <a
-                        onClick={() => this.clickPost(p)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        {p.title}
-                      </a>
-                    </ListGroupItem>
-                )}
-              </ListGroup>
-            </Panel>}
+                </ListGroupItem>
+            )}
+          </ListGroup>
+        </Panel>
       </div>
     );
   }

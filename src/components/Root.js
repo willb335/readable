@@ -5,6 +5,7 @@ import { addPost, removePost, editPost } from "../actions/postActions";
 import { isFetchRequestComplete, getCategories } from "../actions/fetchActions";
 import { Grid, Row, Col } from "react-bootstrap";
 import Category from "./Category";
+import PostDetail from "./PostDetail";
 import { isCategoryOpen } from "../actions/categories";
 import { isBackButtonClicked } from "../actions/backButtonAction";
 import { withRouter } from "react-router-dom";
@@ -65,20 +66,30 @@ class Root extends Component {
       location,
       history
     } = this.props;
-    console.log("match", match);
     const categoryList = () => {
       if (fetchRequests.categories !== undefined) {
         return (
           <div>
             <Route
-              exact
+              path={`/${category.currentCategory}/will`}
+              render={({ match }) => {
+                console.log("id is", match.params.id);
+                return (
+                  <div>
+                    <PostDetail />
+                  </div>
+                );
+              }}
+            />
+            <Route
+              exact={true}
               path={`/${category.currentCategory}`}
               render={() => <Category catName={category.currentCategory} />}
             />
             {fetchRequests.categories.map(c =>
               <Route
                 key={c}
-                exact
+                exact={true}
                 path={match.url}
                 render={() => {
                   return (
