@@ -72,7 +72,7 @@ class Root extends Component {
           <div>
             <Route
               exact
-              path={`${match.url}/${category.currentCategory}`}
+              path={`/${category.currentCategory}`}
               render={() => <Category catName={category.currentCategory} />}
             />
             {fetchRequests.categories.map(c =>

@@ -27,7 +27,8 @@ class Category extends Component {
   };
 
   render() {
-    const { modal, catName, posts, postDetail } = this.props;
+    const { modal, catName, posts, postDetail, match } = this.props;
+    console.log("match is", match);
 
     return (
       <div>
