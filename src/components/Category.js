@@ -35,7 +35,6 @@ class Category extends Component {
       match,
       currentPost
     } = this.props;
-    console.log("match is", match.url);
 
     return (
       <div>
@@ -75,7 +74,7 @@ class Category extends Component {
                 p.category === catName &&
                 <ListGroupItem key={p.title}>
                   <Link
-                    to={`/${catName}/will`}
+                    to={`/${p.category}/${p.title}`}
                     onClick={() => this.clickPost(p)}
                     style={{ cursor: "pointer" }}
                   >

@@ -64,23 +64,24 @@ class Root extends Component {
       backButton,
       match,
       location,
-      history
+      history,
+      currentPost
     } = this.props;
     const categoryList = () => {
       if (fetchRequests.categories !== undefined) {
         return (
           <div>
-            <Route
-              path={`/${category.currentCategory}/will`}
-              render={({ match }) => {
-                console.log("id is", match.params.id);
-                return (
-                  <div>
-                    <PostDetail />
-                  </div>
-                );
-              }}
-            />
+            {currentPost &&
+              <Route
+                path={`/${currentPost.category}/${currentPost.title}`}
+                render={({ match }) => {
+                  return (
+                    <div>
+                      <PostDetail />
+                    </div>
+                  );
+                }}
+              />}
             <Route
               exact={true}
               path={`/${category.currentCategory}`}
@@ -122,14 +123,16 @@ function mapStateToProps({
   fetchRequests,
   postDetail,
   category,
-  backButton
+  backButton,
+  currentPost
 }) {
   return {
     posts,
     fetchRequests,
     postDetail,
     category,
-    backButton
+    backButton,
+    currentPost: currentPost.currentPost
   };
 }
 
