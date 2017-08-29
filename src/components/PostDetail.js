@@ -50,7 +50,10 @@ class PostDetail extends Component {
                   <Button bsStyle="primary" onClick={this.onClickEditPost}>
                     Edit Post
                   </Button>
-                  <PostModal isOpen={modal.isModalOpen} />
+                  <PostModal
+                    isOpen={modal.isModalOpen}
+                    currentPost={currentPost}
+                  />
                 </div>
               </div>
             }
