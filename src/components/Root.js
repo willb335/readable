@@ -7,6 +7,7 @@ import { Grid, Row, Col } from "react-bootstrap";
 import Category from "./Category";
 import { isCategoryOpen } from "../actions/categories";
 import { isBackButtonClicked } from "../actions/backButtonAction";
+import { withRouter } from "react-router-dom";
 
 class Root extends Component {
   getPostsFromServer = () => {
@@ -59,14 +60,17 @@ class Root extends Component {
       postDetail,
       category,
       isBackButtonClicked,
-      backButton
+      backButton,
+      match,
+      location,
+      history
     } = this.props;
+    console.log(location);
     const categoryList = () => {
       if (fetchRequests.categories !== undefined) {
         return (
           <div>
-            {(postDetail.isPostDetailOpen || category.isCategoryOpen) &&
-            !backButton.isBackButtonClicked
+            {location.pathname !== "/"
               ? <Route
                   exact
                   path={`/${category.currentCategory}`}
@@ -132,4 +136,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Root);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Root));
