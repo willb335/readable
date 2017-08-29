@@ -56,17 +56,7 @@ class Root extends Component {
   };
 
   render() {
-    const {
-      fetchRequests,
-      postDetail,
-      category,
-      isBackButtonClicked,
-      backButton,
-      match,
-      location,
-      history,
-      currentPost
-    } = this.props;
+    const { fetchRequests, category, match, currentPost } = this.props;
     const categoryList = () => {
       if (fetchRequests.categories !== undefined) {
         return (
