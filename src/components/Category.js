@@ -8,6 +8,7 @@ import { isModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
 import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
 import { setCurrentPost } from "../actions/postActions";
+import { withRouter } from "react-router-dom";
 
 class Category extends Component {
   clickNewPost = () => {
@@ -101,4 +102,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Category);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Category)
+);

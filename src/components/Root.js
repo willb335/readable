@@ -65,36 +65,34 @@ class Root extends Component {
       location,
       history
     } = this.props;
-    console.log(location);
+    console.log("match", match);
     const categoryList = () => {
       if (fetchRequests.categories !== undefined) {
         return (
           <div>
-            {location.pathname !== "/"
-              ? <Route
-                  exact
-                  path={`/${category.currentCategory}`}
-                  render={() => <Category catName={category.currentCategory} />}
-                />
-              : fetchRequests.categories.map(c =>
-                  <Route
-                    key={c}
-                    exact
-                    path="/"
-                    render={() => {
-                      // isBackButtonClicked({ isBackButtonClicked: true });
-                      return (
-                        <Row className="show-category" key={c}>
-                          <Col xs={12} md={12}>
-                            <div>
-                              <Category catName={c} />
-                            </div>
-                          </Col>
-                        </Row>
-                      );
-                    }}
-                  />
-                )}
+            <Route
+              exact
+              path={`${match.url}/${category.currentCategory}`}
+              render={() => <Category catName={category.currentCategory} />}
+            />
+            {fetchRequests.categories.map(c =>
+              <Route
+                key={c}
+                exact
+                path={match.url}
+                render={() => {
+                  return (
+                    <Row className="show-category" key={c}>
+                      <Col xs={12} md={12}>
+                        <div>
+                          <Category catName={c} />
+                        </div>
+                      </Col>
+                    </Row>
+                  );
+                }}
+              />
+            )}
           </div>
         );
       }
