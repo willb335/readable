@@ -11,12 +11,20 @@ import { Link } from "react-router-dom";
 import { isModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
 import { editPost, removePost } from "../actions/postActions";
-import { editTitle, editBody, editName } from "../actions/editFormAction";
+import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { setCurrentPost } from "../actions/postActions";
 import uuidv4 from "uuid/v4";
 
 class EditModal extends Component {
   currentPost = { ...this.props.currentPost };
+
+  componentDidMount() {
+    this.props.editAuthor({ author: this.currentPost.author });
+
+    this.props.editTitle({ title: this.currentPost.title });
+
+    this.props.editBody({ body: this.currentPost.body });
+  }
 
   onClose = payload => {
     this.props.isModalOpen({
@@ -31,6 +39,9 @@ class EditModal extends Component {
       const randomId = uuidv4();
       const payload = {
         ...cP,
+        title: this.props.form.title,
+        author: this.props.form.name,
+        body: this.props.form.body,
         timestamp: Date.now(),
         deleted: false
       };
@@ -90,7 +101,7 @@ class EditModal extends Component {
   };
 
   handleAuthorChange = event => {
-    this.editName({ name: event.target.value });
+    this.editAuthor({ author: event.target.value });
   };
 
   handleTitleChange = event => {
@@ -99,11 +110,10 @@ class EditModal extends Component {
 
   hanglePostBodyChange = event => {
     this.editBody({ body: event.target.data });
-    this.currentPost.body = event.target.value;
   };
 
   render() {
-    const { modal, currentPost } = this.props;
+    const { modal, currentPost, form } = this.props;
     console.log("author", this.currentPost.author);
     return (
       <div>
@@ -122,7 +132,7 @@ class EditModal extends Component {
                 <FormControl
                   type="text"
                   componentClass="textarea"
-                  value={this.currentPost.author}
+                  value={form.author}
                   placeholder="Enter name"
                   onChange={this.handleAuthorChange}
                 />
@@ -135,7 +145,7 @@ class EditModal extends Component {
                 <FormControl
                   type="text"
                   componentClass="textarea"
-                  value={this.currentPost.title}
+                  value={form.title}
                   placeholder="Enter title"
                   onChange={this.handleTitleChange}
                 />
@@ -146,7 +156,7 @@ class EditModal extends Component {
               <FormGroup controlId="formControlsTextarea">
                 <ControlLabel>Enter Post</ControlLabel>
                 <FormControl
-                  value={this.currentPost.body}
+                  value={form.body}
                   style={{ height: "300px" }}
                   componentClass="textarea"
                   placeholder="Enter Post"
@@ -168,11 +178,12 @@ class EditModal extends Component {
   }
 }
 
-function mapStateToProps({ modal, posts, category, currentPost }) {
+function mapStateToProps({ modal, posts, category, currentPost, form }) {
   return {
     modal,
     posts,
     category,
+    form,
     currentPost: currentPost.currentPost
   };
 }
@@ -184,7 +195,7 @@ function mapDispatchToProps(dispatch) {
     setCurrentPost: data => dispatch(setCurrentPost(data)),
     isModalOpen: data => dispatch(isModalOpen(data)),
     isPostDetailOpen: data => dispatch(isPostDetailOpen(data)),
-    editName: data => dispatch(editName(data)),
+    editAuthor: data => dispatch(editAuthor(data)),
     editTitle: data => dispatch(editTitle(data)),
     editBody: data => dispatch(editBody(data))
   };

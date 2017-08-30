@@ -1,25 +1,25 @@
-import { EDIT_NAME, EDIT_TITLE, EDIT_BODY } from "../actions/editFormAction";
+import { EDIT_AUTHOR, EDIT_TITLE, EDIT_BODY } from "../actions/editFormAction";
 
 function form(state = {}, action) {
   switch (action.type) {
-    const { name, body, title } = action;
-
-    case EDIT_NAME:
+    case EDIT_AUTHOR:
+      const { author } = action;
       return {
         ...state,
-        name
+        author
       };
-      case EDIT_TITLE:
+    case EDIT_TITLE:
+      const { title } = action;
       return {
         ...state,
         title
-      }
-
-      case EDIT_BODY:
+      };
+    case EDIT_BODY:
+      const { body } = action;
       return {
         ...state,
         body
-      }
+      };
     default:
       return state;
   }
