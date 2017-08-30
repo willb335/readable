@@ -14,6 +14,7 @@ import { editPost, removePost } from "../actions/postActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { setCurrentPost } from "../actions/postActions";
 import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
+import { withRouter } from "react-router-dom";
 
 import uuidv4 from "uuid/v4";
 
@@ -32,6 +33,12 @@ class EditModal extends Component {
     this.props.isModalOpen({
       isModalOpen: false
     });
+    this.props.setCurrentCategory({
+      currentCategory: this.props.currentPost.category
+    });
+
+    this.props.history.push(`/`);
+
     payload = {};
   };
 
@@ -92,6 +99,7 @@ class EditModal extends Component {
       this.props.setCurrentCategory({
         currentCategory: this.props.currentPost.category
       });
+      this.props.history.push(`/`);
       resolve();
     });
   };
@@ -208,4 +216,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditModal);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(EditModal)
+);
