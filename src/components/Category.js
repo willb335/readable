@@ -27,6 +27,8 @@ class Category extends Component {
 
   render() {
     const { modal, catName, posts } = this.props;
+    const sortedPosts = posts.sort((b, a) => a.voteScore - b.voteScore);
+
     return (
       <div>
         <Panel
@@ -60,22 +62,26 @@ class Category extends Component {
           }
           style={{ textAlign: "left" }}
         >
-          <ListGroup fill>
-            {posts.map(
-              p =>
-                p.category === catName &&
-                !p.deleted &&
-                <ListGroupItem key={p.title}>
-                  <Link
-                    to={`/${p.category}/${p.title}`}
-                    onClick={() => this.clickPost(p)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {p.title}
-                  </Link>
-                </ListGroupItem>
-            )}
-          </ListGroup>
+          <div className="list-group-item">
+            <ListGroup fill>
+              {sortedPosts.map(
+                p =>
+                  p.category === catName &&
+                  !p.deleted &&
+                  <ListGroupItem key={p.title}>
+                    <div>
+                      <Link
+                        to={`/${p.category}/${p.title}`}
+                        onClick={() => this.clickPost(p)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {p.title}
+                      </Link>
+                    </div>
+                  </ListGroupItem>
+              )}
+            </ListGroup>
+          </div>
         </Panel>
       </div>
     );
