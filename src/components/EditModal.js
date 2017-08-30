@@ -111,16 +111,16 @@ class EditModal extends Component {
   };
 
   handleTitleChange = event => {
-    this.props.editTitle({ title: event.target.data });
+    this.props.editTitle({ title: event.target.value });
   };
 
   hanglePostBodyChange = event => {
-    this.props.editBody({ body: event.target.data });
+    this.props.editBody({ body: event.target.value });
+    console.log("event", event.target.value);
   };
 
   render() {
     const { modal, currentPost, form } = this.props;
-    console.log("author", this.currentPost.author);
     return (
       <div>
         <Modal
