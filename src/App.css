@@ -27,7 +27,18 @@
   }
 }
 
+.vote-score-post {
+  align-self: flex-start;
+}
+
 .user-post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.well-post {
   display: flex;
   justify-content: center;
   align-items: center;

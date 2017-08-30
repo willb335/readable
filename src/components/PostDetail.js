@@ -69,63 +69,70 @@ class PostDetail extends Component {
   render() {
     const { currentPost, modal } = this.props;
     return (
-      <div className="user-post">
+      <div className="well-post">
         <Well style={{ maxWidth: "50%", marginTop: "25px" }}>
-          <div>
-            <strong>
-              {currentPost.title}
-            </strong>
-          </div>
-          <div>
-            <strong>
-              {currentPost.author}
-            </strong>
-          </div>
-          <div>
-            <strong>
-              {currentPost.timestamp}
-            </strong>
-          </div>
-          <div>
-            <strong>
-              {currentPost.voteScore}
-            </strong>
-          </div>
-          <hr style={{ borderWidth: "2px" }} />
-          {currentPost.body}
-          <hr style={{ borderWidth: "2px" }} />
-          <Panel
-            header={
-              <div className="comment-container">
-                <div>
-                  <Button bsStyle="primary">Primary</Button>
+          <div className="user-post">
+            <div className="vote-score-post">
+              <strong>VoteScore</strong>
+            </div>
+            <div>
+              <strong>
+                {currentPost.title}
+              </strong>
+            </div>
+            <div>
+              <strong>
+                {currentPost.author}
+              </strong>
+            </div>
+            <div>
+              <strong>
+                {currentPost.timestamp}
+              </strong>
+            </div>
+            <div>
+              <strong>
+                {currentPost.voteScore}
+              </strong>
+            </div>
+            <hr style={{ borderWidth: "2px" }} />
+            {currentPost.body}
+            <hr style={{ borderWidth: "2px" }} />
+            <Panel
+              header={
+                <div className="comment-container">
+                  <div>
+                    <Button bsStyle="primary">Primary</Button>
+                  </div>
+                  <div>
+                    <Button bsStyle="primary" onClick={this.onClickDeletePost}>
+                      Delete Post
+                    </Button>
+                  </div>
+                  <div className="edit-comment">
+                    <Button bsStyle="primary" onClick={this.onClickEditPost}>
+                      Edit Post
+                    </Button>
+                    <EditModal currentPost={currentPost} />
+                  </div>
                 </div>
-                <div>
-                  <Button bsStyle="primary" onClick={this.onClickDeletePost}>
-                    Delete Post
-                  </Button>
-                </div>
-                <div className="edit-comment">
-                  <Button bsStyle="primary" onClick={this.onClickEditPost}>
-                    Edit Post
-                  </Button>
-                  <EditModal currentPost={currentPost} />
-                </div>
-              </div>
-            }
-            style={{ textAlign: "left" }}
-          >
-            <ListGroup fill>
-              <ListGroupItem>
-                Comments will be in here Comments will be in here Comments will
-                be in here Comments will be in here Comments will be in here
-              </ListGroupItem>
-              <ListGroupItem>
-                Comments will be in here Comments will be in here Comments will
-                be in here Comments will be in here Comments will be in here
-              </ListGroupItem>
-            </ListGroup>
-          </Panel>
+              }
+              style={{ textAlign: "left" }}
+            >
+              <ListGroup fill>
+                <ListGroupItem>
+                  Comments will be in here Comments will be in here Comments
+                  will be in here Comments will be in here Comments will be in
+                  here
+                </ListGroupItem>
+                <ListGroupItem>
+                  Comments will be in here Comments will be in here Comments
+                  will be in here Comments will be in here Comments will be in
+                  here
+                </ListGroupItem>
+              </ListGroup>
+            </Panel>
+          </div>
         </Well>
       </div>
     );
