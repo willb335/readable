@@ -41,8 +41,10 @@ class EditModal extends Component {
       const randomId = uuidv4();
       const payload = {
         ...cP,
-        timestamp: Date.now(),
-        deleted: false
+        title: this.props.form.title,
+        author: this.props.form.author,
+        body: this.props.form.body,
+        timestamp: Date.now()
       };
       resolve(payload);
     });
@@ -51,13 +53,7 @@ class EditModal extends Component {
   addEditedPostToStore = payload => {
     return new Promise(resolve => {
       console.log("adding edited payload to store");
-      this.props.editPost({
-        ...payload,
-        title: this.props.form.title,
-        author: this.props.form.author,
-        body: this.props.form.body,
-        timestamp: Date.now()
-      });
+      this.props.editPost(payload);
       this.props.setCurrentPost({ currentPost: payload });
       resolve(payload);
     });
