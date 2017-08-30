@@ -23,9 +23,7 @@ class EditModal extends Component {
 
   componentDidMount() {
     this.props.editAuthor({ author: this.currentPost.author });
-
     this.props.editTitle({ title: this.currentPost.title });
-
     this.props.editBody({ body: this.currentPost.body });
   }
 
@@ -45,7 +43,6 @@ class EditModal extends Component {
   buildPayload = cP => {
     return new Promise(resolve => {
       console.log("building payload", cP);
-      const randomId = uuidv4();
       const payload = {
         ...cP,
         title: this.props.form.title,

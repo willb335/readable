@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Well, Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import { isModalOpen } from "../actions/modalActions";
-import PostModal from "./PostModal";
 import EditModal from "./EditModal";
 import { editPost, removePost } from "../actions/postActions";
 import { setCurrentPost } from "../actions/postActions";
@@ -67,7 +66,7 @@ class PostDetail extends Component {
   };
 
   render() {
-    const { currentPost, modal } = this.props;
+    const { currentPost } = this.props;
     return (
       <div className="well-post">
         <Well style={{ maxWidth: "50%", marginTop: "25px" }}>
