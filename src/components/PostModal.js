@@ -19,7 +19,7 @@ class PostModal extends Component {
     this.props.isModalOpen({
       isModalOpen: false
     });
-    this.props.history.push("/");
+    this.props.history.push(`/${this.props.category.currentCategory}`);
     payload = {};
   };
 
@@ -43,10 +43,6 @@ class PostModal extends Component {
       this.props.addPost(payload);
       resolve(payload);
     });
-  };
-
-  onBackButtonEvent = e => {
-    console.log("handling back button press");
   };
 
   postPayloadToBackEnd = payload => {
@@ -81,7 +77,7 @@ class PostModal extends Component {
       .then(this.removeCurrentPayload)
       .then(() => {
         this.props.isModalOpen({ isModalOpen: false });
-        this.props.history.push("/");
+        this.props.history.push(`/${this.props.category.currentCategory}`);
       });
   };
 
