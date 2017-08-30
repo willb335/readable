@@ -62,13 +62,13 @@ class Category extends Component {
           }
           style={{ textAlign: "left" }}
         >
-          <div className="list-group-item">
-            <ListGroup fill>
-              {sortedPosts.map(
-                p =>
-                  p.category === catName &&
-                  !p.deleted &&
-                  <ListGroupItem key={p.title}>
+          <ListGroup fill>
+            {sortedPosts.map(
+              p =>
+                p.category === catName &&
+                !p.deleted &&
+                <ListGroupItem key={p.title}>
+                  <div className="list-group-item">
                     <div>
                       <Link
                         to={`/${p.category}/${p.title}`}
@@ -78,10 +78,12 @@ class Category extends Component {
                         {p.title}
                       </Link>
                     </div>
-                  </ListGroupItem>
-              )}
-            </ListGroup>
-          </div>
+
+                    <div className="vote-score-list-item">Hi</div>
+                  </div>
+                </ListGroupItem>
+            )}
+          </ListGroup>
         </Panel>
       </div>
     );

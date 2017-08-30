@@ -67,6 +67,9 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.vote-score-list-item {
+  align-self: flex-end;
 }
