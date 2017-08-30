@@ -13,6 +13,8 @@ import { isPostDetailOpen } from "../actions/postDetailActions";
 import { editPost, removePost } from "../actions/postActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { setCurrentPost } from "../actions/postActions";
+import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
+
 import uuidv4 from "uuid/v4";
 
 class EditModal extends Component {
@@ -87,6 +89,10 @@ class EditModal extends Component {
     return new Promise(resolve => {
       this.props.isModalOpen({ isModalOpen: false });
       this.props.isPostDetailOpen({ isPostDetailOpen: false });
+      this.props.isCategoryOpen({ isCategoryOpen: true });
+      this.props.setCurrentCategory({
+        currentCategory: this.props.currentPost.category
+      });
       resolve();
     });
   };
@@ -101,15 +107,15 @@ class EditModal extends Component {
   };
 
   handleAuthorChange = event => {
-    this.editAuthor({ author: event.target.value });
+    this.props.editAuthor({ author: event.target.value });
   };
 
   handleTitleChange = event => {
-    this.editTitle({ title: event.target.data });
+    this.props.editTitle({ title: event.target.data });
   };
 
   hanglePostBodyChange = event => {
-    this.editBody({ body: event.target.data });
+    this.props.editBody({ body: event.target.data });
   };
 
   render() {
@@ -197,7 +203,9 @@ function mapDispatchToProps(dispatch) {
     isPostDetailOpen: data => dispatch(isPostDetailOpen(data)),
     editAuthor: data => dispatch(editAuthor(data)),
     editTitle: data => dispatch(editTitle(data)),
-    editBody: data => dispatch(editBody(data))
+    editBody: data => dispatch(editBody(data)),
+    isCategoryOpen: data => dispatch(isCategoryOpen(data)),
+    setCurrentCategory: data => dispatch(setCurrentCategory(data))
   };
 }
 
