@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Well, Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import { isModalOpen } from "../actions/modalActions";
 import PostModal from "./PostModal";
+import EditModal from "./EditModal";
 
 class PostDetail extends Component {
   onClickEditPost = () => {
@@ -50,7 +51,7 @@ class PostDetail extends Component {
                   <Button bsStyle="primary" onClick={this.onClickEditPost}>
                     Edit Post
                   </Button>
-                  <PostModal
+                  <EditModal
                     isOpen={modal.isModalOpen}
                     currentPost={currentPost}
                   />
