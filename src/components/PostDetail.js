@@ -6,6 +6,7 @@ import PostModal from "./PostModal";
 import EditModal from "./EditModal";
 import { editPost, removePost } from "../actions/postActions";
 import { setCurrentPost } from "../actions/postActions";
+import { withRouter } from "react-router-dom";
 
 class PostDetail extends Component {
   currentPost = { ...this.props.currentPost };
@@ -61,7 +62,8 @@ class PostDetail extends Component {
       .then(this.deletePost)
       .then(this.addDeletedPostToStore)
       .then(this.postPayloadToBackEnd)
-      .then(this.removeCurrentPayload);
+      .then(this.removeCurrentPayload)
+      .then(() => this.props.history.push(`/`));
   };
 
   render() {
@@ -146,4 +148,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostDetail);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(PostDetail)
+);
