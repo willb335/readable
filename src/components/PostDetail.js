@@ -112,10 +112,25 @@ class PostDetail extends Component {
       .then(this.addThumbsUpToPost)
       .then(this.addNewScoreToStore)
       .then(this.addScoreChangeToBackEnd)
-      .then(() => {
-        this.currentPost = { ...this.props.currentPost };
-      });
-    // .then(this.removeCurrentPayload);
+      .then(() => (this.currentPost = { ...this.props.currentPost }));
+  };
+
+  addThumbsDownToPost = cP => {
+    return new Promise(resolve => {
+      const payload = {
+        ...cP,
+        voteScore: cP.voteScore - 1
+      };
+      resolve(payload);
+    });
+  };
+
+  onClickThumbsDown = () => {
+    Promise.resolve(this.currentPost)
+      .then(this.addThumbsDownToPost)
+      .then(this.addNewScoreToStore)
+      .then(this.addScoreChangeToBackEnd)
+      .then(() => (this.currentPost = { ...this.props.currentPost }));
   };
 
   render() {
@@ -130,7 +145,7 @@ class PostDetail extends Component {
                   <Glyphicon glyph="thumbs-up" />
                 </Button>
 
-                <Button bsStyle="primary">
+                <Button bsStyle="primary" onClick={this.onClickThumbsDown}>
                   <Glyphicon glyph="thumbs-down" />
                 </Button>
               </div>
@@ -153,11 +168,7 @@ class PostDetail extends Component {
                 {currentPost.timestamp}
               </strong>
             </div>
-            <div>
-              <strong>
-                {currentPost.voteScore}
-              </strong>
-            </div>
+
             <hr style={{ borderWidth: "2px" }} />
             {currentPost.body}
             <hr style={{ borderWidth: "2px" }} />
