@@ -5,6 +5,7 @@ import { isModalOpen } from "../actions/modalActions";
 import PostModal from "./PostModal";
 import EditModal from "./EditModal";
 import { editPost, removePost } from "../actions/postActions";
+import { setCurrentPost } from "../actions/postActions";
 
 class PostDetail extends Component {
   currentPost = { ...this.props.currentPost };
@@ -16,7 +17,7 @@ class PostDetail extends Component {
   deletePost = cP => {
     return new Promise(resolve => {
       const payload = {
-        ...cp,
+        ...cP,
         deleted: true
       };
       resolve(payload);
@@ -140,7 +141,8 @@ function mapDispatchToProps(dispatch) {
   return {
     isModalOpen: data => dispatch(isModalOpen(data)),
     editPost: data => dispatch(editPost(data)),
-    removePost: data => dispatch(removePost(data))
+    removePost: data => dispatch(removePost(data)),
+    setCurrentPost: data => dispatch(setCurrentPost(data))
   };
 }
 
