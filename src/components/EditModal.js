@@ -7,7 +7,9 @@ import {
   FormControl
 } from "react-bootstrap";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { isModalOpen } from "../actions/modalActions";
+import { isPostDetailOpen } from "../actions/postDetailActions";
 import { editPost, removePost } from "../actions/postActions";
 import { setCurrentPost } from "../actions/postActions";
 import uuidv4 from "uuid/v4";
@@ -26,7 +28,11 @@ class EditModal extends Component {
     return new Promise(resolve => {
       console.log("building payload", cP);
       const randomId = uuidv4();
-      const payload = cP;
+      const payload = {
+        ...cP,
+        timestamp: Date.now(),
+        deleted: false
+      };
       resolve(payload);
     });
   };
@@ -65,15 +71,21 @@ class EditModal extends Component {
     });
   };
 
+  closeModal = () => {
+    return new Promise(resolve => {
+      this.props.isModalOpen({ isModalOpen: false });
+      this.props.isPostDetailOpen({ isPostDetailOpen: false });
+      resolve();
+    });
+  };
+
   onSubmit = () => {
     Promise.resolve(this.currentPost)
       .then(this.buildPayload)
       .then(this.addEditedPostToStore)
       .then(this.postPayloadToBackEnd)
       .then(this.removeCurrentPayload)
-      .then(() => {
-        this.props.isModalOpen({ isModalOpen: false });
-      });
+      .then(this.closeModal);
   };
 
   handleAuthorChange = event => {
@@ -89,16 +101,16 @@ class EditModal extends Component {
   };
 
   render() {
-    const { isOpen } = this.props;
+    const { modal, currentPost } = this.props;
     return (
       <div>
         <Modal
-          show={isOpen}
+          show={modal.isModalOpen}
           bsSize="large"
           aria-labelledby="contained-modal-title-lg"
         >
           <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-lg">New Post</Modal.Title>
+            <Modal.Title id="contained-modal-title-lg">Edit Post</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <form>
@@ -141,9 +153,10 @@ class EditModal extends Component {
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <Button bsStyle="primary" onClick={this.onSubmit}>
-              Submit
-            </Button>
+            <Link to={`/${currentPost.category}`} onClick={this.onSubmit}>
+              <Button bsStyle="primary">Submit</Button>
+            </Link>
+
             <Button onClick={this.onClose}>Close</Button>
           </Modal.Footer>
         </Modal>
@@ -152,11 +165,12 @@ class EditModal extends Component {
   }
 }
 
-function mapStateToProps({ modal, posts, category }) {
+function mapStateToProps({ modal, posts, category, currentPost }) {
   return {
     modal,
     posts,
-    category
+    category,
+    currentPost: currentPost.currentPost
   };
 }
 
@@ -165,7 +179,8 @@ function mapDispatchToProps(dispatch) {
     editPost: data => dispatch(editPost(data)),
     removePost: data => dispatch(removePost(data)),
     setCurrentPost: data => dispatch(setCurrentPost(data)),
-    isModalOpen: data => dispatch(isModalOpen(data))
+    isModalOpen: data => dispatch(isModalOpen(data)),
+    isPostDetailOpen: data => dispatch(isPostDetailOpen(data))
   };
 }
 

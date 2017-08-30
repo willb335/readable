@@ -7,6 +7,7 @@ import { Grid, Row, Col } from "react-bootstrap";
 import Category from "./Category";
 import PostDetail from "./PostDetail";
 import { isCategoryOpen } from "../actions/categories";
+import { isModalOpen } from "../actions/modalActions";
 import { isBackButtonClicked } from "../actions/backButtonAction";
 import { withRouter } from "react-router-dom";
 
@@ -33,6 +34,7 @@ class Root extends Component {
   };
 
   componentDidMount() {
+    // this.props.isModalOpen({ isModalOpen: false });
     this.getCategoryTypes();
     Promise.resolve("Start")
       .then(this.getPostsFromServer)
@@ -134,7 +136,8 @@ function mapDispatchToProps(dispatch) {
     isFetchRequestComplete: data => dispatch(isFetchRequestComplete(data)),
     getCategories: data => dispatch(getCategories(data)),
     isCategoryOpen: data => dispatch(isCategoryOpen(data)),
-    isBackButtonClicked: data => dispatch(isBackButtonClicked(data))
+    isBackButtonClicked: data => dispatch(isBackButtonClicked(data)),
+    isModalOpen: data => dispatch(isModalOpen(data))
   };
 }
 
