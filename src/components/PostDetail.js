@@ -72,6 +72,48 @@ class PostDetail extends Component {
       .then(() => this.props.history.push(`/`));
   };
 
+  addThumbsUpToPost = cP => {
+    return new Promise(resolve => {
+      const payload = {
+        ...cP,
+        voteScore: cP.voteScore + 1
+      };
+      resolve(payload);
+    });
+  };
+
+  addNewScoreToStore = payload => {
+    return new Promise(resolve => {
+      this.props.editPost(payload);
+      this.props.setCurrentPost({ currentPost: payload });
+      resolve(payload);
+    });
+  };
+
+  addScoreChangeToBackEnd = payload => {
+    return new Promise(resolve => {
+      fetch(`http://localhost:5001/posts/${payload.id}`, {
+        method: "put",
+        headers: {
+          Authorization: "will335",
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      }).then(response => {
+        resolve(payload);
+      });
+    });
+  };
+
+  onClickThumbsUp = () => {
+    Promise.resolve(this.currentPost)
+      .then(this.addThumbsUpToPost)
+      .then(this.addNewScoreToStore)
+      .then(this.addScoreChangeToBackEnd);
+    // .then(this.removeCurrentPayload);
+  };
+
   render() {
     const { currentPost } = this.props;
     return (
@@ -80,7 +122,7 @@ class PostDetail extends Component {
           <div className="user-post">
             <div className="vote-score-post">
               <div>
-                <Button bsStyle="primary">
+                <Button bsStyle="primary" onClick={this.onClickThumbsUp}>
                   <Glyphicon glyph="thumbs-up" />
                 </Button>
 
