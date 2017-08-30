@@ -9,6 +9,7 @@ import {
 import { connect } from "react-redux";
 import { isModalOpen } from "../actions/modalActions";
 import { editPost, removePost } from "../actions/postActions";
+import { setCurrentPost } from "../actions/postActions";
 import uuidv4 from "uuid/v4";
 
 class EditModal extends Component {
@@ -23,6 +24,7 @@ class EditModal extends Component {
 
   buildPayload = cP => {
     return new Promise(resolve => {
+      console.log("building payload", cP);
       const randomId = uuidv4();
       const payload = cP;
       resolve(payload);
@@ -31,7 +33,9 @@ class EditModal extends Component {
 
   addEditedPostToStore = payload => {
     return new Promise(resolve => {
+      console.log("adding edited payload to store");
       this.props.editPost(payload);
+      this.props.setCurrentPost({ currentPost: payload });
       resolve(payload);
     });
   };
@@ -86,7 +90,6 @@ class EditModal extends Component {
 
   render() {
     const { isOpen } = this.props;
-    console.log("currentPost", this.props.currentPost);
     return (
       <div>
         <Modal
@@ -161,6 +164,7 @@ function mapDispatchToProps(dispatch) {
   return {
     editPost: data => dispatch(editPost(data)),
     removePost: data => dispatch(removePost(data)),
+    setCurrentPost: data => dispatch(setCurrentPost(data)),
     isModalOpen: data => dispatch(isModalOpen(data))
   };
 }

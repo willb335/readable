@@ -50,20 +50,24 @@ export function removePost({ id, deleted }) {
 }
 
 export function editPost({
+  id,
   timestamp,
   title,
   body,
   author,
   category,
-  deleted = false
+  voteScore,
+  deleted
 }) {
   return {
     type: EDIT_POST,
+    id,
     timestamp,
     title,
     body,
     author,
     category,
+    voteScore,
     deleted
   };
 }
