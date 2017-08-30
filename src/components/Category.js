@@ -37,7 +37,7 @@ class Category extends Component {
               <Link
                 to={`/${catName}`}
                 onClick={this.clickCategory}
-                style={{ cursor: "pointer", color: "blue" }}
+                style={{ cursor: "pointer", color: "#337ab7" }}
               >
                 {catName}
               </Link>
@@ -68,19 +68,15 @@ class Category extends Component {
                 p.category === catName &&
                 !p.deleted &&
                 <ListGroupItem key={p.title}>
-                  <div className="list-group-item">
-                    <div>
-                      <Link
-                        to={`/${p.category}/${p.title}`}
-                        onClick={() => this.clickPost(p)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        {p.title}
-                      </Link>
-                    </div>
+                  <Link
+                    to={`/${p.category}/${p.title}`}
+                    onClick={() => this.clickPost(p)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {p.title}
+                  </Link>
 
-                    <div className="vote-score-list-item">Hi</div>
-                  </div>
+                  <div className="vote-score-list-item">{`Vote Score is ${p.voteScore}`}</div>
                 </ListGroupItem>
             )}
           </ListGroup>

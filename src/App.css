@@ -63,13 +63,7 @@
   float: left;
 }
 
-.list-group-item {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-}
-
 .vote-score-list-item {
-  align-self: flex-end;
+  float: right;
+  color: #337ab7;
 }
