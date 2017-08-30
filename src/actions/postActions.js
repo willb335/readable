@@ -55,8 +55,7 @@ export function editPost({
   body,
   author,
   category,
-  voteScore,
-  deleted
+  deleted = false
 }) {
   return {
     type: EDIT_POST,
@@ -65,7 +64,6 @@ export function editPost({
     body,
     author,
     category,
-    voteScore,
     deleted
   };
 }

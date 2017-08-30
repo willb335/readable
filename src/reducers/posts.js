@@ -38,14 +38,16 @@ function posts(state = {}, action) {
     case EDIT_POST:
       return {
         ...state,
-        id,
-        timestamp,
-        title,
-        body,
-        author,
-        category,
-        voteScore,
-        deleted
+        [id]: {
+          id,
+          timestamp,
+          title,
+          body,
+          author,
+          category,
+          voteScore,
+          deleted
+        }
       };
 
     default:

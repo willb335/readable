@@ -8,11 +8,11 @@ import {
 } from "react-bootstrap";
 import { connect } from "react-redux";
 import { isModalOpen } from "../actions/modalActions";
-import { editPost } from "../actions/postActions";
+import { editPost, removePost } from "../actions/postActions";
 import uuidv4 from "uuid/v4";
 
 class EditModal extends Component {
-  currentPost = this.props.currentPost;
+  currentPost = { ...this.props.currentPost };
 
   onClose = payload => {
     this.props.isModalOpen({
@@ -24,27 +24,21 @@ class EditModal extends Component {
   buildPayload = cP => {
     return new Promise(resolve => {
       const randomId = uuidv4();
-      const payload = {
-        ...cP,
-        id: randomId,
-        timestamp: Date.now(),
-        category: this.props.category.currentCategory,
-        deleted: false,
-        voteScore: 0
-      };
+      const payload = cP;
       resolve(payload);
     });
   };
 
-  addPostToStore = payload => {
+  addEditedPostToStore = payload => {
     return new Promise(resolve => {
-      this.props.addPost(payload);
+      this.props.editPost(payload);
       resolve(payload);
     });
   };
 
   postPayloadToBackEnd = payload => {
     return new Promise(resolve => {
+      console.log("payload id", payload.id);
       fetch(`http://localhost:5001/posts/${payload.id}`, {
         method: "put",
         headers: {
@@ -70,7 +64,7 @@ class EditModal extends Component {
   onSubmit = () => {
     Promise.resolve(this.currentPost)
       .then(this.buildPayload)
-      .then(this.addPostToStore)
+      .then(this.addEditedPostToStore)
       .then(this.postPayloadToBackEnd)
       .then(this.removeCurrentPayload)
       .then(() => {
@@ -166,6 +160,7 @@ function mapStateToProps({ modal, posts, category }) {
 function mapDispatchToProps(dispatch) {
   return {
     editPost: data => dispatch(editPost(data)),
+    removePost: data => dispatch(removePost(data)),
     isModalOpen: data => dispatch(isModalOpen(data))
   };
 }
