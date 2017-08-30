@@ -102,6 +102,7 @@ class EditModal extends Component {
 
   render() {
     const { modal, currentPost } = this.props;
+    console.log("author", this.currentPost.author);
     return (
       <div>
         <Modal
