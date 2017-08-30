@@ -4,10 +4,63 @@ import { Well, Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import { isModalOpen } from "../actions/modalActions";
 import PostModal from "./PostModal";
 import EditModal from "./EditModal";
+import { editPost, removePost } from "../actions/postActions";
 
 class PostDetail extends Component {
+  currentPost = { ...this.props.currentPost };
+
   onClickEditPost = () => {
     this.props.isModalOpen({ isModalOpen: true });
+  };
+
+  deletePost = cP => {
+    return new Promise(resolve => {
+      const payload = {
+        ...cp,
+        deleted: true
+      };
+      resolve(payload);
+    });
+  };
+
+  addDeletedPostToStore = payload => {
+    return new Promise(resolve => {
+      this.props.editPost(payload);
+      this.props.setCurrentPost({ currentPost: payload });
+      resolve(payload);
+    });
+  };
+
+  postPayloadToBackEnd = payload => {
+    return new Promise(resolve => {
+      fetch(`http://localhost:5001/posts/${payload.id}`, {
+        method: "delete",
+        headers: {
+          Authorization: "will335",
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      }).then(response => {
+        resolve(payload);
+      });
+    });
+  };
+
+  removeCurrentPayload = payload => {
+    return new Promise(resolve => {
+      payload = {};
+      this.currentPost = {};
+      resolve(payload);
+    });
+  };
+
+  onClickDeletePost = () => {
+    Promise.resolve(this.currentPost)
+      .then(this.deletePost)
+      .then(this.addDeletedPostToStore)
+      .then(this.postPayloadToBackEnd)
+      .then(this.removeCurrentPayload);
   };
 
   render() {
@@ -45,7 +98,9 @@ class PostDetail extends Component {
                   <Button bsStyle="primary">Primary</Button>
                 </div>
                 <div>
-                  <Button bsStyle="primary">Primary</Button>
+                  <Button bsStyle="primary" onClick={this.onClickDeletePost}>
+                    Delete Post
+                  </Button>
                 </div>
                 <div className="edit-comment">
                   <Button bsStyle="primary" onClick={this.onClickEditPost}>
@@ -61,22 +116,10 @@ class PostDetail extends Component {
               <ListGroupItem>
                 Comments will be in here Comments will be in here Comments will
                 be in here Comments will be in here Comments will be in here
-                Comments will be in here Comments will be in here Comments will
-                be in here Comments will be in here Comments will be in here
-                Comments will be in here Comments will be in here Comments will
-                be in here Comments will be in here Comments will be in here
-                Comments will be in here Comments will be in here Comments will
-                be in here
               </ListGroupItem>
               <ListGroupItem>
                 Comments will be in here Comments will be in here Comments will
                 be in here Comments will be in here Comments will be in here
-                Comments will be in here Comments will be in here Comments will
-                be in here Comments will be in here Comments will be in here
-                Comments will be in here Comments will be in here Comments will
-                be in here Comments will be in here Comments will be in here
-                Comments will be in here Comments will be in here Comments will
-                be in here
               </ListGroupItem>
             </ListGroup>
           </Panel>
@@ -95,8 +138,9 @@ function mapStateToProps({ currentPost, modal }) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    // addPost: data => dispatch(addPost(data)),
-    isModalOpen: data => dispatch(isModalOpen(data))
+    isModalOpen: data => dispatch(isModalOpen(data)),
+    editPost: data => dispatch(editPost(data)),
+    removePost: data => dispatch(removePost(data))
   };
 }
 
