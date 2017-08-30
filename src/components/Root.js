@@ -6,6 +6,7 @@ import { isFetchRequestComplete, getCategories } from "../actions/fetchActions";
 import { Grid, Row, Col } from "react-bootstrap";
 import Category from "./Category";
 import PostDetail from "./PostDetail";
+import PostModal from "./PostModal";
 import { isCategoryOpen } from "../actions/categories";
 import { isModalOpen } from "../actions/modalActions";
 import { isBackButtonClicked } from "../actions/backButtonAction";
@@ -66,7 +67,7 @@ class Root extends Component {
             {currentPost &&
               <Route
                 path={`/${currentPost.category}/${currentPost.title}`}
-                render={({ match }) => {
+                render={() => {
                   return (
                     <div>
                       <PostDetail />
@@ -78,6 +79,13 @@ class Root extends Component {
               exact={true}
               path={`/${category.currentCategory}`}
               render={() => <Category catName={category.currentCategory} />}
+            />
+            <Route
+              path={`/newpost`}
+              render={() =>
+                <div>
+                  <Category catName={category.currentCategory} />
+                </div>}
             />
             {fetchRequests.categories.map(c =>
               <Route

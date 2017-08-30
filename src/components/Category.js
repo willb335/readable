@@ -27,7 +27,6 @@ class Category extends Component {
 
   render() {
     const { modal, catName, posts } = this.props;
-
     return (
       <div>
         <Panel
@@ -51,9 +50,10 @@ class Category extends Component {
                 <Button bsStyle="primary">Primary</Button>
               </div>
               <div>
-                <Button bsStyle="primary" onClick={this.onClickNewPost}>
-                  New Post
-                </Button>
+                <Link to={`/newpost`} onClick={this.onClickNewPost}>
+                  <Button bsStyle="primary">New Post</Button>
+                </Link>
+
                 <PostModal isOpen={modal.isModalOpen} />
               </div>
             </div>

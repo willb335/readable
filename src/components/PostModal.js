@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { isModalOpen } from "../actions/modalActions";
 import { addPost } from "../actions/postActions";
 import uuidv4 from "uuid/v4";
+import { withRouter } from "react-router-dom";
 
 class PostModal extends Component {
   currentPost = {};
@@ -18,6 +19,7 @@ class PostModal extends Component {
     this.props.isModalOpen({
       isModalOpen: false
     });
+    this.props.history.push("/");
     payload = {};
   };
 
@@ -79,6 +81,7 @@ class PostModal extends Component {
       .then(this.removeCurrentPayload)
       .then(() => {
         this.props.isModalOpen({ isModalOpen: false });
+        this.props.history.push("/");
       });
   };
 
@@ -173,4 +176,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostModal);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(PostModal)
+);
