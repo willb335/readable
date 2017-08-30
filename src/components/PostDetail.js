@@ -91,6 +91,7 @@ class PostDetail extends Component {
   };
 
   addScoreChangeToBackEnd = payload => {
+    console.log("payload is", payload);
     return new Promise(resolve => {
       fetch(`http://localhost:5001/posts/${payload.id}`, {
         method: "put",
@@ -110,7 +111,10 @@ class PostDetail extends Component {
     Promise.resolve(this.currentPost)
       .then(this.addThumbsUpToPost)
       .then(this.addNewScoreToStore)
-      .then(this.addScoreChangeToBackEnd);
+      .then(this.addScoreChangeToBackEnd)
+      .then(() => {
+        this.currentPost = { ...this.props.currentPost };
+      });
     // .then(this.removeCurrentPayload);
   };
 
