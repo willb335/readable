@@ -1,19 +1,19 @@
 import { ADD_POST, EDIT_POST, REMOVE_POST } from "../actions/postActions";
 
 function posts(state = {}, action) {
+  const {
+    id,
+    timestamp,
+    title,
+    body,
+    author,
+    category,
+    voteScore,
+    deleted
+  } = action;
+
   switch (action.type) {
     case ADD_POST:
-      const {
-        id,
-        timestamp,
-        title,
-        body,
-        author,
-        category,
-        voteScore,
-        deleted
-      } = action;
-
       return {
         ...state,
         [id]: {
