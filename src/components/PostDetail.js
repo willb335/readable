@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Well, Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
+import {
+  Well,
+  Panel,
+  ListGroup,
+  ListGroupItem,
+  Button,
+  Glyphicon
+} from "react-bootstrap";
 import { isModalOpen } from "../actions/modalActions";
 import EditModal from "./EditModal";
 import { editPost, removePost } from "../actions/postActions";
@@ -72,8 +79,19 @@ class PostDetail extends Component {
         <Well style={{ maxWidth: "50%", marginTop: "25px" }}>
           <div className="user-post">
             <div className="vote-score-post">
-              <strong>VoteScore</strong>
+              <div>
+                <Button bsStyle="primary">
+                  <Glyphicon glyph="thumbs-up" />
+                </Button>
+
+                <Button bsStyle="primary">
+                  <Glyphicon glyph="thumbs-down" />
+                </Button>
+              </div>
+              <div>{`Vote Score is ${currentPost.voteScore}`}</div>
             </div>
+            <div style={{ height: "1em" }} />
+
             <div>
               <strong>
                 {currentPost.title}

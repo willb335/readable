@@ -16,8 +16,6 @@ import { setCurrentPost } from "../actions/postActions";
 import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
 import { withRouter } from "react-router-dom";
 
-import uuidv4 from "uuid/v4";
-
 class EditModal extends Component {
   currentPost = { ...this.props.currentPost };
 
