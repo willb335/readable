@@ -64,6 +64,7 @@ class Category extends Component {
             {posts.map(
               p =>
                 p.category === catName &&
+                !p.deleted &&
                 <ListGroupItem key={p.title}>
                   <Link
                     to={`/${p.category}/${p.title}`}
