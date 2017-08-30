@@ -43,6 +43,10 @@ class PostModal extends Component {
     });
   };
 
+  onBackButtonEvent = e => {
+    console.log("handling back button press");
+  };
+
   postPayloadToBackEnd = payload => {
     return new Promise(resolve => {
       fetch("http://localhost:5001/posts", {
