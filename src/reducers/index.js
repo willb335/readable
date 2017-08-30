@@ -6,6 +6,7 @@ import category from "./category";
 import postDetail from "./postDetail";
 import currentPost from "./currentPost";
 import backButton from "./backButton";
+import form from "./editForm";
 
 export default combineReducers({
   posts,
@@ -14,5 +15,6 @@ export default combineReducers({
   category,
   postDetail,
   currentPost,
-  backButton
+  backButton,
+  form
 });

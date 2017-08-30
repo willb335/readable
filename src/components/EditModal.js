@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { isModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
 import { editPost, removePost } from "../actions/postActions";
+import { editTitle, editBody, editName } from "../actions/editFormAction";
 import { setCurrentPost } from "../actions/postActions";
 import uuidv4 from "uuid/v4";
 
@@ -89,14 +90,15 @@ class EditModal extends Component {
   };
 
   handleAuthorChange = event => {
-    this.currentPost.author = event.target.value;
+    this.editName({ name: event.target.value });
   };
 
   handleTitleChange = event => {
-    this.currentPost.title = event.target.value;
+    this.editTitle({ title: event.target.data });
   };
 
   hanglePostBodyChange = event => {
+    this.editBody({ body: event.target.data });
     this.currentPost.body = event.target.value;
   };
 
@@ -181,7 +183,10 @@ function mapDispatchToProps(dispatch) {
     removePost: data => dispatch(removePost(data)),
     setCurrentPost: data => dispatch(setCurrentPost(data)),
     isModalOpen: data => dispatch(isModalOpen(data)),
-    isPostDetailOpen: data => dispatch(isPostDetailOpen(data))
+    isPostDetailOpen: data => dispatch(isPostDetailOpen(data)),
+    editName: data => dispatch(editName(data)),
+    editTitle: data => dispatch(editTitle(data)),
+    editBody: data => dispatch(editBody(data))
   };
 }
 
