@@ -1,13 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Well,
-  Panel,
-  ListGroup,
-  ListGroupItem,
-  Button,
-  Glyphicon
-} from "react-bootstrap";
+import { Well, Panel, Button, Glyphicon } from "react-bootstrap";
 import { isModalOpen } from "../actions/modalActions";
 import Comment from "./Comment";
 import EditModal from "./EditModal";

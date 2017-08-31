@@ -67,13 +67,7 @@ class Category extends Component {
   };
 
   render() {
-    const {
-      modal,
-      catName,
-      posts,
-      isPostSortedByVote,
-      isPostSortedByTimestamp
-    } = this.props;
+    const { modal, catName, posts } = this.props;
     this.sortPosts(posts);
 
     return (

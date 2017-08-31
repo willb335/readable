@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
-import PostModal from "./PostModal";
+import { ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import NewCommentModal from "./NewCommentModal";
 import { isModalOpen, isCommentModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
@@ -64,17 +62,7 @@ class Comment extends Component {
   };
 
   render() {
-    const {
-      modal,
-      catName,
-      posts,
-      isPostSortedByVote,
-      isPostSortedByTimestamp,
-      comments,
-      currentPost
-    } = this.props;
-    console.log("currentPost is", currentPost);
-    console.log("comments are", comments);
+    const { comments } = this.props;
 
     return (
       <div>
