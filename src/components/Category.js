@@ -5,7 +5,10 @@ import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import PostModal from "./PostModal";
 import { isModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
-import { isPostSortedByVote } from "../actions/sortActions";
+import {
+  isPostSortedByVote,
+  isPostSortedByTimestamp
+} from "../actions/sortActions";
 import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
 import { setCurrentPost } from "../actions/postActions";
 import { withRouter } from "react-router-dom";
@@ -13,6 +16,7 @@ import { withRouter } from "react-router-dom";
 class Category extends Component {
   componentDidMount() {
     this.props.isPostSortedByVote({ isPostSortedByVote: true });
+    this.props.isPostSortedByTimestamp({ isPostSortedByTimestamp: false });
   }
 
   onClickNewPost = () => {
@@ -30,9 +34,39 @@ class Category extends Component {
     this.props.setCurrentCategory({ currentCategory: this.props.catName });
   };
 
+  onClickSortPostByTimestamp = () => {
+    this.props.isPostSortedByVote({ isPostSortedByVote: false });
+    this.props.isPostSortedByTimestamp({ isPostSortedByTimestamp: true });
+  };
+
+  onClickSortPostByVoteScore = () => {
+    this.props.isPostSortedByVote({ isPostSortedByVote: true });
+    this.props.isPostSortedByTimestamp({ isPostSortedByTimestamp: false });
+  };
+
+  sortPosts = postsToSort => {
+    const { sorts, posts } = this.props;
+    switch (true) {
+      case sorts.isPostSortedByVote:
+        postsToSort = posts.sort((b, a) => a.voteScore - b.voteScore);
+        break;
+      case sorts.isPostSortedByTimestamp:
+        postsToSort = posts.sort((b, a) => a.timestamp - b.timestamp);
+        break;
+      default:
+        return;
+    }
+  };
+
   render() {
-    const { modal, catName, posts } = this.props;
-    const sortedPosts = posts.sort((b, a) => a.voteScore - b.voteScore);
+    const {
+      modal,
+      catName,
+      posts,
+      isPostSortedByVote,
+      isPostSortedByTimestamp
+    } = this.props;
+    this.sortPosts(posts);
 
     return (
       <div>
@@ -68,7 +102,7 @@ class Category extends Component {
           style={{ textAlign: "left" }}
         >
           <ListGroup fill>
-            {sortedPosts.map(
+            {posts.map(
               p =>
                 p.category === catName &&
                 !p.deleted &&
@@ -82,7 +116,7 @@ class Category extends Component {
                   </Link>
 
                   <div className="vote-score-list-item">{`Vote Score is ${p.voteScore}`}</div>
-                  <div className="timestamp-list-item">{`Date ${p.timestamp}   `}</div>
+                  <div className="timestamp-list-item">{`Date ${p.timestamp}`}</div>
                 </ListGroupItem>
             )}
           </ListGroup>
@@ -91,13 +125,21 @@ class Category extends Component {
     );
   }
 }
-function mapStateToProps({ modal, posts, postDetail, category, currentPost }) {
+function mapStateToProps({
+  modal,
+  posts,
+  postDetail,
+  category,
+  currentPost,
+  sorts
+}) {
   return {
     modal,
     posts: Object.values(posts),
     postDetail,
     category,
-    currentPost
+    currentPost,
+    sorts
   };
 }
 
@@ -108,7 +150,8 @@ function mapDispatchToProps(dispatch) {
     isPostDetailOpen: data => dispatch(isPostDetailOpen(data)),
     isCategoryOpen: data => dispatch(isCategoryOpen(data)),
     setCurrentPost: data => dispatch(setCurrentPost(data)),
-    isPostSortedByVote: data => dispatch(isPostSortedByVote(data))
+    isPostSortedByVote: data => dispatch(isPostSortedByVote(data)),
+    isPostSortedByTimestamp: data => dispatch(isPostSortedByTimestamp(data))
   };
 }
 
