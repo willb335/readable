@@ -29,7 +29,7 @@ class NewCommentModal extends Component {
       const payload = {
         ...cC,
         id: randomId,
-        parentId: "8xf0y6ziyjabvozdd253nd",
+        parentId: this.props.currentPost.id,
         timestamp: Date.now(),
         deleted: false,
         parentDeleted: false
