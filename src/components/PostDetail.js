@@ -177,9 +177,6 @@ class PostDetail extends Component {
               header={
                 <div className="comment-container">
                   <div>
-                    <Button bsStyle="primary">Primary</Button>
-                  </div>
-                  <div>
                     <Button bsStyle="primary" onClick={this.onClickDeletePost}>
                       Delete Post
                     </Button>
