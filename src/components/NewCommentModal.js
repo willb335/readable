@@ -85,7 +85,7 @@ class NewCommentModal extends Component {
     this.currentComment.author = event.target.value;
   };
 
-  hanglePostBodyChange = event => {
+  handlePostBodyChange = event => {
     this.currentComment.body = event.target.value;
   };
 
@@ -124,7 +124,7 @@ class NewCommentModal extends Component {
                   style={{ height: "300px" }}
                   componentClass="textarea"
                   placeholder="Enter Post"
-                  onChange={this.hanglePostBodyChange}
+                  onChange={this.handlePostBodyChange}
                 />
               </FormGroup>
             </form>

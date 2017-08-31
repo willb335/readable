@@ -259,7 +259,11 @@ class Comment extends Component {
                   <div>
                     {this.convertDate(c.timestamp)}
                     <div className="comment-buttons">
-                      <Button bsSize="xsmall" bsStyle="primary">
+                      <Button
+                        bsSize="xsmall"
+                        bsStyle="primary"
+                        onClick={() => this.onClickEditComment(c)}
+                      >
                         Edit
                       </Button>
                       <Button

@@ -20,9 +20,8 @@ class EditCommentModal extends Component {
   currentPost = { ...this.props.currentPost };
 
   componentDidMount() {
-    this.props.editAuthor({ author: this.currentPost.author });
-    this.props.editTitle({ title: this.currentPost.title });
-    this.props.editBody({ body: this.currentPost.body });
+    this.props.editAuthor({ author: this.currentComment.author });
+    this.props.editBody({ body: this.currentComment.body });
   }
 
   onClose = payload => {
