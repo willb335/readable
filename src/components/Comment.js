@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { ListGroup, ListGroupItem, Button, Glyphicon } from "react-bootstrap";
 import NewCommentModal from "./NewCommentModal";
+import EditCommentModal from "./EditCommentModal";
 import { isModalOpen, isCommentModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
 import {
@@ -272,6 +273,7 @@ class Comment extends Component {
                       >
                         Edit
                       </Button>
+                      <EditCommentModal />
                       <Button
                         bsSize="xsmall"
                         bsStyle="primary"

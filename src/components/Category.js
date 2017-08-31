@@ -104,7 +104,7 @@ class Category extends Component {
                   <Button bsStyle="primary">New Post</Button>
                 </Link>
 
-                <PostModal isOpen={modal.isModalOpen} />
+                <PostModal />
               </div>
             </div>
           }

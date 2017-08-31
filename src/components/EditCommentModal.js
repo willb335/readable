@@ -17,7 +17,7 @@ import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
 import { withRouter } from "react-router-dom";
 
 class EditCommentModal extends Component {
-  currentPost = { ...this.props.currentPost };
+  // currentPost = { ...this.props.currentPost };
 
   componentDidMount() {
     this.props.editAuthor({ author: this.currentComment.author });

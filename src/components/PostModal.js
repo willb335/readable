@@ -94,11 +94,11 @@ class PostModal extends Component {
   };
 
   render() {
-    const { isOpen } = this.props;
+    const { modal } = this.props;
     return (
       <div>
         <Modal
-          show={isOpen}
+          show={modal.isModalOpen}
           bsSize="large"
           aria-labelledby="contained-modal-title-lg"
         >
