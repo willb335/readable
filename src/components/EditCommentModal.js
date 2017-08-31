@@ -125,12 +125,14 @@ class EditCommentModal extends Component {
     return (
       <div>
         <Modal
-          show={modal.isModalOpen}
+          show={modal.isCommentModalOpen}
           bsSize="large"
           aria-labelledby="contained-modal-title-lg"
         >
           <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-lg">Edit Post</Modal.Title>
+            <Modal.Title id="contained-modal-title-lg">
+              Edit Comment
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <form>

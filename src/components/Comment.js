@@ -201,6 +201,12 @@ class Comment extends Component {
       .then(this.postPayloadToBackEnd);
   };
 
+  onClickEditComment = comment => {
+    Promise.resolve(comment)
+      .then(this.setCurrentComment)
+      .then(() => this.props.isCommentModalOpen({ isCommentModalOpen: true }));
+  };
+
   render() {
     const { comments, currentPost } = this.props;
     this.sortComments(comments);
