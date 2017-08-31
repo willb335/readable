@@ -53,6 +53,14 @@
   align-items: center;
 }
 
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 .comment-container {
   display: flex;
   align-items: stretch;
@@ -61,14 +69,4 @@
 
 .edit-comment {
   float: left;
-}
-
-.vote-score-list-item {
-  float: right;
-  color: #337ab7;
-}
-
-.timestamp-list-item {
-  float: right;
-  color: #337ab7;
 }

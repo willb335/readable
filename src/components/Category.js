@@ -112,23 +112,25 @@ class Category extends Component {
           style={{ textAlign: "left" }}
         >
           <ListGroup fill>
-            {posts.map(
-              p =>
-                p.category === catName &&
-                !p.deleted &&
-                <ListGroupItem key={p.title}>
-                  <Link
-                    to={`/${p.category}/${p.title}`}
-                    onClick={() => this.clickPost(p)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {p.title}
-                  </Link>
+            <div className="posts-container">
+              {" "}{posts.map(
+                p =>
+                  p.category === catName &&
+                  !p.deleted &&
+                  <ListGroupItem key={p.title}>
+                    <Link
+                      to={`/${p.category}/${p.title}`}
+                      onClick={() => this.clickPost(p)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {p.title}
+                    </Link>
 
-                  <div className="vote-score-list-item">{`Vote Score is ${p.voteScore}`}</div>
-                  <div className="timestamp-list-item">{`Date ${p.timestamp}`}</div>
-                </ListGroupItem>
-            )}
+                    <div>{`Vote Score is ${p.voteScore}`}</div>
+                    <div>{`Date ${p.timestamp}`}</div>
+                  </ListGroupItem>
+              )}
+            </div>
           </ListGroup>
         </Panel>
       </div>
