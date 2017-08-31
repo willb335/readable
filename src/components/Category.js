@@ -11,6 +11,10 @@ import { setCurrentPost } from "../actions/postActions";
 import { withRouter } from "react-router-dom";
 
 class Category extends Component {
+  componentDidMount() {
+    this.props.isPostSortedByVote({ isPostSortedByVote: true });
+  }
+
   onClickNewPost = () => {
     this.props.isModalOpen({ isModalOpen: true });
     this.props.setCurrentCategory({ currentCategory: this.props.catName });
@@ -24,11 +28,6 @@ class Category extends Component {
   clickCategory = () => {
     this.props.isCategoryOpen({ isCategoryOpen: true });
     this.props.setCurrentCategory({ currentCategory: this.props.catName });
-  };
-
-  sortPostByVoteScore = () => {
-    const sortedPosts = posts.sort((b, a) => a.voteScore - b.voteScore);
-    this.props.isPostSortedByVote({ isPostSortedByVote: true });
   };
 
   render() {
@@ -52,10 +51,10 @@ class Category extends Component {
               <div>Filler</div>
 
               <div>
-                <Button bsStyle="primary">Primary</Button>
+                <Button bsStyle="primary">Sort By Data</Button>
               </div>
               <div>
-                <Button bsStyle="primary">Primary</Button>
+                <Button bsStyle="primary">Sort by Vote</Button>
               </div>
               <div>
                 <Link to={`/newpost`} onClick={this.onClickNewPost}>
@@ -83,6 +82,7 @@ class Category extends Component {
                   </Link>
 
                   <div className="vote-score-list-item">{`Vote Score is ${p.voteScore}`}</div>
+                  <div className="timestamp-list-item">{`Date ${p.timestamp}   `}</div>
                 </ListGroupItem>
             )}
           </ListGroup>
