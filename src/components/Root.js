@@ -34,7 +34,6 @@ class Root extends Component {
   };
 
   componentDidMount() {
-    // this.props.isModalOpen({ isModalOpen: false });
     this.getCategoryTypes();
     Promise.resolve("Start")
       .then(this.getPostsFromServer)

@@ -14,6 +14,34 @@ import { setCurrentPost } from "../actions/postActions";
 import { withRouter } from "react-router-dom";
 
 class Comment extends Component {
+  getCommentsFromServer = () => {
+    return new Promise(resolve => {
+      fetch(
+        `http://localhost:5001/posts/${this.props.currentPost.id}/comments`,
+        {
+          headers: { Authorization: "will335" }
+        }
+      ).then(response => {
+        resolve(response.json());
+      });
+    });
+  };
+
+  addCommentsToStore = comments => {
+    return new Promise(resolve => {
+      comments.forEach(p => {
+        this.props.addPost(p);
+      });
+      resolve();
+    });
+  };
+
+  componentDidMount() {
+    this.getCategoryTypes();
+    Promise.resolve("Start")
+      .then(this.getPostsFromServer)
+      .then(this.addPostsToStore);
+  }
   componentDidMount() {
     this.props.isPostSortedByVote({ isPostSortedByVote: true });
     this.props.isPostSortedByTimestamp({ isPostSortedByTimestamp: false });
@@ -64,7 +92,7 @@ function mapStateToProps({
     posts: Object.values(posts),
     postDetail,
     category,
-    currentPost,
+    currentPost: currentPost.currentPost,
     sorts
   };
 }
