@@ -32,7 +32,8 @@ class NewCommentModal extends Component {
         parentId: this.props.currentPost.id,
         timestamp: Date.now(),
         deleted: false,
-        parentDeleted: false
+        parentDeleted: false,
+        voteScore: 0
       };
       resolve(payload);
     });
