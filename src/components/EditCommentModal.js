@@ -24,7 +24,7 @@ class EditCommentModal extends Component {
   currentComment = { ...this.props.currentComment };
 
   componentDidMount() {
-    console.log("currentComment", this.currentComment);
+    // console.log("currentComment", this.props.currentComment);
     this.props.editAuthor({ author: this.currentComment.author });
     this.props.editBody({ body: this.currentComment.body });
   }
@@ -153,19 +153,7 @@ class EditCommentModal extends Component {
                 <FormControl.Feedback />
               </FormGroup>
             </form>
-            <form>
-              <FormGroup controlId="formBasicText">
-                <ControlLabel>Title</ControlLabel>
-                <FormControl
-                  type="text"
-                  componentClass="textarea"
-                  value={form.title}
-                  placeholder="Enter title"
-                  onChange={this.handleTitleChange}
-                />
-                <FormControl.Feedback />
-              </FormGroup>
-            </form>
+
             <form className="form-input-area">
               <FormGroup controlId="formControlsTextarea">
                 <ControlLabel>Enter Post</ControlLabel>

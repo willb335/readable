@@ -21,6 +21,7 @@ import {
   setCurrentComment,
   editComment
 } from "../actions/commentActions";
+import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { setCurrentPost } from "../actions/postActions";
 import { withRouter } from "react-router-dom";
 
@@ -208,11 +209,17 @@ class Comment extends Component {
   };
 
   onClickEditComment = comment => {
-    Promise.resolve(comment).then(this.setCurrentComment).then(() => {
-      this.props.isEditCommentModalOpen({ isEditCommentModalOpen: true });
-      this.props.isCommentModalOpen({ isCommentModalOpen: false });
-      this.props.isModalOpen({ isEditCommentModalOpen: false });
-    });
+    Promise.resolve(comment)
+      .then(this.setCurrentComment)
+      .then(comment => {
+        this.props.editAuthor({ author: comment.author });
+        this.props.editBody({ body: comment.body });
+      })
+      .then(() => {
+        this.props.isEditCommentModalOpen({ isEditCommentModalOpen: true });
+        this.props.isCommentModalOpen({ isCommentModalOpen: false });
+        this.props.isModalOpen({ isEditCommentModalOpen: false });
+      });
   };
 
   render() {
@@ -325,6 +332,9 @@ function mapStateToProps({
 function mapDispatchToProps(dispatch) {
   return {
     isModalOpen: data => dispatch(isModalOpen(data)),
+    editAuthor: data => dispatch(editAuthor(data)),
+    editTitle: data => dispatch(editTitle(data)),
+    editBody: data => dispatch(editBody(data)),
     setCurrentCategory: data => dispatch(setCurrentCategory(data)),
     isPostDetailOpen: data => dispatch(isPostDetailOpen(data)),
     isCategoryOpen: data => dispatch(isCategoryOpen(data)),
