@@ -81,8 +81,8 @@ class Category extends Component {
                 {catName}
               </Link>
 
-              <div>Filler</div>
-              <div>Filler</div>
+              {/* <div>Filler</div>
+              <div>Filler</div> */}
 
               <div>
                 <Button
