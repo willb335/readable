@@ -43,8 +43,10 @@ class Comment extends Component {
   };
 
   componentDidMount() {
-    this.props.isCommentSortedByVote({ isPostSortedByVote: true });
-    this.props.isCommentSortedByTimestamp({ isPostSortedByTimestamp: false });
+    this.props.isCommentSortedByVote({ isCommentSortedByVote: true });
+    this.props.isCommentSortedByTimestamp({
+      isCommentSortedByTimestamp: false
+    });
     Promise.resolve("Start")
       .then(this.getCommentsFromServer)
       .then(this.addCommentsToStore);
@@ -59,17 +61,19 @@ class Comment extends Component {
   };
 
   onClickSortCommentByTimestamp = () => {
-    this.props.isCommentSortedByVote({ isPostSortedByVote: false });
-    this.props.isCommentSortedByTimestamp({ isPostSortedByTimestamp: true });
+    this.props.isCommentSortedByVote({ isCommentSortedByVote: false });
+    this.props.isCommentSortedByTimestamp({ isCommentSortedByTimestamp: true });
   };
 
   onClickSortCommentByVoteScore = () => {
-    this.props.isCommentSortedByVote({ isPostSortedByVote: true });
-    this.props.isCommentSortedByTimestamp({ isPostSortedByTimestamp: false });
+    this.props.isCommentSortedByVote({ isCommentSortedByVote: true });
+    this.props.isCommentSortedByTimestamp({
+      isCommentSortedByTimestamp: false
+    });
   };
 
   sortComments = commentsToSort => {
-    const { sorts, comments } = this.comments;
+    const { sorts, comments } = this.props;
     switch (true) {
       case sorts.isCommentSortedByVote:
         commentsToSort = comments.sort((b, a) => a.voteScore - b.voteScore);
@@ -164,6 +168,7 @@ class Comment extends Component {
 
   render() {
     const { comments, currentPost } = this.props;
+    this.sortComments(comments);
 
     return (
       <div>
