@@ -6,7 +6,9 @@ import { isModalOpen, isCommentModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
 import {
   isPostSortedByVote,
-  isPostSortedByTimestamp
+  isPostSortedByTimestamp,
+  isCommentSortedByVote,
+  isCommentSortedByTimestamp
 } from "../actions/sortActions";
 import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
 import {
@@ -41,8 +43,8 @@ class Comment extends Component {
   };
 
   componentDidMount() {
-    this.props.isPostSortedByVote({ isPostSortedByVote: true });
-    this.props.isPostSortedByTimestamp({ isPostSortedByTimestamp: false });
+    this.props.isCommentSortedByVote({ isPostSortedByVote: true });
+    this.props.isCommentSortedByTimestamp({ isPostSortedByTimestamp: false });
     Promise.resolve("Start")
       .then(this.getCommentsFromServer)
       .then(this.addCommentsToStore);
@@ -54,6 +56,30 @@ class Comment extends Component {
     }
     var d = new Date(inputFormat);
     return [pad(d.getMonth() + 1), pad(d.getDate()), d.getFullYear()].join("/");
+  };
+
+  onClickSortCommentByTimestamp = () => {
+    this.props.isCommentSortedByVote({ isPostSortedByVote: false });
+    this.props.isCommentSortedByTimestamp({ isPostSortedByTimestamp: true });
+  };
+
+  onClickSortCommentByVoteScore = () => {
+    this.props.isCommentSortedByVote({ isPostSortedByVote: true });
+    this.props.isCommentSortedByTimestamp({ isPostSortedByTimestamp: false });
+  };
+
+  sortComments = commentsToSort => {
+    const { sorts, comments } = this.comments;
+    switch (true) {
+      case sorts.isCommentSortedByVote:
+        commentsToSort = comments.sort((b, a) => a.voteScore - b.voteScore);
+        break;
+      case sorts.isCommentSortedByTimestamp:
+        commentsToSort = comments.sort((b, a) => a.timestamp - b.timestamp);
+        break;
+      default:
+        return;
+    }
   };
 
   onClickNewComment = () => {
@@ -142,8 +168,18 @@ class Comment extends Component {
     return (
       <div>
         <div className="button-comment-container">
-          <Button bsStyle="primary">Sort by Date</Button>
-          <Button bsStyle="primary">Sort by Vote Score</Button>
+          <Button
+            bsStyle="primary"
+            onClick={this.onClickSortCommentByTimestamp}
+          >
+            Sort by Date
+          </Button>
+          <Button
+            bsStyle="primary"
+            onClick={this.onClickSortCommentByVoteScore}
+          >
+            Sort by Vote Score
+          </Button>
           <Button bsStyle="primary" onClick={this.onClickNewComment}>
             New Comment
           </Button>
@@ -225,7 +261,10 @@ function mapDispatchToProps(dispatch) {
     addComment: data => dispatch(addComment(data)),
     editComment: data => dispatch(editComment(data)),
     isCommentModalOpen: data => dispatch(isCommentModalOpen(data)),
-    setCurrentComment: data => dispatch(setCurrentComment(data))
+    setCurrentComment: data => dispatch(setCurrentComment(data)),
+    isCommentSortedByVote: data => dispatch(isCommentSortedByVote(data)),
+    isCommentSortedByTimestamp: data =>
+      dispatch(isCommentSortedByTimestamp(data))
   };
 }
 
