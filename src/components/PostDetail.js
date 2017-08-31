@@ -9,6 +9,7 @@ import {
   Glyphicon
 } from "react-bootstrap";
 import { isModalOpen } from "../actions/modalActions";
+import Comment from "./Comment";
 import EditModal from "./EditModal";
 import { editPost, removePost } from "../actions/postActions";
 import { setCurrentPost } from "../actions/postActions";
@@ -203,6 +204,7 @@ class PostDetail extends Component {
             />
           </div>
         </Well>
+        <Comment />
       </div>
     );
   }

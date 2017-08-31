@@ -10,6 +10,7 @@ import {
   isPostSortedByTimestamp
 } from "../actions/sortActions";
 import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
+import { addComment } from "../actions/commentActions";
 import { setCurrentPost } from "../actions/postActions";
 import { withRouter } from "react-router-dom";
 
@@ -23,28 +24,26 @@ class Comment extends Component {
         }
       ).then(response => {
         resolve(response.json());
+        // console.log("response from comment fetch", response.json());
       });
     });
   };
 
   addCommentsToStore = comments => {
     return new Promise(resolve => {
-      comments.forEach(p => {
-        this.props.addPost(p);
+      comments.forEach(c => {
+        this.props.addComment(c);
       });
       resolve();
     });
   };
 
   componentDidMount() {
-    this.getCategoryTypes();
-    Promise.resolve("Start")
-      .then(this.getPostsFromServer)
-      .then(this.addPostsToStore);
-  }
-  componentDidMount() {
     this.props.isPostSortedByVote({ isPostSortedByVote: true });
     this.props.isPostSortedByTimestamp({ isPostSortedByTimestamp: false });
+    Promise.resolve("Start")
+      .then(this.getCommentsFromServer)
+      .then(this.addCommentsToStore);
   }
 
   render() {
@@ -53,8 +52,12 @@ class Comment extends Component {
       catName,
       posts,
       isPostSortedByVote,
-      isPostSortedByTimestamp
+      isPostSortedByTimestamp,
+      comments,
+      currentPost
     } = this.props;
+    console.log("currentPost is", currentPost);
+    console.log("comments are", comments);
 
     return (
       <div>
@@ -64,14 +67,11 @@ class Comment extends Component {
         </div>
         <div>
           <ListGroup fill>
-            <ListGroupItem>
-              Comments will be in here Comments will be in here Comments will be
-              in here Comments will be in here Comments will be in here
-            </ListGroupItem>
-            <ListGroupItem>
-              Comments will be in here Comments will be in here Comments will be
-              in here Comments will be in here Comments will be in here
-            </ListGroupItem>
+            {comments.map(c =>
+              <ListGroupItem key={c.id}>
+                {c.body}
+              </ListGroupItem>
+            )}
           </ListGroup>
         </div>
       </div>
@@ -85,7 +85,8 @@ function mapStateToProps({
   postDetail,
   category,
   currentPost,
-  sorts
+  sorts,
+  comments
 }) {
   return {
     modal,
@@ -93,7 +94,8 @@ function mapStateToProps({
     postDetail,
     category,
     currentPost: currentPost.currentPost,
-    sorts
+    sorts,
+    comments: Object.values(comments)
   };
 }
 
@@ -105,7 +107,8 @@ function mapDispatchToProps(dispatch) {
     isCategoryOpen: data => dispatch(isCategoryOpen(data)),
     setCurrentPost: data => dispatch(setCurrentPost(data)),
     isPostSortedByVote: data => dispatch(isPostSortedByVote(data)),
-    isPostSortedByTimestamp: data => dispatch(isPostSortedByTimestamp(data))
+    isPostSortedByTimestamp: data => dispatch(isPostSortedByTimestamp(data)),
+    addComment: data => dispatch(addComment(data))
   };
 }
 

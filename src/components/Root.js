@@ -16,11 +16,9 @@ class Root extends Component {
     return new Promise(resolve => {
       fetch("http://localhost:5001/posts", {
         headers: { Authorization: "will335" }
-      })
-        .then(response => {
-          resolve(response.json());
-        })
-        .then(posts => resolve(posts));
+      }).then(response => {
+        resolve(response.json());
+      });
     });
   };
 
