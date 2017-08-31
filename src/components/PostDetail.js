@@ -133,6 +133,14 @@ class PostDetail extends Component {
       .then(() => (this.currentPost = { ...this.props.currentPost }));
   };
 
+  convertDate = inputFormat => {
+    function pad(s) {
+      return s < 10 ? "0" + s : s;
+    }
+    var d = new Date(inputFormat);
+    return [pad(d.getMonth() + 1), pad(d.getDate()), d.getFullYear()].join("/");
+  };
+
   render() {
     const { currentPost } = this.props;
     return (
@@ -165,7 +173,7 @@ class PostDetail extends Component {
             </div>
             <div>
               <strong>
-                {currentPost.timestamp}
+                {this.convertDate(currentPost.timestamp)}
               </strong>
             </div>
 
@@ -192,20 +200,7 @@ class PostDetail extends Component {
                 </div>
               }
               style={{ textAlign: "left" }}
-            >
-              <ListGroup fill>
-                <ListGroupItem>
-                  Comments will be in here Comments will be in here Comments
-                  will be in here Comments will be in here Comments will be in
-                  here
-                </ListGroupItem>
-                <ListGroupItem>
-                  Comments will be in here Comments will be in here Comments
-                  will be in here Comments will be in here Comments will be in
-                  here
-                </ListGroupItem>
-              </ListGroup>
-            </Panel>
+            />
           </div>
         </Well>
       </div>

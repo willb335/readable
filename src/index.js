@@ -5,6 +5,7 @@ import App from "./components/App";
 import { BrowserRouter } from "react-router-dom";
 // import PostDetail from "./components/PostDetail";
 // import PostModal from "./components/PostModal";
+import Comment from "./components/Comment";
 import registerServiceWorker from "./registerServiceWorker";
 import { createStore, applyMiddleware, compose } from "redux";
 import reducer from "./reducers/index";
@@ -26,7 +27,7 @@ const store = createStore(reducer, composeEnhancers(applyMiddleware()));
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <Comment />
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")
