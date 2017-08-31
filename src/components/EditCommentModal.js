@@ -8,7 +8,11 @@ import {
 } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { isModalOpen, isCommentModalOpen } from "../actions/modalActions";
+import {
+  isModalOpen,
+  isEditCommentModalOpen,
+  isCommentModalOpen
+} from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
 import { editPost, removePost } from "../actions/postActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
@@ -26,7 +30,7 @@ class EditCommentModal extends Component {
   }
 
   onClose = payload => {
-    this.props.isCommentModalOpen({
+    this.props.isEditCommentModalOpen({
       isModalOpen: false
     });
     // this.props.setCurrentCategory({
@@ -126,7 +130,7 @@ class EditCommentModal extends Component {
     return (
       <div>
         <Modal
-          show={modal.isCommentModalOpen}
+          show={modal.isEditCommentModalOpen}
           bsSize="large"
           aria-labelledby="contained-modal-title-lg"
         >
@@ -212,6 +216,7 @@ function mapDispatchToProps(dispatch) {
     removePost: data => dispatch(removePost(data)),
     setCurrentPost: data => dispatch(setCurrentPost(data)),
     isModalOpen: data => dispatch(isModalOpen(data)),
+    isEditCommentModalOpen: data => dispatch(isEditCommentModalOpen(data)),
     isCommentModalOpen: data => dispatch(isCommentModalOpen(data)),
     isPostDetailOpen: data => dispatch(isPostDetailOpen(data)),
     editAuthor: data => dispatch(editAuthor(data)),

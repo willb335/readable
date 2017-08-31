@@ -3,7 +3,11 @@ import { connect } from "react-redux";
 import { ListGroup, ListGroupItem, Button, Glyphicon } from "react-bootstrap";
 import NewCommentModal from "./NewCommentModal";
 import EditCommentModal from "./EditCommentModal";
-import { isModalOpen, isCommentModalOpen } from "../actions/modalActions";
+import {
+  isModalOpen,
+  isCommentModalOpen,
+  isEditCommentModalOpen
+} from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
 import {
   isPostSortedByVote,
@@ -89,6 +93,7 @@ class Comment extends Component {
 
   onClickNewComment = () => {
     this.props.isModalOpen({ isModalOpen: false });
+    this.props.isEditCommentModalOpen({ isEditCommentModalOpen: false });
     this.props.isCommentModalOpen({ isCommentModalOpen: true });
     this.props.setCurrentCategory({
       currentCategory: this.props.currentPost.category
@@ -203,9 +208,11 @@ class Comment extends Component {
   };
 
   onClickEditComment = comment => {
-    Promise.resolve(comment)
-      .then(this.setCurrentComment)
-      .then(() => this.props.isCommentModalOpen({ isCommentModalOpen: true }));
+    Promise.resolve(comment).then(this.setCurrentComment).then(() => {
+      this.props.isEditCommentModalOpen({ isEditCommentModalOpen: true });
+      this.props.isCommentModalOpen({ isCommentModalOpen: false });
+      this.props.isModalOpen({ isEditCommentModalOpen: false });
+    });
   };
 
   render() {
@@ -327,6 +334,7 @@ function mapDispatchToProps(dispatch) {
     addComment: data => dispatch(addComment(data)),
     editComment: data => dispatch(editComment(data)),
     isCommentModalOpen: data => dispatch(isCommentModalOpen(data)),
+    isEditCommentModalOpen: data => dispatch(isEditCommentModalOpen(data)),
     setCurrentComment: data => dispatch(setCurrentComment(data)),
     isCommentSortedByVote: data => dispatch(isCommentSortedByVote(data)),
     isCommentSortedByTimestamp: data =>
