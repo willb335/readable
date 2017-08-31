@@ -1,4 +1,4 @@
-import { ADD_COMMENT } from "../actions/commentActions";
+import { ADD_COMMENT, EDIT_COMMENT } from "../actions/commentActions";
 
 function comments(state = {}, action) {
   const {
@@ -29,28 +29,21 @@ function comments(state = {}, action) {
           parentDeleted
         }
       };
-
-    // case REMOVE_POST:
-    //   return {
-    //     ...state,
-    //     [id]: {
-    //       deleted: true
-    //     }
-    //   };
-    // case EDIT_POST:
-    //   return {
-    //     ...state,
-    //     [id]: {
-    //       id,
-    //       timestamp,
-    //       title,
-    //       body,
-    //       author,
-    //       category,
-    //       voteScore,
-    //       deleted
-    //     }
-    //   };
+    case EDIT_COMMENT:
+      return {
+        ...state,
+        [id]: {
+          id,
+          parentId,
+          timestamp,
+          body,
+          author,
+          category,
+          voteScore,
+          deleted,
+          parentDeleted
+        }
+      };
 
     default:
       return state;

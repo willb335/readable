@@ -34,6 +34,7 @@ class PostDetail extends Component {
   };
 
   postPayloadToBackEnd = payload => {
+    console.log("payload on post is", payload);
     return new Promise(resolve => {
       fetch(`http://localhost:5001/posts/${payload.id}`, {
         method: "delete",

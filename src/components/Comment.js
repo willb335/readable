@@ -9,7 +9,11 @@ import {
   isPostSortedByTimestamp
 } from "../actions/sortActions";
 import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
-import { addComment } from "../actions/commentActions";
+import {
+  addComment,
+  setCurrentComment,
+  editComment
+} from "../actions/commentActions";
 import { setCurrentPost } from "../actions/postActions";
 import { withRouter } from "react-router-dom";
 
@@ -60,6 +64,58 @@ class Comment extends Component {
     });
   };
 
+  setCurrentComment = currentComment => {
+    const payloadComment = { ...currentComment };
+    return new Promise(resolve => {
+      this.props.setCurrentComment({ currentComment: payloadComment });
+      resolve(payloadComment);
+    });
+  };
+
+  addThumbsUpToComment = payloadComment => {
+    return new Promise(resolve => {
+      const payload = {
+        ...payloadComment,
+        voteScore: payloadComment.voteScore + 1
+      };
+      resolve(payload);
+    });
+  };
+
+  addNewCommentScoreToStore = payload => {
+    return new Promise(resolve => {
+      this.props.editComment(payload);
+      resolve(payload);
+    });
+  };
+
+  addCommentVoteScoreChangeToBackEnd = payload => {
+    console.log("payload id is", payload.id);
+    return new Promise(resolve => {
+      fetch(`http://localhost:5001/comments/${payload.id}`, {
+        method: "put",
+        headers: {
+          Authorization: "will335",
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      }).then(response => {
+        resolve(payload);
+      });
+    });
+  };
+
+  onClickThumbsUp = comment => {
+    console.log("comment is", comment);
+    Promise.resolve(comment)
+      .then(this.setCurrentComment)
+      .then(this.addThumbsUpToComment)
+      .then(this.addNewCommentScoreToStore)
+      .then(this.addCommentVoteScoreChangeToBackEnd)
+      .then(() => console.log("currentComment", this.props.currentComment));
+  };
+
   render() {
     const { comments } = this.props;
 
@@ -80,7 +136,10 @@ class Comment extends Component {
                 <div>
                   {c.author}
                   <div>
-                    <Button bsStyle="primary" onClick={this.onClickThumbsUp}>
+                    <Button
+                      bsStyle="primary"
+                      onClick={() => this.onClickThumbsUp(c)}
+                    >
                       <Glyphicon glyph="thumbs-up" />
                     </Button>
 
@@ -114,7 +173,8 @@ function mapStateToProps({
   category,
   currentPost,
   sorts,
-  comments
+  comments,
+  currentComment
 }) {
   return {
     modal,
@@ -123,7 +183,8 @@ function mapStateToProps({
     category,
     currentPost: currentPost.currentPost,
     sorts,
-    comments: Object.values(comments)
+    comments: Object.values(comments),
+    currentComment
   };
 }
 
@@ -137,7 +198,9 @@ function mapDispatchToProps(dispatch) {
     isPostSortedByVote: data => dispatch(isPostSortedByVote(data)),
     isPostSortedByTimestamp: data => dispatch(isPostSortedByTimestamp(data)),
     addComment: data => dispatch(addComment(data)),
-    isCommentModalOpen: data => dispatch(isCommentModalOpen(data))
+    editComment: data => dispatch(editComment(data)),
+    isCommentModalOpen: data => dispatch(isCommentModalOpen(data)),
+    setCurrentComment: data => dispatch(setCurrentComment(data))
   };
 }
 

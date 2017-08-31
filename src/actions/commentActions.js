@@ -27,6 +27,30 @@ export function addComment({
     parentDeleted
   };
 }
+export function editComment({
+  id,
+  parentId,
+  timestamp,
+  body,
+  author,
+  category,
+  voteScore,
+  deleted,
+  parentDeleted
+}) {
+  return {
+    type: EDIT_COMMENT,
+    id,
+    parentId,
+    timestamp,
+    body,
+    author,
+    category,
+    voteScore,
+    deleted,
+    parentDeleted
+  };
+}
 
 export function setCurrentComment({ currentComment }) {
   return {
