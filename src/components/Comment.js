@@ -205,11 +205,7 @@ class Comment extends Component {
   onClickEditComment = comment => {
     Promise.resolve(comment)
       .then(this.setCurrentComment)
-      .then(() => this.props.isCommentModalOpen({ isCommentModalOpen: true }))
-      .then(() => {
-        console.log("about to return...");
-        return <EditCommentModal />;
-      });
+      .then(() => this.props.isCommentModalOpen({ isCommentModalOpen: true }));
   };
 
   render() {
@@ -218,6 +214,9 @@ class Comment extends Component {
 
     return (
       <div>
+        <EditCommentModal />
+        <NewCommentModal />
+
         <div className="button-comment-container">
           <Button
             bsStyle="primary"
@@ -234,7 +233,6 @@ class Comment extends Component {
           <Button bsStyle="primary" onClick={this.onClickNewComment}>
             New Comment
           </Button>
-          <NewCommentModal />
         </div>
         <div>
           <ListGroup fill>

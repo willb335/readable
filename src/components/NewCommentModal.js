@@ -94,7 +94,7 @@ class NewCommentModal extends Component {
     return (
       <div>
         <Modal
-          show={modal.isCommentModalOpen}
+          show={false}
           bsSize="large"
           aria-labelledby="contained-modal-title-lg"
         >
