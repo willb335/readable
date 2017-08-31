@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { ListGroup, ListGroupItem, Button } from "react-bootstrap";
+import { ListGroup, ListGroupItem, Button, Glyphicon } from "react-bootstrap";
 import NewCommentModal from "./NewCommentModal";
 import { isModalOpen, isCommentModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
@@ -53,7 +53,6 @@ class Comment extends Component {
   };
 
   onClickNewComment = () => {
-    // this.props.isPostDetailOpen({ isPostDetailOpen: false });
     this.props.isModalOpen({ isModalOpen: false });
     this.props.isCommentModalOpen({ isCommentModalOpen: true });
     this.props.setCurrentCategory({
@@ -70,7 +69,7 @@ class Comment extends Component {
           <Button bsStyle="primary">Sort by Date</Button>
           <Button bsStyle="primary">Sort by Vote Score</Button>
           <Button bsStyle="primary" onClick={this.onClickNewComment}>
-            New Post
+            New Comment
           </Button>
           <NewCommentModal />
         </div>
@@ -80,8 +79,16 @@ class Comment extends Component {
               <ListGroupItem key={c.id}>
                 <div>
                   {c.author}
-                </div>
+                  <div>
+                    <Button bsStyle="primary" onClick={this.onClickThumbsUp}>
+                      <Glyphicon glyph="thumbs-up" />
+                    </Button>
 
+                    <Button bsStyle="primary" onClick={this.onClickThumbsDown}>
+                      <Glyphicon glyph="thumbs-down" />
+                    </Button>
+                  </div>
+                </div>
                 <div>
                   {c.body}
                 </div>
