@@ -24,7 +24,6 @@ class Comment extends Component {
         }
       ).then(response => {
         resolve(response.json());
-        // console.log("response from comment fetch", response.json());
       });
     });
   };
@@ -45,6 +44,14 @@ class Comment extends Component {
       .then(this.getCommentsFromServer)
       .then(this.addCommentsToStore);
   }
+
+  convertDate = inputFormat => {
+    function pad(s) {
+      return s < 10 ? "0" + s : s;
+    }
+    var d = new Date(inputFormat);
+    return [pad(d.getMonth() + 1), pad(d.getDate()), d.getFullYear()].join("/");
+  };
 
   render() {
     const {
@@ -69,7 +76,18 @@ class Comment extends Component {
           <ListGroup fill>
             {comments.map(c =>
               <ListGroupItem key={c.id}>
-                {c.body}
+                <div>
+                  {c.author}
+                </div>
+                <div>
+                  {c.body}
+                </div>
+                <div>
+                  {c.voteScore}
+                </div>
+                <div>
+                  {this.convertDate(c.timestamp)}
+                </div>
               </ListGroupItem>
             )}
           </ListGroup>
