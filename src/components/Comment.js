@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import PostModal from "./PostModal";
 import NewCommentModal from "./NewCommentModal";
-import { isModalOpen } from "../actions/modalActions";
+import { isModalOpen, isCommentModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
 import {
   isPostSortedByVote,
@@ -54,6 +54,15 @@ class Comment extends Component {
     return [pad(d.getMonth() + 1), pad(d.getDate()), d.getFullYear()].join("/");
   };
 
+  onClickNewComment = () => {
+    // this.props.isPostDetailOpen({ isPostDetailOpen: false });
+    this.props.isModalOpen({ isModalOpen: false });
+    this.props.isCommentModalOpen({ isCommentModalOpen: true });
+    this.props.setCurrentCategory({
+      currentCategory: this.props.currentPost.category
+    });
+  };
+
   render() {
     const {
       modal,
@@ -72,8 +81,10 @@ class Comment extends Component {
         <div className="button-comment-container">
           <Button bsStyle="primary">Sort by Date</Button>
           <Button bsStyle="primary">Sort by Vote Score</Button>
-          <Button bsStyle="primary">New Post</Button>
-          <NewCommentModal isOpen={false} />
+          <Button bsStyle="primary" onClick={this.onClickNewComment}>
+            New Post
+          </Button>
+          <NewCommentModal />
         </div>
         <div>
           <ListGroup fill>
@@ -129,7 +140,8 @@ function mapDispatchToProps(dispatch) {
     setCurrentPost: data => dispatch(setCurrentPost(data)),
     isPostSortedByVote: data => dispatch(isPostSortedByVote(data)),
     isPostSortedByTimestamp: data => dispatch(isPostSortedByTimestamp(data)),
-    addComment: data => dispatch(addComment(data))
+    addComment: data => dispatch(addComment(data)),
+    isCommentModalOpen: data => dispatch(isCommentModalOpen(data))
   };
 }
 
