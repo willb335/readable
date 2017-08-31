@@ -120,7 +120,6 @@ class Comment extends Component {
   };
 
   addCommentVoteScoreChangeToBackEnd = payload => {
-    console.log("payload id is", payload.id);
     return new Promise(resolve => {
       fetch(`http://localhost:5001/comments/${payload.id}`, {
         method: "put",
@@ -137,13 +136,11 @@ class Comment extends Component {
   };
 
   onClickThumbsUp = comment => {
-    console.log("comment is", comment);
     Promise.resolve(comment)
       .then(this.setCurrentComment)
       .then(this.addThumbsUpToComment)
       .then(this.addNewCommentScoreToStore)
-      .then(this.addCommentVoteScoreChangeToBackEnd)
-      .then(() => console.log("currentComment", this.props.currentComment));
+      .then(this.addCommentVoteScoreChangeToBackEnd);
   };
 
   addThumbsDownToComment = payloadComment => {
@@ -157,13 +154,11 @@ class Comment extends Component {
   };
 
   onClickThumbsDown = comment => {
-    console.log("comment is", comment);
     Promise.resolve(comment)
       .then(this.setCurrentComment)
       .then(this.addThumbsDownToComment)
       .then(this.addNewCommentScoreToStore)
-      .then(this.addCommentVoteScoreChangeToBackEnd)
-      .then(() => console.log("currentComment", this.props.currentComment));
+      .then(this.addCommentVoteScoreChangeToBackEnd);
   };
 
   render() {
