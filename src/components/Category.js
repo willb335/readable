@@ -5,6 +5,7 @@ import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import PostModal from "./PostModal";
 import { isModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
+import { isPostSortedByVote } from "../actions/sortActions";
 import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
 import { setCurrentPost } from "../actions/postActions";
 import { withRouter } from "react-router-dom";
@@ -23,6 +24,11 @@ class Category extends Component {
   clickCategory = () => {
     this.props.isCategoryOpen({ isCategoryOpen: true });
     this.props.setCurrentCategory({ currentCategory: this.props.catName });
+  };
+
+  sortPostByVoteScore = () => {
+    const sortedPosts = posts.sort((b, a) => a.voteScore - b.voteScore);
+    this.props.isPostSortedByVote({ isPostSortedByVote: true });
   };
 
   render() {
@@ -101,7 +107,8 @@ function mapDispatchToProps(dispatch) {
     setCurrentCategory: data => dispatch(setCurrentCategory(data)),
     isPostDetailOpen: data => dispatch(isPostDetailOpen(data)),
     isCategoryOpen: data => dispatch(isCategoryOpen(data)),
-    setCurrentPost: data => dispatch(setCurrentPost(data))
+    setCurrentPost: data => dispatch(setCurrentPost(data)),
+    isPostSortedByVote: data => dispatch(isPostSortedByVote(data))
   };
 }
 
