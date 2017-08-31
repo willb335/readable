@@ -85,10 +85,20 @@ class Category extends Component {
               <div>Filler</div>
 
               <div>
-                <Button bsStyle="primary">Sort By Data</Button>
+                <Button
+                  bsStyle="primary"
+                  onClick={this.onClickSortPostByTimestamp}
+                >
+                  Sort By Date
+                </Button>
               </div>
               <div>
-                <Button bsStyle="primary">Sort by Vote</Button>
+                <Button
+                  bsStyle="primary"
+                  onClick={this.onClickSortPostByVoteScore}
+                >
+                  Sort by Vote
+                </Button>
               </div>
               <div>
                 <Link to={`/newpost`} onClick={this.onClickNewPost}>
