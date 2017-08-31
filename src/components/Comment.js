@@ -93,6 +93,7 @@ class Comment extends Component {
                 <div>
                   {c.author}
                 </div>
+
                 <div>
                   {c.body}
                 </div>

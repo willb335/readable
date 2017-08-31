@@ -7,91 +7,87 @@ import {
   FormControl
 } from "react-bootstrap";
 import { connect } from "react-redux";
-import { isModalOpen } from "../actions/modalActions";
+import { isModalOpen, isCommentModalOpen } from "../actions/modalActions";
 import { addPost } from "../actions/postActions";
 import uuidv4 from "uuid/v4";
 import { withRouter } from "react-router-dom";
+import { addComment } from "../actions/commentActions";
 
 class NewCommentModal extends Component {
-  currentPost = {};
+  currentComment = {};
 
-  // onClose = payload => {
-  //   this.props.isModalOpen({
-  //     isModalOpen: false
-  //   });
-  //   this.props.history.push(`/${this.props.category.currentCategory}`);
-  //   payload = {};
-  // };
-  //
-  // buildPayload = cP => {
-  //   return new Promise(resolve => {
-  //     const randomId = uuidv4();
-  //     const payload = {
-  //       ...cP,
-  //       id: randomId,
-  //       timestamp: Date.now(),
-  //       category: this.props.category.currentCategory,
-  //       deleted: false,
-  //       voteScore: 0
-  //     };
-  //     resolve(payload);
-  //   });
-  // };
-  //
-  // addPostToStore = payload => {
-  //   return new Promise(resolve => {
-  //     this.props.addPost(payload);
-  //     resolve(payload);
-  //   });
-  // };
-  //
-  // postPayloadToBackEnd = payload => {
-  //   return new Promise(resolve => {
-  //     fetch("http://localhost:5001/posts", {
-  //       method: "post",
-  //       headers: {
-  //         Authorization: "will335",
-  //         Accept: "application/json",
-  //         "Content-Type": "application/json"
-  //       },
-  //       body: JSON.stringify(payload)
-  //     }).then(response => {
-  //       resolve(payload);
-  //     });
-  //   });
-  // };
-  //
-  // removeCurrentPayload = payload => {
-  //   return new Promise(resolve => {
-  //     payload = {};
-  //     this.currentPost = {};
-  //     resolve(payload);
-  //   });
-  // };
-  //
-  // onSubmit = () => {
-  //   Promise.resolve(this.currentPost)
-  //     .then(this.buildPayload)
-  //     .then(this.addPostToStore)
-  //     .then(this.postPayloadToBackEnd)
-  //     .then(this.removeCurrentPayload)
-  //     .then(() => {
-  //       this.props.isModalOpen({ isModalOpen: false });
-  //       this.props.history.push(`/${this.props.category.currentCategory}`);
-  //     });
-  // };
-  //
-  // handleAuthorChange = event => {
-  //   this.currentPost.author = event.target.value;
-  // };
-  //
-  // handleTitleChange = event => {
-  //   this.currentPost.title = event.target.value;
-  // };
-  //
-  // hanglePostBodyChange = event => {
-  //   this.currentPost.body = event.target.value;
-  // };
+  onClose = payload => {
+    this.props.isCommentModalOpen({
+      isCommentModalOpen: false
+    });
+    payload = {};
+  };
+
+  buildPayload = cC => {
+    return new Promise(resolve => {
+      const randomId = uuidv4();
+      const payload = {
+        ...cC,
+        id: randomId,
+        parentId: "8xf0y6ziyjabvozdd253nd",
+        timestamp: Date.now(),
+        deleted: false,
+        parentDeleted: false,
+        voteScore: 0
+      };
+      resolve(payload);
+    });
+  };
+
+  addCommentToStore = payload => {
+    return new Promise(resolve => {
+      this.props.addComment(payload);
+      resolve(payload);
+    });
+  };
+
+  postPayloadToBackEnd = payload => {
+    return new Promise(resolve => {
+      fetch(`http://localhost:5001/comments/${payload.id}`, {
+        method: "post",
+        headers: {
+          Authorization: "will335",
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      }).then(response => {
+        resolve(payload);
+      });
+    });
+  };
+
+  removeCurrentPayload = payload => {
+    return new Promise(resolve => {
+      payload = {};
+      this.currentComment = {};
+      resolve(payload);
+    });
+  };
+
+  onSubmit = () => {
+    Promise.resolve(this.currentComment)
+      .then(this.buildPayload)
+      .then(this.addCommentToStore)
+      .then(this.postPayloadToBackEnd)
+      .then(this.removeCurrentPayload)
+      .then(() => {
+        this.props.isCommentModalOpen({ isModalOpen: false });
+      });
+  };
+
+  handleAuthorChange = event => {
+    this.currentComment.author = event.target.value;
+  };
+
+  hanglePostBodyChange = event => {
+    this.currentComment.body = event.target.value;
+  };
 
   render() {
     const { modal } = this.props;
@@ -106,44 +102,32 @@ class NewCommentModal extends Component {
             <Modal.Title id="contained-modal-title-lg">New Post</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {/* <form>
+            <form>
               <FormGroup controlId="formBasicText">
                 <ControlLabel>Name</ControlLabel>
                 <FormControl
                   type="text"
                   componentClass="textarea"
-                  value={this.currentPost.author}
+                  value={this.currentComment.author}
                   placeholder="Enter name"
                   onChange={this.handleAuthorChange}
                 />
                 <FormControl.Feedback />
               </FormGroup>
             </form>
-            <form>
-              <FormGroup controlId="formBasicText">
-                <ControlLabel>Title</ControlLabel>
-                <FormControl
-                  type="text"
-                  componentClass="textarea"
-                  value={this.currentPost.title}
-                  placeholder="Enter title"
-                  onChange={this.handleTitleChange}
-                />
-                <FormControl.Feedback />
-              </FormGroup>
-            </form>
+
             <form className="form-input-area">
               <FormGroup controlId="formControlsTextarea">
                 <ControlLabel>Enter Post</ControlLabel>
                 <FormControl
-                  value={this.currentPost.body}
+                  value={this.currentComment.body}
                   style={{ height: "300px" }}
                   componentClass="textarea"
                   placeholder="Enter Post"
                   onChange={this.hanglePostBodyChange}
                 />
               </FormGroup>
-            </form> */}
+            </form>
           </Modal.Body>
           <Modal.Footer>
             <Button bsStyle="primary" onClick={this.onSubmit}>
@@ -157,18 +141,21 @@ class NewCommentModal extends Component {
   }
 }
 
-function mapStateToProps({ modal, posts, category }) {
+function mapStateToProps({ modal, posts, category, currentPost }) {
   return {
     modal,
     posts,
-    category
+    category,
+    currentPost: currentPost.currentPost
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     addPost: data => dispatch(addPost(data)),
-    isModalOpen: data => dispatch(isModalOpen(data))
+    isModalOpen: data => dispatch(isModalOpen(data)),
+    addComment: data => dispatch(addComment(data)),
+    isCommentModalOpen: data => dispatch(isCommentModalOpen(data))
   };
 }
 
