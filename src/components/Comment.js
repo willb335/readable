@@ -161,6 +161,24 @@ class Comment extends Component {
       .then(this.addCommentVoteScoreChangeToBackEnd);
   };
 
+  deleteComment = comment => {
+    return new Promise(resolve => {
+      const payload = {
+        ...comment,
+        deleted: true
+      };
+      resolve(payload);
+    });
+  };
+
+  onClickDeleteComment = comment => {
+    Promise.resolve(comment).then(this.deleteComment);
+    // .then(this.addDeletedPostToStore)
+    // .then(this.postPayloadToBackEnd)
+    // .then(this.removeCurrentPayload)
+    // .then(() => this.props.history.push(`/`));
+  };
+
   render() {
     const { comments, currentPost } = this.props;
     this.sortComments(comments);
