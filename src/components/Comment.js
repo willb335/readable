@@ -217,6 +217,14 @@ class Comment extends Component {
                   </div>
                   <div>
                     {this.convertDate(c.timestamp)}
+                    <div className="comment-buttons">
+                      <Button bsSize="xsmall" bsStyle="primary">
+                        Edit
+                      </Button>
+                      <Button bsSize="xsmall" bsStyle="primary">
+                        Delete
+                      </Button>
+                    </div>
                   </div>
                 </ListGroupItem>
             )}
