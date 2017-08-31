@@ -32,8 +32,7 @@ class NewCommentModal extends Component {
         parentId: "8xf0y6ziyjabvozdd253nd",
         timestamp: Date.now(),
         deleted: false,
-        parentDeleted: false,
-        voteScore: 0
+        parentDeleted: false
       };
       resolve(payload);
     });
@@ -48,7 +47,7 @@ class NewCommentModal extends Component {
 
   postPayloadToBackEnd = payload => {
     return new Promise(resolve => {
-      fetch(`http://localhost:5001/comments/${payload.id}`, {
+      fetch(`http://localhost:5001/comments`, {
         method: "post",
         headers: {
           Authorization: "will335",
