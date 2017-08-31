@@ -171,12 +171,34 @@ class Comment extends Component {
     });
   };
 
+  addDeletedCommentToStore = payload => {
+    return new Promise(resolve => {
+      this.props.editComment(payload);
+      resolve(payload);
+    });
+  };
+
+  postPayloadToBackEnd = payload => {
+    return new Promise(resolve => {
+      fetch(`http://localhost:5001/comments/${payload.id}`, {
+        method: "delete",
+        headers: {
+          Authorization: "will335",
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      }).then(response => {
+        resolve(payload);
+      });
+    });
+  };
+
   onClickDeleteComment = comment => {
-    Promise.resolve(comment).then(this.deleteComment);
-    // .then(this.addDeletedPostToStore)
-    // .then(this.postPayloadToBackEnd)
-    // .then(this.removeCurrentPayload)
-    // .then(() => this.props.history.push(`/`));
+    Promise.resolve(comment)
+      .then(this.deleteComment)
+      .then(this.addDeletedCommentToStore)
+      .then(this.postPayloadToBackEnd);
   };
 
   render() {
@@ -208,6 +230,7 @@ class Comment extends Component {
             {comments.map(
               c =>
                 c.parentId === currentPost.id &&
+                !c.deleted &&
                 <ListGroupItem key={c.id}>
                   <div>
                     {c.author}
@@ -239,7 +262,11 @@ class Comment extends Component {
                       <Button bsSize="xsmall" bsStyle="primary">
                         Edit
                       </Button>
-                      <Button bsSize="xsmall" bsStyle="primary">
+                      <Button
+                        bsSize="xsmall"
+                        bsStyle="primary"
+                        onClick={() => this.onClickDeleteComment(c)}
+                      >
                         Delete
                       </Button>
                     </div>
