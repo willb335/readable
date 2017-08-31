@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import PostModal from "./PostModal";
+import NewCommentModal from "./NewCommentModal";
 import { isModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
 import {
@@ -71,6 +72,8 @@ class Comment extends Component {
         <div className="button-comment-container">
           <Button bsStyle="primary">Sort by Date</Button>
           <Button bsStyle="primary">Sort by Vote Score</Button>
+          <Button bsStyle="primary">New Post</Button>
+          <NewCommentModal isOpen={false} />
         </div>
         <div>
           <ListGroup fill>
