@@ -58,6 +58,14 @@ class Category extends Component {
     }
   };
 
+  convertDate = inputFormat => {
+    function pad(s) {
+      return s < 10 ? "0" + s : s;
+    }
+    var d = new Date(inputFormat);
+    return [pad(d.getMonth() + 1), pad(d.getDate()), d.getFullYear()].join("/");
+  };
+
   render() {
     const {
       modal,
@@ -113,7 +121,7 @@ class Category extends Component {
         >
           <ListGroup fill>
             <div className="posts-container">
-              {" "}{posts.map(
+              {posts.map(
                 p =>
                   p.category === catName &&
                   !p.deleted &&
@@ -127,7 +135,7 @@ class Category extends Component {
                     </Link>
 
                     <div>{`Vote Score is ${p.voteScore}`}</div>
-                    <div>{`Date ${p.timestamp}`}</div>
+                    <div>{`Date ${this.convertDate(p.timestamp)}`}</div>
                   </ListGroupItem>
               )}
             </div>
