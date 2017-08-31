@@ -116,6 +116,26 @@ class Comment extends Component {
       .then(() => console.log("currentComment", this.props.currentComment));
   };
 
+  addThumbsDownToComment = payloadComment => {
+    return new Promise(resolve => {
+      const payload = {
+        ...payloadComment,
+        voteScore: payloadComment.voteScore - 1
+      };
+      resolve(payload);
+    });
+  };
+
+  onClickThumbsDown = comment => {
+    console.log("comment is", comment);
+    Promise.resolve(comment)
+      .then(this.setCurrentComment)
+      .then(this.addThumbsDownToComment)
+      .then(this.addNewCommentScoreToStore)
+      .then(this.addCommentVoteScoreChangeToBackEnd)
+      .then(() => console.log("currentComment", this.props.currentComment));
+  };
+
   render() {
     const { comments } = this.props;
 
@@ -143,7 +163,10 @@ class Comment extends Component {
                       <Glyphicon glyph="thumbs-up" />
                     </Button>
 
-                    <Button bsStyle="primary" onClick={this.onClickThumbsDown}>
+                    <Button
+                      bsStyle="primary"
+                      onClick={() => this.onClickThumbsDown(c)}
+                    >
                       <Glyphicon glyph="thumbs-down" />
                     </Button>
                   </div>
