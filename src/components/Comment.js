@@ -205,7 +205,11 @@ class Comment extends Component {
   onClickEditComment = comment => {
     Promise.resolve(comment)
       .then(this.setCurrentComment)
-      .then(() => this.props.isCommentModalOpen({ isCommentModalOpen: true }));
+      .then(() => this.props.isCommentModalOpen({ isCommentModalOpen: true }))
+      .then(() => {
+        console.log("about to return...");
+        return <EditCommentModal />;
+      });
   };
 
   render() {
@@ -273,7 +277,6 @@ class Comment extends Component {
                       >
                         Edit
                       </Button>
-                      <EditCommentModal />
                       <Button
                         bsSize="xsmall"
                         bsStyle="primary"

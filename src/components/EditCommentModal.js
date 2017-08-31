@@ -8,7 +8,7 @@ import {
 } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { isModalOpen } from "../actions/modalActions";
+import { isModalOpen, isCommentModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
 import { editPost, removePost } from "../actions/postActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
@@ -17,22 +17,23 @@ import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
 import { withRouter } from "react-router-dom";
 
 class EditCommentModal extends Component {
-  // currentPost = { ...this.props.currentPost };
+  currentComment = { ...this.props.currentComment };
 
   componentDidMount() {
+    console.log("currentComment", this.currentComment);
     this.props.editAuthor({ author: this.currentComment.author });
     this.props.editBody({ body: this.currentComment.body });
   }
 
   onClose = payload => {
-    this.props.isModalOpen({
+    this.props.isCommentModalOpen({
       isModalOpen: false
     });
-    this.props.setCurrentCategory({
-      currentCategory: this.props.currentPost.category
-    });
+    // this.props.setCurrentCategory({
+    //   currentCategory: this.props.currentPost.category
+    // });
 
-    this.props.history.push(`/`);
+    // this.props.history.push(`/`);
 
     payload = {};
   };
@@ -187,13 +188,21 @@ class EditCommentModal extends Component {
   }
 }
 
-function mapStateToProps({ modal, posts, category, currentPost, form }) {
+function mapStateToProps({
+  modal,
+  posts,
+  category,
+  currentPost,
+  form,
+  currentComment
+}) {
   return {
     modal,
     posts,
     category,
     form,
-    currentPost: currentPost.currentPost
+    currentPost: currentPost.currentPost,
+    currentComment: currentComment.currentComment
   };
 }
 
@@ -203,6 +212,7 @@ function mapDispatchToProps(dispatch) {
     removePost: data => dispatch(removePost(data)),
     setCurrentPost: data => dispatch(setCurrentPost(data)),
     isModalOpen: data => dispatch(isModalOpen(data)),
+    isCommentModalOpen: data => dispatch(isCommentModalOpen(data)),
     isPostDetailOpen: data => dispatch(isPostDetailOpen(data)),
     editAuthor: data => dispatch(editAuthor(data)),
     editTitle: data => dispatch(editTitle(data)),
