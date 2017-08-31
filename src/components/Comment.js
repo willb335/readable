@@ -137,7 +137,7 @@ class Comment extends Component {
   };
 
   render() {
-    const { comments } = this.props;
+    const { comments, currentPost } = this.props;
 
     return (
       <div>
@@ -151,36 +151,38 @@ class Comment extends Component {
         </div>
         <div>
           <ListGroup fill>
-            {comments.map(c =>
-              <ListGroupItem key={c.id}>
-                <div>
-                  {c.author}
+            {comments.map(
+              c =>
+                c.parentId === currentPost.id &&
+                <ListGroupItem key={c.id}>
                   <div>
-                    <Button
-                      bsStyle="primary"
-                      onClick={() => this.onClickThumbsUp(c)}
-                    >
-                      <Glyphicon glyph="thumbs-up" />
-                    </Button>
+                    {c.author}
+                    <div>
+                      <Button
+                        bsStyle="primary"
+                        onClick={() => this.onClickThumbsUp(c)}
+                      >
+                        <Glyphicon glyph="thumbs-up" />
+                      </Button>
 
-                    <Button
-                      bsStyle="primary"
-                      onClick={() => this.onClickThumbsDown(c)}
-                    >
-                      <Glyphicon glyph="thumbs-down" />
-                    </Button>
+                      <Button
+                        bsStyle="primary"
+                        onClick={() => this.onClickThumbsDown(c)}
+                      >
+                        <Glyphicon glyph="thumbs-down" />
+                      </Button>
+                    </div>
                   </div>
-                </div>
-                <div>
-                  {c.body}
-                </div>
-                <div>
-                  {c.voteScore}
-                </div>
-                <div>
-                  {this.convertDate(c.timestamp)}
-                </div>
-              </ListGroupItem>
+                  <div>
+                    {c.body}
+                  </div>
+                  <div>
+                    {c.voteScore}
+                  </div>
+                  <div>
+                    {this.convertDate(c.timestamp)}
+                  </div>
+                </ListGroupItem>
             )}
           </ListGroup>
         </div>
