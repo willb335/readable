@@ -7,7 +7,6 @@ import {
   FormControl
 } from "react-bootstrap";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import {
   isModalOpen,
   isEditCommentModalOpen,
@@ -99,7 +98,7 @@ class EditCommentModal extends Component {
   };
 
   render() {
-    const { modal, currentPost, form } = this.props;
+    const { modal, form } = this.props;
     return (
       <div>
         <Modal

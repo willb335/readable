@@ -67,7 +67,7 @@ class Category extends Component {
   };
 
   render() {
-    const { modal, catName, posts } = this.props;
+    const { catName, posts } = this.props;
     this.sortPosts(posts);
 
     return (
