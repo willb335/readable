@@ -5,7 +5,6 @@ import modal from "./modal";
 import category from "./category";
 import postDetail from "./postDetail";
 import currentPost from "./currentPost";
-import backButton from "./backButton";
 import form from "./editForm";
 import sorts from "./sorts";
 import comments from "./comments";
@@ -18,7 +17,6 @@ export default combineReducers({
   category,
   postDetail,
   currentPost,
-  backButton,
   form,
   sorts,
   comments,

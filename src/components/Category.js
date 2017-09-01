@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import PostModal from "./PostModal";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import { isModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
 import {
@@ -11,7 +12,6 @@ import {
 } from "../actions/sortActions";
 import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
 import { setCurrentPost } from "../actions/postActions";
-import { withRouter } from "react-router-dom";
 
 class Category extends Component {
   componentDidMount() {
