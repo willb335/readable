@@ -21,17 +21,15 @@ class EditPostModal extends Component {
 
   componentDidMount() {}
 
-  onClose = payload => {
+  onClose = () => {
     this.props.isEditPostModalOpen({
       isEditPostModalOpen: false
     });
     this.props.history.push(`/`);
-    payload = {};
   };
 
   buildPayload = cP => {
     return new Promise(resolve => {
-      console.log("payload", cP);
       const payload = {
         ...cP,
         title: this.props.form.title,
@@ -67,19 +65,11 @@ class EditPostModal extends Component {
     });
   };
 
-  removeCurrentPayload = payload => {
-    return new Promise(resolve => {
-      payload = {};
-      resolve(payload);
-    });
-  };
-
-  closeModal = () => {
+  closeModal = payload => {
     return new Promise(resolve => {
       this.props.isEditPostModalOpen({ isEditPostModalOpen: false });
       this.props.isPostDetailOpen({ isPostDetailOpen: false });
-
-      this.props.history.push(`/`);
+      this.props.history.push("/");
       resolve();
     });
   };
@@ -89,7 +79,6 @@ class EditPostModal extends Component {
       .then(this.buildPayload)
       .then(this.addEditedPostToStore)
       .then(this.postPayloadToBackEnd)
-      // .then(this.removeCurrentPayload)
       .then(this.closeModal);
   };
 
@@ -158,9 +147,11 @@ class EditPostModal extends Component {
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <Link to={`/${currentPost.category}`} onClick={this.onSubmit}>
-              <Button bsStyle="primary">Submit</Button>
-            </Link>
+            {/* <Link to={`/${currentPost.category}`} > */}
+            <Button bsStyle="primary" onClick={this.onSubmit}>
+              Submit
+            </Button>
+            {/* </Link> */}
 
             <Button onClick={this.onClose}>Close</Button>
           </Modal.Footer>

@@ -69,7 +69,8 @@ class Category extends Component {
   render() {
     const { catName, posts } = this.props;
     this.sortPosts(posts);
-
+    const filteredPosts = posts.filter(p => !p.deleted);
+    console.log("posts...", filteredPosts);
     return (
       <div>
         <NewPostModal />
@@ -112,10 +113,10 @@ class Category extends Component {
           <ListGroup fill>
             <div className="posts-container">
               {posts.map(
-                p =>
+                (p, i) =>
                   p.category === catName &&
                   !p.deleted &&
-                  <ListGroupItem key={p.title}>
+                  <ListGroupItem key={i}>
                     <Link
                       to={`/${p.category}/${p.title}`}
                       onClick={() => this.clickPost(p)}
