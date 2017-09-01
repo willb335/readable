@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import { Grid, Row, Col } from "react-bootstrap";
-import { connect } from "react-redux";
 import Category from "./Category";
 import PostDetail from "./PostDetail";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { addPost } from "../actions/postActions";
 import { isFetchRequestComplete, getCategories } from "../actions/fetchActions";
