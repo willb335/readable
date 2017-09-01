@@ -3,7 +3,7 @@ import { Well, Panel, Button, Glyphicon } from "react-bootstrap";
 import { connect } from "react-redux";
 import Comment from "./Comment";
 import EditPostModal from "./EditPostModal";
-import { isModalOpen } from "../actions/modalActions";
+import { isModalOpen, isEditPostModalOpen } from "../actions/modalActions";
 import { editPost } from "../actions/postActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { setCurrentPost } from "../actions/postActions";
@@ -20,7 +20,9 @@ class PostDetail extends Component {
         this.props.editBody({ body: currentPost.body });
         this.props.editTitle({ title: currentPost.title });
       })
-      .then(() => this.props.isModalOpen({ isModalOpen: true }));
+      .then(() =>
+        this.props.isEditPostModalOpen({ isEditPostModalOpen: true })
+      );
   };
 
   deletePost = cP => {
@@ -246,7 +248,7 @@ class PostDetail extends Component {
                     <Button bsStyle="primary" onClick={this.onClickEditPost}>
                       Edit Post
                     </Button>
-                    <EditPostModal currentPost={currentPost} />
+                    <EditPostModal />
                   </div>
                 </div>
               }
@@ -271,6 +273,7 @@ function mapStateToProps({ currentPost, modal, comments }) {
 function mapDispatchToProps(dispatch) {
   return {
     isModalOpen: data => dispatch(isModalOpen(data)),
+    isEditPostModalOpen: data => dispatch(isEditPostModalOpen(data)),
     editPost: data => dispatch(editPost(data)),
     editComment: data => dispatch(editComment(data)),
     setCurrentPost: data => dispatch(setCurrentPost(data)),

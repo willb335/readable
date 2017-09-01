@@ -9,7 +9,7 @@ import {
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { isModalOpen } from "../actions/modalActions";
+import { isModalOpen, isEditPostModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
 import { editPost } from "../actions/postActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
@@ -22,15 +22,10 @@ class EditPostModal extends Component {
   componentDidMount() {}
 
   onClose = payload => {
-    this.props.isModalOpen({
-      isModalOpen: false
+    this.props.isEditPostModalOpen({
+      isEditPostModalOpen: false
     });
-    this.props.setCurrentCategory({
-      currentCategory: this.props.currentPost.category
-    });
-
     this.props.history.push(`/`);
-
     payload = {};
   };
 
@@ -80,7 +75,7 @@ class EditPostModal extends Component {
 
   closeModal = () => {
     return new Promise(resolve => {
-      this.props.isModalOpen({ isModalOpen: false });
+      this.props.isEditPostModalOpen({ isEditPostModalOpen: false });
       this.props.isPostDetailOpen({ isPostDetailOpen: false });
       this.props.setCurrentCategory({
         currentCategory: this.props.currentPost.category
@@ -116,7 +111,7 @@ class EditPostModal extends Component {
     return (
       <div>
         <Modal
-          show={modal.isModalOpen}
+          show={modal.isEditPostModalOpen}
           bsSize="large"
           aria-labelledby="contained-modal-title-lg"
         >
@@ -191,6 +186,7 @@ function mapDispatchToProps(dispatch) {
     editPost: data => dispatch(editPost(data)),
     setCurrentPost: data => dispatch(setCurrentPost(data)),
     isModalOpen: data => dispatch(isModalOpen(data)),
+    isEditPostModalOpen: data => dispatch(isEditPostModalOpen(data)),
     isPostDetailOpen: data => dispatch(isPostDetailOpen(data)),
     editAuthor: data => dispatch(editAuthor(data)),
     editTitle: data => dispatch(editTitle(data)),

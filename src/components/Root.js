@@ -10,6 +10,7 @@ import { isFetchRequestComplete } from "../actions/fetchActions";
 import { getCategories } from "../actions/categories";
 import {
   isModalOpen,
+  isEditPostModalOpen,
   isCommentModalOpen,
   isEditCommentModalOpen
 } from "../actions/modalActions";
@@ -35,6 +36,7 @@ class Root extends Component {
 
   setModalState = () => {
     this.props.isModalOpen({ isModalOpen: false });
+    this.props.isEditPostModalOpen({ isEditPostModalOpen: false });
     this.props.isCommentModalOpen({ isCommentModalOpen: false });
     this.props.isEditCommentModalOpen({ isEditCommentModalOpen: false });
   };
@@ -145,6 +147,7 @@ function mapDispatchToProps(dispatch) {
     isFetchRequestComplete: data => dispatch(isFetchRequestComplete(data)),
     getCategories: data => dispatch(getCategories(data)),
     isModalOpen: data => dispatch(isModalOpen(data)),
+    isEditPostModalOpen: data => dispatch(isEditPostModalOpen(data)),
     isCommentModalOpen: data => dispatch(isCommentModalOpen(data)),
     isEditCommentModalOpen: data => dispatch(isEditCommentModalOpen(data))
   };
