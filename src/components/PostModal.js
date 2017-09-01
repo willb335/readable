@@ -7,10 +7,10 @@ import {
   FormControl
 } from "react-bootstrap";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import uuidv4 from "uuid/v4";
 import { isModalOpen } from "../actions/modalActions";
 import { addPost } from "../actions/postActions";
-import uuidv4 from "uuid/v4";
-import { withRouter } from "react-router-dom";
 
 class PostModal extends Component {
   currentPost = {};
