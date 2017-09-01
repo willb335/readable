@@ -189,6 +189,7 @@ class PostDetail extends Component {
 
   render() {
     const { currentPost, comments } = this.props;
+    console.log("current post in detail", currentPost);
     let commentKeys = Object.keys(comments);
     let filteredKeys = commentKeys.filter(
       key => comments[key].parentId === this.props.currentPost.id
@@ -196,6 +197,7 @@ class PostDetail extends Component {
 
     return (
       <div className="well-post">
+        <EditPostModal />
         <Well style={{ maxWidth: "50%", marginTop: "25px" }}>
           <div className="user-post">
             <div className="vote-score-post">
@@ -248,7 +250,6 @@ class PostDetail extends Component {
                     <Button bsStyle="primary" onClick={this.onClickEditPost}>
                       Edit Post
                     </Button>
-                    <EditPostModal />
                   </div>
                 </div>
               }

@@ -64,7 +64,6 @@ class Root extends Component {
 
   render() {
     const { fetchRequests, category, match, currentPost } = this.props;
-    console.log("currentPost", currentPost);
     const categoryList = () => {
       if (category.categories !== undefined) {
         return (

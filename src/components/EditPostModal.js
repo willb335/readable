@@ -31,6 +31,7 @@ class EditPostModal extends Component {
 
   buildPayload = cP => {
     return new Promise(resolve => {
+      console.log("payload", cP);
       const payload = {
         ...cP,
         title: this.props.form.title,
@@ -77,9 +78,7 @@ class EditPostModal extends Component {
     return new Promise(resolve => {
       this.props.isEditPostModalOpen({ isEditPostModalOpen: false });
       this.props.isPostDetailOpen({ isPostDetailOpen: false });
-      this.props.setCurrentCategory({
-        currentCategory: this.props.currentPost.category
-      });
+
       this.props.history.push(`/`);
       resolve();
     });
@@ -90,7 +89,7 @@ class EditPostModal extends Component {
       .then(this.buildPayload)
       .then(this.addEditedPostToStore)
       .then(this.postPayloadToBackEnd)
-      .then(this.removeCurrentPayload)
+      // .then(this.removeCurrentPayload)
       .then(this.closeModal);
   };
 
