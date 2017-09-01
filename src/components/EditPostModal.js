@@ -74,7 +74,6 @@ class EditPostModal extends Component {
   removeCurrentPayload = payload => {
     return new Promise(resolve => {
       payload = {};
-      this.currentPost = {};
       resolve(payload);
     });
   };

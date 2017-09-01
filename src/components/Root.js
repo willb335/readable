@@ -8,7 +8,11 @@ import { withRouter } from "react-router-dom";
 import { addPost } from "../actions/postActions";
 import { isFetchRequestComplete } from "../actions/fetchActions";
 import { getCategories } from "../actions/categories";
-
+import {
+  isModalOpen,
+  isCommentModalOpen,
+  isEditCommentModalOpen
+} from "../actions/modalActions";
 class Root extends Component {
   getPostsFromServer = () => {
     return new Promise(resolve => {
@@ -29,9 +33,16 @@ class Root extends Component {
     });
   };
 
+  setModalState = () => {
+    this.props.isModalOpen({ isModalOpen: false });
+    this.props.isCommentModalOpen({ isCommentModalOpen: false });
+    this.props.isEditCommentModalOpen({ isEditCommentModalOpen: false });
+  };
+
   componentDidMount() {
     this.getCategoryTypes();
     Promise.resolve("Start")
+      .then(this.setModalState)
       .then(this.getPostsFromServer)
       .then(this.addPostsToStore);
   }
@@ -51,6 +62,7 @@ class Root extends Component {
 
   render() {
     const { fetchRequests, category, match, currentPost } = this.props;
+    console.log("currentPost", currentPost);
     const categoryList = () => {
       if (category.categories !== undefined) {
         return (
@@ -131,7 +143,10 @@ function mapDispatchToProps(dispatch) {
   return {
     addPost: data => dispatch(addPost(data)),
     isFetchRequestComplete: data => dispatch(isFetchRequestComplete(data)),
-    getCategories: data => dispatch(getCategories(data))
+    getCategories: data => dispatch(getCategories(data)),
+    isModalOpen: data => dispatch(isModalOpen(data)),
+    isCommentModalOpen: data => dispatch(isCommentModalOpen(data)),
+    isEditCommentModalOpen: data => dispatch(isEditCommentModalOpen(data))
   };
 }
 
