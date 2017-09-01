@@ -6,7 +6,6 @@ import {
   ControlLabel,
   FormControl
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { isModalOpen, isEditPostModalOpen } from "../actions/modalActions";
@@ -93,7 +92,7 @@ class EditPostModal extends Component {
   };
 
   render() {
-    const { modal, currentPost, form } = this.props;
+    const { modal, form } = this.props;
     return (
       <div>
         <Modal

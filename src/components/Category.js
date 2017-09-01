@@ -59,9 +59,9 @@ class Category extends Component {
   };
 
   convertDate = inputFormat => {
-    function pad(s) {
+    const pad = s => {
       return s < 10 ? "0" + s : s;
-    }
+    };
     var d = new Date(inputFormat);
     return [pad(d.getMonth() + 1), pad(d.getDate()), d.getFullYear()].join("/");
   };
@@ -69,7 +69,6 @@ class Category extends Component {
   render() {
     const { catName, posts } = this.props;
     this.sortPosts(posts);
-    const filteredPosts = posts.filter(p => !p.deleted);
     return (
       <div>
         <NewPostModal />
