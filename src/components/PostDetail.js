@@ -73,7 +73,6 @@ class PostDetail extends Component {
             deleted: true
           };
         filteredComments.push(payload);
-        console.log("fitleredCommenta", filteredComments);
       });
       resolve(filteredComments);
     });
@@ -100,7 +99,6 @@ class PostDetail extends Component {
           },
           body: JSON.stringify(c)
         }).then(response => {
-          console.log("commentArray array on exit", commentArray);
           resolve(commentArray);
         });
       });
@@ -189,8 +187,10 @@ class PostDetail extends Component {
 
   render() {
     const { currentPost, comments } = this.props;
-    console.log("comments on render", comments);
-    console.log("currentPost", currentPost);
+    let commentKeys = Object.keys(comments);
+    let filteredKeys = commentKeys.filter(
+      key => comments[key].parentId === this.props.currentPost.id
+    );
 
     return (
       <div className="well-post">
@@ -227,7 +227,7 @@ class PostDetail extends Component {
             </div>
             <div>
               <strong>
-                {`Current number of comments ${comments.length}`}
+                {`Current number of comments ${filteredKeys.length}`}
               </strong>
             </div>
 
