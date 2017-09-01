@@ -6,7 +6,8 @@ import PostDetail from "./PostDetail";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { addPost } from "../actions/postActions";
-import { isFetchRequestComplete, getCategories } from "../actions/fetchActions";
+import { isFetchRequestComplete } from "../actions/fetchActions";
+import { getCategories } from "../actions/categories";
 
 class Root extends Component {
   getPostsFromServer = () => {
@@ -39,22 +40,19 @@ class Root extends Component {
     return fetch("http://localhost:5001/categories", {
       headers: { Authorization: "will335" }
     })
-      .then(response => {
-        return response.json();
-      })
+      .then(response => response.json())
       .then(data => {
         this.props.isFetchRequestComplete({ isComplete: true });
-        return data.categories.map(c => c.name);
+        const categories = data.categories.map(c => c.name);
+        return categories;
       })
-      .then(cats => {
-        this.props.getCategories({ categories: cats });
-      });
+      .then(categories => this.props.getCategories({ categories: categories }));
   };
 
   render() {
     const { fetchRequests, category, match, currentPost } = this.props;
     const categoryList = () => {
-      if (fetchRequests.categories !== undefined) {
+      if (category.categories !== undefined) {
         return (
           <div>
             {currentPost &&
@@ -80,7 +78,7 @@ class Root extends Component {
                   <Category catName={category.currentCategory} />
                 </div>}
             />
-            {fetchRequests.categories.map(c =>
+            {category.categories.map(c =>
               <Route
                 key={c}
                 exact={true}

@@ -1,7 +1,4 @@
-import {
-  IS_FETCH_REQUEST_COMPLETE,
-  GET_CATEGORIES
-} from "../actions/fetchActions";
+import { IS_FETCH_REQUEST_COMPLETE } from "../actions/fetchActions";
 
 function fetchRequests(state = {}, action) {
   switch (action.type) {
@@ -10,13 +7,6 @@ function fetchRequests(state = {}, action) {
       return {
         ...state,
         isComplete
-      };
-
-    case GET_CATEGORIES:
-      const { categories } = action;
-      return {
-        ...state,
-        categories
       };
 
     default:
