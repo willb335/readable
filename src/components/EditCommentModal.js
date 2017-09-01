@@ -25,7 +25,6 @@ class EditCommentModal extends Component {
   componentDidMount() {}
 
   setCurrentComment = currentComment => {
-    console.log("current comment is", currentComment);
     return new Promise(resolve => {
       const payloadComment = { ...currentComment };
       resolve(payloadComment);
@@ -34,7 +33,6 @@ class EditCommentModal extends Component {
 
   buildPayload = payloadComment => {
     return new Promise(resolve => {
-      console.log("building comment payload", payloadComment);
       const payload = {
         ...payloadComment,
         title: this.props.form.title,
@@ -48,7 +46,6 @@ class EditCommentModal extends Component {
 
   addEditedCommentToStore = payload => {
     return new Promise(resolve => {
-      console.log("adding edited Comment payload to store", payload);
       this.props.editComment(payload);
       this.props.setCurrentComment({ currentComment: payload });
       resolve(payload);
@@ -57,7 +54,6 @@ class EditCommentModal extends Component {
 
   postPayloadToBackEnd = payload => {
     return new Promise(resolve => {
-      console.log("comment payload id", payload.id);
       fetch(`http://localhost:5001/comments/${payload.id}`, {
         method: "put",
         headers: {

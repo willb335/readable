@@ -5,6 +5,7 @@ import { isModalOpen } from "../actions/modalActions";
 import Comment from "./Comment";
 import EditModal from "./EditModal";
 import { editPost, removePost } from "../actions/postActions";
+import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { setCurrentPost } from "../actions/postActions";
 import { withRouter } from "react-router-dom";
 
@@ -12,7 +13,13 @@ class PostDetail extends Component {
   currentPost = { ...this.props.currentPost };
 
   onClickEditPost = () => {
-    this.props.isModalOpen({ isModalOpen: true });
+    Promise.resolve(this.currentPost)
+      .then(currentPost => {
+        this.props.editAuthor({ author: currentPost.author });
+        this.props.editBody({ body: currentPost.body });
+        this.props.editTitle({ title: currentPost.title });
+      })
+      .then(() => this.props.isModalOpen({ isModalOpen: true }));
   };
 
   deletePost = cP => {
@@ -211,7 +218,10 @@ function mapDispatchToProps(dispatch) {
     isModalOpen: data => dispatch(isModalOpen(data)),
     editPost: data => dispatch(editPost(data)),
     removePost: data => dispatch(removePost(data)),
-    setCurrentPost: data => dispatch(setCurrentPost(data))
+    setCurrentPost: data => dispatch(setCurrentPost(data)),
+    editAuthor: data => dispatch(editAuthor(data)),
+    editTitle: data => dispatch(editTitle(data)),
+    editBody: data => dispatch(editBody(data))
   };
 }
 
