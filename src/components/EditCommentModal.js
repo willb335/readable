@@ -22,25 +22,21 @@ import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
 import { withRouter } from "react-router-dom";
 
 class EditCommentModal extends Component {
-  currentComment = { ...this.props.currentComment };
+  componentDidMount() {}
 
-  componentDidMount() {
-    this.props.editAuthor({ author: this.currentComment.author });
-    this.props.editBody({ body: this.currentComment.body });
-  }
-
-  onClose = payload => {
-    this.props.isEditCommentModalOpen({
-      isModalOpen: false
+  setCurrentComment = currentComment => {
+    console.log("current comment is", currentComment);
+    return new Promise(resolve => {
+      const payloadComment = { ...currentComment };
+      resolve(payloadComment);
     });
-    payload = {};
   };
 
-  buildPayload = currentComment => {
+  buildPayload = payloadComment => {
     return new Promise(resolve => {
-      console.log("building comment payload", currentComment);
+      console.log("building comment payload", payloadComment);
       const payload = {
-        ...currentComment,
+        ...payloadComment,
         title: this.props.form.title,
         author: this.props.form.author,
         body: this.props.form.body,
@@ -52,7 +48,7 @@ class EditCommentModal extends Component {
 
   addEditedCommentToStore = payload => {
     return new Promise(resolve => {
-      console.log("adding edited Comment payload to store");
+      console.log("adding edited Comment payload to store", payload);
       this.props.editComment(payload);
       this.props.setCurrentComment({ currentComment: payload });
       resolve(payload);
@@ -87,7 +83,7 @@ class EditCommentModal extends Component {
   };
 
   onSubmit = () => {
-    Promise.resolve(this.currentComment)
+    Promise.resolve(this.props.currentComment)
       .then(this.buildPayload)
       .then(this.addEditedCommentToStore)
       .then(this.postPayloadToBackEnd)
@@ -102,9 +98,8 @@ class EditCommentModal extends Component {
     this.props.editTitle({ title: event.target.value });
   };
 
-  hanglePostBodyChange = event => {
+  handlePostBodyChange = event => {
     this.props.editBody({ body: event.target.value });
-    console.log("event", event.target.value);
   };
 
   render() {
@@ -144,7 +139,7 @@ class EditCommentModal extends Component {
                   style={{ height: "300px" }}
                   componentClass="textarea"
                   placeholder="Enter Post"
-                  onChange={this.hanglePostBodyChange}
+                  onChange={this.handlePostBodyChange}
                 />
               </FormGroup>
             </form>
@@ -154,7 +149,7 @@ class EditCommentModal extends Component {
               Submit
             </Button>
 
-            <Button onClick={this.onClose}>Close</Button>
+            <Button onClick={this.closeModal}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>
