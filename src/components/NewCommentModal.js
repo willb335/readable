@@ -7,10 +7,9 @@ import {
   FormControl
 } from "react-bootstrap";
 import { connect } from "react-redux";
-import { isModalOpen, isCommentModalOpen } from "../actions/modalActions";
-import { addPost } from "../actions/postActions";
-import uuidv4 from "uuid/v4";
 import { withRouter } from "react-router-dom";
+import uuidv4 from "uuid/v4";
+import { isCommentModalOpen } from "../actions/modalActions";
 import { addComment } from "../actions/commentActions";
 
 class NewCommentModal extends Component {
@@ -77,7 +76,7 @@ class NewCommentModal extends Component {
       .then(this.postPayloadToBackEnd)
       .then(this.removeCurrentPayload)
       .then(() => {
-        this.props.isCommentModalOpen({ isModalOpen: false });
+        this.props.isCommentModalOpen({ isCommentModalOpen: false });
       });
   };
 
@@ -152,8 +151,6 @@ function mapStateToProps({ modal, posts, category, currentPost }) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addPost: data => dispatch(addPost(data)),
-    isModalOpen: data => dispatch(isModalOpen(data)),
     addComment: data => dispatch(addComment(data)),
     isCommentModalOpen: data => dispatch(isCommentModalOpen(data))
   };
