@@ -17,8 +17,6 @@ import { setCurrentPost } from "../actions/postActions";
 import { setCurrentCategory } from "../actions/categories";
 
 class EditPostModal extends Component {
-  currentPost = { ...this.props.currentPost };
-
   componentDidMount() {}
 
   onClose = () => {
@@ -75,7 +73,7 @@ class EditPostModal extends Component {
   };
 
   onSubmit = () => {
-    Promise.resolve(this.currentPost)
+    Promise.resolve(this.props.currentPost)
       .then(this.buildPayload)
       .then(this.addEditedPostToStore)
       .then(this.postPayloadToBackEnd)

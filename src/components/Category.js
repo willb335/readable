@@ -70,7 +70,6 @@ class Category extends Component {
     const { catName, posts } = this.props;
     this.sortPosts(posts);
     const filteredPosts = posts.filter(p => !p.deleted);
-    console.log("posts...", filteredPosts);
     return (
       <div>
         <NewPostModal />
