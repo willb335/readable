@@ -56,49 +56,53 @@ class PostDetail extends Component {
     });
   };
 
-  // removeCurrentPayload = payload => {
-  //   return new Promise(resolve => {
-  //     payload = {};
-  //     this.currentPost = {};
-  //     resolve(payload);
-  //   });
-  // };
-
-  filterComments = payload => {
+  deleteFilteredComments = () => {
     return new Promise(resolve => {
-      const comments = { ...this.props.comments };
+      let comments = { ...this.props.comments };
       let filteredComments = [];
-      comments.forEach(c => {
-        if (c.parentId === payload.id) {
-          filteredComments.push(c);
-        }
+      let keys = Object.keys(comments);
+      let filtered_keys = keys.filter(
+        key => comments[key].parentId === this.props.currentPost.id
+      );
+      filtered_keys.forEach(key => {
+        let payload = {};
+        if (this.props.currentPost.deleted)
+          payload = {
+            ...comments[key],
+            deleted: true
+          };
+        filteredComments.push(payload);
+        console.log("fitleredCommenta", filteredComments);
       });
-      console.log("filteredComments:", filteredComments);
       resolve(filteredComments);
     });
   };
 
-  deleteFilteredComments = filteredComments => {
+  addDeletedCommentsToBackend = commentArray => {
     return new Promise(resolve => {
-      let filteredCommentsPayload = [];
-      filteredComments.forEach((c, i) => {
-        let payload = {
-          ...c,
-          deleted: true
-        };
-        filteredCommentsPayload.push(payload);
+      commentArray.forEach(c => {
+        this.props.editComment(c);
       });
-      console.log("filteredCommentsPayload", filteredCommentsPayload);
-      resolve(filteredCommentsPayload);
+      resolve(commentArray);
     });
   };
 
-  addDeletedCommentsToBackend = payloadArray => {
+  postCommentPayloadArrayToBackend = commentArray => {
     return new Promise(resolve => {
-      payloadArray.forEach(p => {
-        this.props.editComment(p);
+      commentArray.forEach(c => {
+        fetch(`http://localhost:5001/comments/${c.id}`, {
+          method: "delete",
+          headers: {
+            Authorization: "will335",
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(c)
+        }).then(response => {
+          console.log("commentArray array on exit", commentArray);
+          resolve(commentArray);
+        });
       });
-      resolve(payloadArray);
     });
   };
 
@@ -107,10 +111,10 @@ class PostDetail extends Component {
       .then(this.deletePost)
       .then(this.addDeletedPostToStore)
       .then(this.postPayloadToBackEnd)
-      // .then(this.removeCurrentPayload)
       .then(this.filteredComments)
       .then(this.deleteFilteredComments)
-      .then(addDeletedCommentsToBackend)
+      .then(this.addDeletedCommentsToBackend)
+      .then(this.postCommentPayloadArrayToBackend)
       .then(() => this.props.history.push(`/`));
   };
 
@@ -184,6 +188,9 @@ class PostDetail extends Component {
 
   render() {
     const { currentPost, comments } = this.props;
+    console.log("comments on render", comments);
+    console.log("currentPost", currentPost);
+
     return (
       <div className="well-post">
         <Well style={{ maxWidth: "50%", marginTop: "25px" }}>
