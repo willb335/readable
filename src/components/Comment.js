@@ -1,29 +1,25 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { ListGroup, ListGroupItem, Button, Glyphicon } from "react-bootstrap";
 import NewCommentModal from "./NewCommentModal";
 import EditCommentModal from "./EditCommentModal";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import {
   isModalOpen,
   isCommentModalOpen,
   isEditCommentModalOpen
 } from "../actions/modalActions";
-import { isPostDetailOpen } from "../actions/postDetailActions";
 import {
-  isPostSortedByVote,
-  isPostSortedByTimestamp,
   isCommentSortedByVote,
   isCommentSortedByTimestamp
 } from "../actions/sortActions";
-import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
+import { setCurrentCategory } from "../actions/categories";
 import {
   addComment,
   setCurrentComment,
   editComment
 } from "../actions/commentActions";
-import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
-import { setCurrentPost } from "../actions/postActions";
-import { withRouter } from "react-router-dom";
+import { editBody, editAuthor } from "../actions/editFormAction";
 
 class Comment extends Component {
   getCommentsFromServer = () => {
@@ -333,14 +329,8 @@ function mapDispatchToProps(dispatch) {
   return {
     isModalOpen: data => dispatch(isModalOpen(data)),
     editAuthor: data => dispatch(editAuthor(data)),
-    editTitle: data => dispatch(editTitle(data)),
     editBody: data => dispatch(editBody(data)),
     setCurrentCategory: data => dispatch(setCurrentCategory(data)),
-    isPostDetailOpen: data => dispatch(isPostDetailOpen(data)),
-    isCategoryOpen: data => dispatch(isCategoryOpen(data)),
-    setCurrentPost: data => dispatch(setCurrentPost(data)),
-    isPostSortedByVote: data => dispatch(isPostSortedByVote(data)),
-    isPostSortedByTimestamp: data => dispatch(isPostSortedByTimestamp(data)),
     addComment: data => dispatch(addComment(data)),
     editComment: data => dispatch(editComment(data)),
     isCommentModalOpen: data => dispatch(isCommentModalOpen(data)),
