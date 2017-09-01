@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Well, Panel, Button, Glyphicon } from "react-bootstrap";
 import { connect } from "react-redux";
 import Comment from "./Comment";
-import EditModal from "./EditModal";
+import EditPostModal from "./EditPostModal";
 import { isModalOpen } from "../actions/modalActions";
 import { editPost } from "../actions/postActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
@@ -246,7 +246,7 @@ class PostDetail extends Component {
                     <Button bsStyle="primary" onClick={this.onClickEditPost}>
                       Edit Post
                     </Button>
-                    <EditModal currentPost={currentPost} />
+                    <EditPostModal currentPost={currentPost} />
                   </div>
                 </div>
               }

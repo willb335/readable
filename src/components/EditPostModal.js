@@ -16,7 +16,7 @@ import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { setCurrentPost } from "../actions/postActions";
 import { setCurrentCategory } from "../actions/categories";
 
-class EditModal extends Component {
+class EditPostModal extends Component {
   currentPost = { ...this.props.currentPost };
 
   componentDidMount() {}
@@ -201,5 +201,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(EditModal)
+  connect(mapStateToProps, mapDispatchToProps)(EditPostModal)
 );
