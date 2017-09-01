@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
-import PostModal from "./PostModal";
+import NewPostModal from "./NewPostModal";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { isModalOpen } from "../actions/modalActions";
@@ -26,6 +26,7 @@ class Category extends Component {
 
   clickPost = p => {
     this.props.setCurrentPost({ currentPost: p });
+    this.props.setCurrentCategory({ currentCategory: this.props.catName });
     this.props.isPostDetailOpen({ isPostDetailOpen: true });
   };
 
@@ -71,6 +72,7 @@ class Category extends Component {
 
     return (
       <div>
+        <NewPostModal />
         <Panel
           header={
             <div className="category-container">
@@ -102,8 +104,6 @@ class Category extends Component {
                 <Link to={`/newpost`} onClick={this.onClickNewPost}>
                   <Button bsStyle="primary">New Post</Button>
                 </Link>
-
-                <PostModal />
               </div>
             </div>
           }

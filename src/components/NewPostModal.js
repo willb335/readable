@@ -12,7 +12,7 @@ import uuidv4 from "uuid/v4";
 import { isModalOpen } from "../actions/modalActions";
 import { addPost } from "../actions/postActions";
 
-class PostModal extends Component {
+class NewPostModal extends Component {
   currentPost = {};
 
   onClose = payload => {
@@ -173,5 +173,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(PostModal)
+  connect(mapStateToProps, mapDispatchToProps)(NewPostModal)
 );
