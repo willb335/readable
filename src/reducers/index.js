@@ -12,13 +12,13 @@ import currentComment from "./currentComment";
 
 export default combineReducers({
   posts,
-  fetchRequests,
-  modal,
-  category,
-  postDetail,
   currentPost,
-  form,
-  sorts,
   comments,
-  currentComment
+  currentComment,
+  category,
+  modal,
+  postDetail,
+  fetchRequests,
+  form,
+  sorts
 });
