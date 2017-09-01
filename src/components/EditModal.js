@@ -6,15 +6,15 @@ import {
   ControlLabel,
   FormControl
 } from "react-bootstrap";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { isModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
-import { editPost, removePost } from "../actions/postActions";
+import { editPost } from "../actions/postActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { setCurrentPost } from "../actions/postActions";
 import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
-import { withRouter } from "react-router-dom";
 
 class EditModal extends Component {
   currentPost = { ...this.props.currentPost };
@@ -191,7 +191,6 @@ function mapStateToProps({ modal, posts, category, currentPost, form }) {
 function mapDispatchToProps(dispatch) {
   return {
     editPost: data => dispatch(editPost(data)),
-    removePost: data => dispatch(removePost(data)),
     setCurrentPost: data => dispatch(setCurrentPost(data)),
     isModalOpen: data => dispatch(isModalOpen(data)),
     isPostDetailOpen: data => dispatch(isPostDetailOpen(data)),
