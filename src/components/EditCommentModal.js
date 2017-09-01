@@ -7,18 +7,10 @@ import {
   FormControl
 } from "react-bootstrap";
 import { connect } from "react-redux";
-import {
-  isModalOpen,
-  isEditCommentModalOpen,
-  isCommentModalOpen
-} from "../actions/modalActions";
-import { isPostDetailOpen } from "../actions/postDetailActions";
-import { editPost, removePost } from "../actions/postActions";
+import { withRouter } from "react-router-dom";
+import { isEditCommentModalOpen } from "../actions/modalActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { editComment, setCurrentComment } from "../actions/commentActions";
-import { setCurrentPost } from "../actions/postActions";
-import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
-import { withRouter } from "react-router-dom";
 
 class EditCommentModal extends Component {
   componentDidMount() {}
@@ -71,7 +63,7 @@ class EditCommentModal extends Component {
     return new Promise(resolve => {
       payload = {};
       this.props.isEditCommentModalOpen({
-        isModalOpen: false
+        isEditCommentModalOpen: false
       });
       resolve();
     });
@@ -172,20 +164,12 @@ function mapStateToProps({
 
 function mapDispatchToProps(dispatch) {
   return {
-    editPost: data => dispatch(editPost(data)),
-    removePost: data => dispatch(removePost(data)),
-    setCurrentPost: data => dispatch(setCurrentPost(data)),
     editComment: data => dispatch(editComment(data)),
     setCurrentComment: data => dispatch(setCurrentComment(data)),
-    isModalOpen: data => dispatch(isModalOpen(data)),
     isEditCommentModalOpen: data => dispatch(isEditCommentModalOpen(data)),
-    isCommentModalOpen: data => dispatch(isCommentModalOpen(data)),
-    isPostDetailOpen: data => dispatch(isPostDetailOpen(data)),
     editAuthor: data => dispatch(editAuthor(data)),
     editTitle: data => dispatch(editTitle(data)),
-    editBody: data => dispatch(editBody(data)),
-    isCategoryOpen: data => dispatch(isCategoryOpen(data)),
-    setCurrentCategory: data => dispatch(setCurrentCategory(data))
+    editBody: data => dispatch(editBody(data))
   };
 }
 
