@@ -99,7 +99,7 @@ class NewCommentModal extends Component {
           aria-labelledby="contained-modal-title-lg"
         >
           <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-lg">New Post</Modal.Title>
+            <Modal.Title id="contained-modal-title-lg">New Comment</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <form>

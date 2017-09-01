@@ -8,6 +8,7 @@ import { editPost, removePost } from "../actions/postActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { setCurrentPost } from "../actions/postActions";
 import { withRouter } from "react-router-dom";
+import { editComment } from "../actions/commentActions";
 
 class PostDetail extends Component {
   currentPost = { ...this.props.currentPost };
@@ -271,6 +272,7 @@ function mapDispatchToProps(dispatch) {
   return {
     isModalOpen: data => dispatch(isModalOpen(data)),
     editPost: data => dispatch(editPost(data)),
+    editComment: data => dispatch(editComment(data)),
     removePost: data => dispatch(removePost(data)),
     setCurrentPost: data => dispatch(setCurrentPost(data)),
     editAuthor: data => dispatch(editAuthor(data)),
