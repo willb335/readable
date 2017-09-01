@@ -36,7 +36,6 @@ class EditModal extends Component {
 
   buildPayload = cP => {
     return new Promise(resolve => {
-      console.log("building payload", cP);
       const payload = {
         ...cP,
         title: this.props.form.title,
@@ -50,7 +49,6 @@ class EditModal extends Component {
 
   addEditedPostToStore = payload => {
     return new Promise(resolve => {
-      console.log("adding edited payload to store");
       this.props.editPost(payload);
       this.props.setCurrentPost({ currentPost: payload });
       resolve(payload);
@@ -59,7 +57,6 @@ class EditModal extends Component {
 
   postPayloadToBackEnd = payload => {
     return new Promise(resolve => {
-      console.log("payload id", payload.id);
       fetch(`http://localhost:5001/posts/${payload.id}`, {
         method: "put",
         headers: {
@@ -114,7 +111,6 @@ class EditModal extends Component {
 
   hanglePostBodyChange = event => {
     this.props.editBody({ body: event.target.value });
-    console.log("event", event.target.value);
   };
 
   render() {

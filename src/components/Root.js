@@ -1,15 +1,12 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { Route } from "react-router-dom";
-import { addPost, removePost, editPost } from "../actions/postActions";
-import { isFetchRequestComplete, getCategories } from "../actions/fetchActions";
 import { Grid, Row, Col } from "react-bootstrap";
+import { connect } from "react-redux";
 import Category from "./Category";
 import PostDetail from "./PostDetail";
-import { isCategoryOpen } from "../actions/categories";
-import { isModalOpen } from "../actions/modalActions";
-import { isBackButtonClicked } from "../actions/backButtonAction";
 import { withRouter } from "react-router-dom";
+import { addPost } from "../actions/postActions";
+import { isFetchRequestComplete, getCategories } from "../actions/fetchActions";
 
 class Root extends Component {
   getPostsFromServer = () => {
@@ -135,13 +132,8 @@ function mapStateToProps({
 function mapDispatchToProps(dispatch) {
   return {
     addPost: data => dispatch(addPost(data)),
-    removePost: data => dispatch(removePost(data)),
-    editPost: data => dispatch(editPost(data)),
     isFetchRequestComplete: data => dispatch(isFetchRequestComplete(data)),
-    getCategories: data => dispatch(getCategories(data)),
-    isCategoryOpen: data => dispatch(isCategoryOpen(data)),
-    isBackButtonClicked: data => dispatch(isBackButtonClicked(data)),
-    isModalOpen: data => dispatch(isModalOpen(data))
+    getCategories: data => dispatch(getCategories(data))
   };
 }
 
