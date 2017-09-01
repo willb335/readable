@@ -19,11 +19,7 @@ import { withRouter } from "react-router-dom";
 class EditModal extends Component {
   currentPost = { ...this.props.currentPost };
 
-  componentDidMount() {
-    this.props.editAuthor({ author: this.currentPost.author });
-    this.props.editTitle({ title: this.currentPost.title });
-    this.props.editBody({ body: this.currentPost.body });
-  }
+  componentDidMount() {}
 
   onClose = payload => {
     this.props.isModalOpen({

@@ -56,11 +56,49 @@ class PostDetail extends Component {
     });
   };
 
-  removeCurrentPayload = payload => {
+  // removeCurrentPayload = payload => {
+  //   return new Promise(resolve => {
+  //     payload = {};
+  //     this.currentPost = {};
+  //     resolve(payload);
+  //   });
+  // };
+
+  filterComments = payload => {
     return new Promise(resolve => {
-      payload = {};
-      this.currentPost = {};
-      resolve(payload);
+      const comments = { ...this.props.comments };
+      let filteredComments = [];
+      comments.forEach(c => {
+        if (c.parentId === payload.id) {
+          filteredComments.push(c);
+        }
+      });
+      console.log("filteredComments:", filteredComments);
+      resolve(filteredComments);
+    });
+  };
+
+  deleteFilteredComments = filteredComments => {
+    return new Promise(resolve => {
+      let filteredCommentsPayload = [];
+      filteredComments.forEach((c, i) => {
+        let payload = {
+          ...c,
+          deleted: true
+        };
+        filteredCommentsPayload.push(payload);
+      });
+      console.log("filteredCommentsPayload", filteredCommentsPayload);
+      resolve(filteredCommentsPayload);
+    });
+  };
+
+  addDeletedCommentsToBackend = payloadArray => {
+    return new Promise(resolve => {
+      payloadArray.forEach(p => {
+        this.props.editComment(p);
+      });
+      resolve(payloadArray);
     });
   };
 
@@ -69,7 +107,10 @@ class PostDetail extends Component {
       .then(this.deletePost)
       .then(this.addDeletedPostToStore)
       .then(this.postPayloadToBackEnd)
-      .then(this.removeCurrentPayload)
+      // .then(this.removeCurrentPayload)
+      .then(this.filteredComments)
+      .then(this.deleteFilteredComments)
+      .then(addDeletedCommentsToBackend)
       .then(() => this.props.history.push(`/`));
   };
 
@@ -142,7 +183,7 @@ class PostDetail extends Component {
   };
 
   render() {
-    const { currentPost } = this.props;
+    const { currentPost, comments } = this.props;
     return (
       <div className="well-post">
         <Well style={{ maxWidth: "50%", marginTop: "25px" }}>
@@ -176,6 +217,11 @@ class PostDetail extends Component {
                 {this.convertDate(currentPost.timestamp)}
               </strong>
             </div>
+            <div>
+              <strong>
+                {`Current number of comments ${comments.length}`}
+              </strong>
+            </div>
 
             <hr style={{ borderWidth: "2px" }} />
             {currentPost.body}
@@ -206,10 +252,11 @@ class PostDetail extends Component {
   }
 }
 
-function mapStateToProps({ currentPost, modal }) {
+function mapStateToProps({ currentPost, modal, comments }) {
   return {
     currentPost: currentPost.currentPost,
-    modal
+    modal,
+    comments
   };
 }
 
