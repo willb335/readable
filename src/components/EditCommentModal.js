@@ -16,6 +16,7 @@ import {
 import { isPostDetailOpen } from "../actions/postDetailActions";
 import { editPost, removePost } from "../actions/postActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
+import { editComment, setCurrentComment } from "../actions/commentActions";
 import { setCurrentPost } from "../actions/postActions";
 import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
 import { withRouter } from "react-router-dom";
@@ -24,7 +25,6 @@ class EditCommentModal extends Component {
   currentComment = { ...this.props.currentComment };
 
   componentDidMount() {
-    // console.log("currentComment", this.props.currentComment);
     this.props.editAuthor({ author: this.currentComment.author });
     this.props.editBody({ body: this.currentComment.body });
   }
@@ -33,20 +33,14 @@ class EditCommentModal extends Component {
     this.props.isEditCommentModalOpen({
       isModalOpen: false
     });
-    // this.props.setCurrentCategory({
-    //   currentCategory: this.props.currentPost.category
-    // });
-
-    // this.props.history.push(`/`);
-
     payload = {};
   };
 
-  buildPayload = cP => {
+  buildPayload = currentComment => {
     return new Promise(resolve => {
-      console.log("building payload", cP);
+      console.log("building comment payload", currentComment);
       const payload = {
-        ...cP,
+        ...currentComment,
         title: this.props.form.title,
         author: this.props.form.author,
         body: this.props.form.body,
@@ -56,19 +50,19 @@ class EditCommentModal extends Component {
     });
   };
 
-  addEditedPostToStore = payload => {
+  addEditedCommentToStore = payload => {
     return new Promise(resolve => {
-      console.log("adding edited payload to store");
-      this.props.editPost(payload);
-      this.props.setCurrentPost({ currentPost: payload });
+      console.log("adding edited Comment payload to store");
+      this.props.editComment(payload);
+      this.props.setCurrentComment({ currentComment: payload });
       resolve(payload);
     });
   };
 
   postPayloadToBackEnd = payload => {
     return new Promise(resolve => {
-      console.log("payload id", payload.id);
-      fetch(`http://localhost:5001/posts/${payload.id}`, {
+      console.log("comment payload id", payload.id);
+      fetch(`http://localhost:5001/comments/${payload.id}`, {
         method: "put",
         headers: {
           Authorization: "will335",
@@ -82,33 +76,21 @@ class EditCommentModal extends Component {
     });
   };
 
-  removeCurrentPayload = payload => {
+  closeModal = payload => {
     return new Promise(resolve => {
       payload = {};
-      this.currentPost = {};
-      resolve(payload);
-    });
-  };
-
-  closeModal = () => {
-    return new Promise(resolve => {
-      this.props.isModalOpen({ isModalOpen: false });
-      this.props.isPostDetailOpen({ isPostDetailOpen: false });
-      this.props.isCategoryOpen({ isCategoryOpen: true });
-      this.props.setCurrentCategory({
-        currentCategory: this.props.currentPost.category
+      this.props.isEditCommentModalOpen({
+        isModalOpen: false
       });
-      this.props.history.push(`/`);
       resolve();
     });
   };
 
   onSubmit = () => {
-    Promise.resolve(this.currentPost)
+    Promise.resolve(this.currentComment)
       .then(this.buildPayload)
-      .then(this.addEditedPostToStore)
+      .then(this.addEditedCommentToStore)
       .then(this.postPayloadToBackEnd)
-      .then(this.removeCurrentPayload)
       .then(this.closeModal);
   };
 
@@ -168,9 +150,9 @@ class EditCommentModal extends Component {
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <Link to={`/${currentPost.category}`} onClick={this.onSubmit}>
-              <Button bsStyle="primary">Submit</Button>
-            </Link>
+            <Button bsStyle="primary" onClick={this.onSubmit}>
+              Submit
+            </Button>
 
             <Button onClick={this.onClose}>Close</Button>
           </Modal.Footer>
@@ -203,6 +185,8 @@ function mapDispatchToProps(dispatch) {
     editPost: data => dispatch(editPost(data)),
     removePost: data => dispatch(removePost(data)),
     setCurrentPost: data => dispatch(setCurrentPost(data)),
+    editComment: data => dispatch(editComment(data)),
+    setCurrentComment: data => dispatch(setCurrentComment(data)),
     isModalOpen: data => dispatch(isModalOpen(data)),
     isEditCommentModalOpen: data => dispatch(isEditCommentModalOpen(data)),
     isCommentModalOpen: data => dispatch(isCommentModalOpen(data)),
