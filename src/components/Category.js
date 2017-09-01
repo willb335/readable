@@ -10,7 +10,7 @@ import {
   isPostSortedByVote,
   isPostSortedByTimestamp
 } from "../actions/sortActions";
-import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
+import { setCurrentCategory } from "../actions/categories";
 import { setCurrentPost } from "../actions/postActions";
 
 class Category extends Component {
@@ -30,7 +30,6 @@ class Category extends Component {
   };
 
   clickCategory = () => {
-    this.props.isCategoryOpen({ isCategoryOpen: true });
     this.props.setCurrentCategory({ currentCategory: this.props.catName });
   };
 
@@ -159,7 +158,6 @@ function mapDispatchToProps(dispatch) {
     isModalOpen: data => dispatch(isModalOpen(data)),
     setCurrentCategory: data => dispatch(setCurrentCategory(data)),
     isPostDetailOpen: data => dispatch(isPostDetailOpen(data)),
-    isCategoryOpen: data => dispatch(isCategoryOpen(data)),
     setCurrentPost: data => dispatch(setCurrentPost(data)),
     isPostSortedByVote: data => dispatch(isPostSortedByVote(data)),
     isPostSortedByTimestamp: data => dispatch(isPostSortedByTimestamp(data))

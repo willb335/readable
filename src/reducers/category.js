@@ -1,8 +1,4 @@
-import {
-  SET_CURRENT_CATEGORY,
-  IS_CATEGORY_OPEN,
-  GET_CATEGORIES
-} from "../actions/categories";
+import { SET_CURRENT_CATEGORY, GET_CATEGORIES } from "../actions/categories";
 
 function category(state = {}, action) {
   switch (action.type) {
@@ -11,13 +7,6 @@ function category(state = {}, action) {
       return {
         ...state,
         currentCategory
-      };
-
-    case IS_CATEGORY_OPEN:
-      const { isCategoryOpen } = action;
-      return {
-        ...state,
-        isCategoryOpen
       };
 
     case GET_CATEGORIES:

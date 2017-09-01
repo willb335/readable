@@ -14,7 +14,7 @@ import { isPostDetailOpen } from "../actions/postDetailActions";
 import { editPost } from "../actions/postActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { setCurrentPost } from "../actions/postActions";
-import { isCategoryOpen, setCurrentCategory } from "../actions/categories";
+import { setCurrentCategory } from "../actions/categories";
 
 class EditModal extends Component {
   currentPost = { ...this.props.currentPost };
@@ -83,7 +83,6 @@ class EditModal extends Component {
     return new Promise(resolve => {
       this.props.isModalOpen({ isModalOpen: false });
       this.props.isPostDetailOpen({ isPostDetailOpen: false });
-      this.props.isCategoryOpen({ isCategoryOpen: true });
       this.props.setCurrentCategory({
         currentCategory: this.props.currentPost.category
       });
@@ -197,7 +196,6 @@ function mapDispatchToProps(dispatch) {
     editAuthor: data => dispatch(editAuthor(data)),
     editTitle: data => dispatch(editTitle(data)),
     editBody: data => dispatch(editBody(data)),
-    isCategoryOpen: data => dispatch(isCategoryOpen(data)),
     setCurrentCategory: data => dispatch(setCurrentCategory(data))
   };
 }
