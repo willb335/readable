@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { Well, Panel, Button, Glyphicon } from "react-bootstrap";
-import { isModalOpen } from "../actions/modalActions";
+import { connect } from "react-redux";
 import Comment from "./Comment";
 import EditModal from "./EditModal";
-import { editPost, removePost } from "../actions/postActions";
+import { isModalOpen } from "../actions/modalActions";
+import { editPost } from "../actions/postActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { setCurrentPost } from "../actions/postActions";
 import { withRouter } from "react-router-dom";
@@ -273,7 +273,6 @@ function mapDispatchToProps(dispatch) {
     isModalOpen: data => dispatch(isModalOpen(data)),
     editPost: data => dispatch(editPost(data)),
     editComment: data => dispatch(editComment(data)),
-    removePost: data => dispatch(removePost(data)),
     setCurrentPost: data => dispatch(setCurrentPost(data)),
     editAuthor: data => dispatch(editAuthor(data)),
     editTitle: data => dispatch(editTitle(data)),
