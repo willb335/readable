@@ -67,7 +67,7 @@ class Category extends Component {
   };
 
   render() {
-    const { catName, posts } = this.props;
+    const { catName, posts, category } = this.props;
     this.sortPosts(posts);
     return (
       <div>
@@ -100,7 +100,7 @@ class Category extends Component {
                 </Button>
               </div>
               <div>
-                <Link to={`/newpost`} onClick={this.onClickNewPost}>
+                <Link to={`/`} onClick={this.onClickNewPost}>
                   <Button bsStyle="primary">New Post</Button>
                 </Link>
               </div>

@@ -84,13 +84,7 @@ class Root extends Component {
               path={`/${category.currentCategory}`}
               render={() => <Category catName={category.currentCategory} />}
             />
-            <Route
-              path={`/newpost`}
-              render={() =>
-                <div>
-                  <Category catName={category.currentCategory} />
-                </div>}
-            />
+
             {category.categories.map(c =>
               <Route
                 key={c}
