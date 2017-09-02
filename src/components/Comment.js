@@ -3,7 +3,6 @@ import { ListGroup, ListGroupItem, Button, Glyphicon } from "react-bootstrap";
 import NewCommentModal from "./NewCommentModal";
 import EditCommentModal from "./EditCommentModal";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import {
   isModalOpen,
   isCommentModalOpen,
@@ -352,6 +351,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Comment)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(Comment);
