@@ -16,28 +16,6 @@ import {
 } from "../actions/modalActions";
 
 class Root extends Component {
-  getPostsFromServer = () => {
-    return new Promise(resolve => {
-      fetch("http://localhost:5001/posts", {
-        headers: { Authorization: "will335" }
-      }).then(response => resolve(response.json()));
-    });
-  };
-
-  addPostsToStore = posts => {
-    return new Promise(resolve => {
-      posts.forEach(p => this.props.addPost(p));
-      resolve();
-    });
-  };
-
-  setModalState = () => {
-    this.props.isModalOpen({ isModalOpen: false });
-    this.props.isEditPostModalOpen({ isEditPostModalOpen: false });
-    this.props.isCommentModalOpen({ isCommentModalOpen: false });
-    this.props.isEditCommentModalOpen({ isEditCommentModalOpen: false });
-  };
-
   componentDidMount() {
     Promise.resolve("Start")
       .then(this.getCategoryTypes)
@@ -58,6 +36,28 @@ class Root extends Component {
         )
         .then(data => this.props.isFetchRequestComplete({ isComplete: true }));
       resolve("Success");
+    });
+  };
+
+  setModalState = () => {
+    this.props.isModalOpen({ isModalOpen: false });
+    this.props.isEditPostModalOpen({ isEditPostModalOpen: false });
+    this.props.isCommentModalOpen({ isCommentModalOpen: false });
+    this.props.isEditCommentModalOpen({ isEditCommentModalOpen: false });
+  };
+
+  getPostsFromServer = () => {
+    return new Promise(resolve => {
+      fetch("http://localhost:5001/posts", {
+        headers: { Authorization: "will335" }
+      }).then(response => resolve(response.json()));
+    });
+  };
+
+  addPostsToStore = posts => {
+    return new Promise(resolve => {
+      posts.forEach(p => this.props.addPost(p));
+      resolve();
     });
   };
 
@@ -115,20 +115,11 @@ class Root extends Component {
   }
 }
 
-function mapStateToProps({
-  posts,
-  fetchRequests,
-  postDetail,
-  category,
-  backButton,
-  currentPost
-}) {
+function mapStateToProps({ posts, fetchRequests, category, currentPost }) {
   return {
     posts,
     fetchRequests,
-    postDetail,
     category,
-    backButton,
     currentPost: currentPost.currentPost
   };
 }
