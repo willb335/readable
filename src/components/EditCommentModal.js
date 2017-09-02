@@ -7,7 +7,6 @@ import {
   FormControl
 } from "react-bootstrap";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import { isEditCommentModalOpen } from "../actions/modalActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { editComment, setCurrentComment } from "../actions/commentActions";
@@ -173,6 +172,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(EditCommentModal)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(EditCommentModal);
