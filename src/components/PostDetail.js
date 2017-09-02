@@ -185,7 +185,6 @@ class PostDetail extends Component {
 
   render() {
     const { currentPost, comments } = this.props;
-    console.log("current post in detail", currentPost);
     let commentKeys = Object.keys(comments);
     let filteredKeys = commentKeys.filter(
       key => comments[key].parentId === this.props.currentPost.id
