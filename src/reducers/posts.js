@@ -1,4 +1,4 @@
-import { ADD_POST, EDIT_POST, REMOVE_POST } from "../actions/postActions";
+import { ADD_POST, EDIT_POST } from "../actions/postActions";
 
 function posts(state = {}, action) {
   const {
@@ -28,13 +28,6 @@ function posts(state = {}, action) {
         }
       };
 
-    case REMOVE_POST:
-      return {
-        ...state,
-        [id]: {
-          deleted: true
-        }
-      };
     case EDIT_POST:
       return {
         ...state,
