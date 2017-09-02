@@ -14,22 +14,19 @@ import {
   isCommentModalOpen,
   isEditCommentModalOpen
 } from "../actions/modalActions";
+
 class Root extends Component {
   getPostsFromServer = () => {
     return new Promise(resolve => {
       fetch("http://localhost:5001/posts", {
         headers: { Authorization: "will335" }
-      }).then(response => {
-        resolve(response.json());
-      });
+      }).then(response => resolve(response.json()));
     });
   };
 
   addPostsToStore = posts => {
     return new Promise(resolve => {
-      posts.forEach(p => {
-        this.props.addPost(p);
-      });
+      posts.forEach(p => this.props.addPost(p));
       resolve();
     });
   };
@@ -56,8 +53,7 @@ class Root extends Component {
       .then(response => response.json())
       .then(data => {
         this.props.isFetchRequestComplete({ isComplete: true });
-        const categories = data.categories.map(c => c.name);
-        return categories;
+        return data.categories.map(c => c.name);
       })
       .then(categories => this.props.getCategories({ categories: categories }));
   };
