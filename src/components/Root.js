@@ -39,23 +39,26 @@ class Root extends Component {
   };
 
   componentDidMount() {
-    this.getCategoryTypes();
     Promise.resolve("Start")
+      .then(this.getCategoryTypes)
       .then(this.setModalState)
       .then(this.getPostsFromServer)
       .then(this.addPostsToStore);
   }
 
   getCategoryTypes = () => {
-    return fetch("http://localhost:5001/categories", {
-      headers: { Authorization: "will335" }
-    })
-      .then(response => response.json())
-      .then(data => {
-        this.props.isFetchRequestComplete({ isComplete: true });
-        return data.categories.map(c => c.name);
+    return new Promise(resolve => {
+      fetch("http://localhost:5001/categories", {
+        headers: { Authorization: "will335" }
       })
-      .then(categories => this.props.getCategories({ categories: categories }));
+        .then(response => response.json())
+        .then(data => data.categories.map(c => c.name))
+        .then(categories =>
+          this.props.getCategories({ categories: categories })
+        )
+        .then(data => this.props.isFetchRequestComplete({ isComplete: true }));
+      resolve("Success");
+    });
   };
 
   render() {
