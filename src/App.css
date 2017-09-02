@@ -37,6 +37,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .well-post {
@@ -44,6 +45,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .category-container {
@@ -88,4 +90,14 @@
 
 .post-vote-count {
   float: right;
+}
+
+.single-comment {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.comment-votes {
+  float: left;
 }

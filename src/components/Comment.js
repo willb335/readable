@@ -251,10 +251,10 @@ class Comment extends Component {
                 c.parentId === currentPost.id &&
                 !c.deleted &&
                 <ListGroupItem key={c.id}>
-                  <div>
-                    {c.author}
-                    <div>
+                  <div className="single-comment">
+                    <div className="comment-votes">
                       <Button
+                        bsSize="xsmall"
                         bsStyle="primary"
                         onClick={() => this.onClickThumbsUp(c)}
                       >
@@ -262,36 +262,40 @@ class Comment extends Component {
                       </Button>
 
                       <Button
+                        bsSize="xsmall"
                         bsStyle="primary"
                         onClick={() => this.onClickThumbsDown(c)}
                       >
                         <Glyphicon glyph="thumbs-down" />
                       </Button>
                     </div>
-                  </div>
-                  <div>
-                    {c.body}
-                  </div>
-                  <div>
-                    {c.voteScore}
-                  </div>
-                  <div>
-                    {this.convertDate(c.timestamp)}
-                    <div className="comment-buttons">
-                      <Button
-                        bsSize="xsmall"
-                        bsStyle="primary"
-                        onClick={() => this.onClickEditComment(c)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        bsSize="xsmall"
-                        bsStyle="primary"
-                        onClick={() => this.onClickDeleteComment(c)}
-                      >
-                        Delete
-                      </Button>
+                    <div>
+                      {c.author}
+                    </div>
+                    <div>
+                      {c.body}
+                    </div>
+                    <div>
+                      {c.voteScore}
+                    </div>
+                    <div>
+                      {this.convertDate(c.timestamp)}
+                      <div className="comment-buttons">
+                        <Button
+                          bsSize="xsmall"
+                          bsStyle="primary"
+                          onClick={() => this.onClickEditComment(c)}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          bsSize="xsmall"
+                          bsStyle="primary"
+                          onClick={() => this.onClickDeleteComment(c)}
+                        >
+                          Delete
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </ListGroupItem>

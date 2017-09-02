@@ -198,7 +198,7 @@ class PostDetail extends Component {
     return (
       <div className="well-post">
         <EditPostModal />
-        <Well style={{ maxWidth: "80%", marginTop: "2%" }}>
+        <Well style={{ maxWidth: "50%", marginTop: "2%" }}>
           <div className="user-post">
             <div className="post-vote-score">
               <div>
@@ -222,7 +222,7 @@ class PostDetail extends Component {
 
               <div
                 className="post-vote-count"
-                style={{ fontSize: "1.25em" }}
+                style={{ fontSize: "1.25em", color: "#337ab7" }}
               >{`Votes: ${currentPost.voteScore}`}</div>
             </div>
             <div style={{ height: "1em" }} />
