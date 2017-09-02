@@ -198,19 +198,32 @@ class PostDetail extends Component {
     return (
       <div className="well-post">
         <EditPostModal />
-        <Well style={{ maxWidth: "50%", marginTop: "25px" }}>
+        <Well style={{ maxWidth: "80%", marginTop: "2%" }}>
           <div className="user-post">
-            <div className="vote-score-post">
+            <div className="post-vote-score">
               <div>
-                <Button bsStyle="primary" onClick={this.onClickThumbsUp}>
-                  <Glyphicon glyph="thumbs-up" />
-                </Button>
+                <Panel
+                  header={
+                    <div>
+                      <Button bsStyle="primary" onClick={this.onClickThumbsUp}>
+                        <Glyphicon glyph="thumbs-up" />
+                      </Button>
 
-                <Button bsStyle="primary" onClick={this.onClickThumbsDown}>
-                  <Glyphicon glyph="thumbs-down" />
-                </Button>
+                      <Button
+                        bsStyle="primary"
+                        onClick={this.onClickThumbsDown}
+                      >
+                        <Glyphicon glyph="thumbs-down" />
+                      </Button>
+                    </div>
+                  }
+                />
               </div>
-              <div>{`Vote Score is ${currentPost.voteScore}`}</div>
+
+              <div
+                className="post-vote-count"
+                style={{ fontSize: "1.25em" }}
+              >{`Votes: ${currentPost.voteScore}`}</div>
             </div>
             <div style={{ height: "1em" }} />
 

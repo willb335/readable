@@ -34,7 +34,7 @@
 
 .user-post {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
 }
@@ -78,3 +78,14 @@
   flex-wrap: nowrap;
   justify-content: flex-end;
 }
+
+.post-vote-score {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+/*.post-vote-count {
+  align-self: flex-end;
+  margin: auto;
+}*/

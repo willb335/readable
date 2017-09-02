@@ -117,12 +117,12 @@ class NewCommentModal extends Component {
 
             <form className="form-input-area">
               <FormGroup controlId="formControlsTextarea">
-                <ControlLabel>Enter Post</ControlLabel>
+                <ControlLabel>Enter Comment</ControlLabel>
                 <FormControl
                   value={this.currentComment.body}
                   style={{ height: "300px" }}
                   componentClass="textarea"
-                  placeholder="Enter Post"
+                  placeholder="Enter Comment"
                   onChange={this.handlePostBodyChange}
                 />
               </FormGroup>
