@@ -223,24 +223,30 @@ class Comment extends Component {
     this.sortComments(comments);
 
     return (
-      <div>
+      <div className="main-comment">
         <EditCommentModal />
         <NewCommentModal />
 
         <div className="button-comment-container">
           <Button
+            bsSize="xsmall"
             bsStyle="primary"
             onClick={this.onClickSortCommentByTimestamp}
           >
             Sort by Date
           </Button>
           <Button
+            bsSize="xsmall"
             bsStyle="primary"
             onClick={this.onClickSortCommentByVoteScore}
           >
             Sort by Vote Score
           </Button>
-          <Button bsStyle="primary" onClick={this.onClickNewComment}>
+          <Button
+            bsSize="xsmall"
+            bsStyle="primary"
+            onClick={this.onClickNewComment}
+          >
             New Comment
           </Button>
         </div>

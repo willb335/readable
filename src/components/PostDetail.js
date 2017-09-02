@@ -198,7 +198,7 @@ class PostDetail extends Component {
     return (
       <div className="well-post">
         <EditPostModal />
-        <Well style={{ maxWidth: "50%", marginTop: "2%" }}>
+        <Well style={{ width: "40%", marginTop: "2%" }}>
           <div className="user-post">
             <div className="post-vote-score">
               <div>

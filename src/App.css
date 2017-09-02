@@ -101,3 +101,11 @@
 .comment-votes {
   float: left;
 }
+
+/*.main-comment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+}*/
