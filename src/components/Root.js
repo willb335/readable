@@ -63,7 +63,7 @@ class Root extends Component {
   };
 
   render() {
-    const { fetchRequests, category, match, currentPost } = this.props;
+    const { fetchRequests, category, currentPost } = this.props;
     const categoryList = () => {
       if (category.categories !== undefined) {
         return (
@@ -89,7 +89,7 @@ class Root extends Component {
               <Route
                 key={c}
                 exact={true}
-                path={match.url}
+                path={"/"}
                 render={() => {
                   return (
                     <Row className="show-category" key={c}>
