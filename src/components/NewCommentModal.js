@@ -7,7 +7,6 @@ import {
   FormControl
 } from "react-bootstrap";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import uuidv4 from "uuid/v4";
 import { isCommentModalOpen } from "../actions/modalActions";
 import { addComment } from "../actions/commentActions";
@@ -156,6 +155,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(NewCommentModal)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(NewCommentModal);
