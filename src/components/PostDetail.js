@@ -3,11 +3,11 @@ import { Well, Panel, Button, Glyphicon } from "react-bootstrap";
 import { connect } from "react-redux";
 import Comment from "./Comment";
 import EditPostModal from "./EditPostModal";
+import { withRouter } from "react-router-dom";
 import { isModalOpen, isEditPostModalOpen } from "../actions/modalActions";
 import { editPost } from "../actions/postActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { setCurrentPost } from "../actions/postActions";
-import { withRouter } from "react-router-dom";
 import { editComment } from "../actions/commentActions";
 
 class PostDetail extends Component {
@@ -110,7 +110,6 @@ class PostDetail extends Component {
       .then(this.deletePost)
       .then(this.addDeletedPostToStore)
       .then(this.postPayloadToBackEnd)
-      // .then(this.filteredComments)
       .then(this.deleteFilteredComments)
       .then(this.addDeletedCommentsToBackend)
       .then(this.postCommentPayloadArrayToBackend)
