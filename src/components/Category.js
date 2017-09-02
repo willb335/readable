@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import NewPostModal from "./NewPostModal";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { isModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
@@ -163,6 +162,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Category)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(Category);
