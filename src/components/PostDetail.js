@@ -11,10 +11,8 @@ import { withRouter } from "react-router-dom";
 import { editComment } from "../actions/commentActions";
 
 class PostDetail extends Component {
-  currentPost = { ...this.props.currentPost };
-
   onClickEditPost = () => {
-    Promise.resolve(this.currentPost)
+    Promise.resolve(this.props.currentPost)
       .then(currentPost => {
         this.props.editAuthor({ author: currentPost.author });
         this.props.editBody({ body: currentPost.body });
@@ -108,11 +106,11 @@ class PostDetail extends Component {
   };
 
   onClickDeletePost = () => {
-    Promise.resolve(this.currentPost)
+    Promise.resolve(this.props.currentPost)
       .then(this.deletePost)
       .then(this.addDeletedPostToStore)
       .then(this.postPayloadToBackEnd)
-      .then(this.filteredComments)
+      // .then(this.filteredComments)
       .then(this.deleteFilteredComments)
       .then(this.addDeletedCommentsToBackend)
       .then(this.postCommentPayloadArrayToBackend)
@@ -154,11 +152,10 @@ class PostDetail extends Component {
   };
 
   onClickThumbsUp = () => {
-    Promise.resolve(this.currentPost)
+    Promise.resolve(this.props.currentPost)
       .then(this.addThumbsUpToPost)
       .then(this.addNewScoreToStore)
-      .then(this.addScoreChangeToBackEnd)
-      .then(() => (this.currentPost = { ...this.props.currentPost }));
+      .then(this.addScoreChangeToBackEnd);
   };
 
   addThumbsDownToPost = cP => {
@@ -172,11 +169,10 @@ class PostDetail extends Component {
   };
 
   onClickThumbsDown = () => {
-    Promise.resolve(this.currentPost)
+    Promise.resolve(this.props.currentPost)
       .then(this.addThumbsDownToPost)
       .then(this.addNewScoreToStore)
-      .then(this.addScoreChangeToBackEnd)
-      .then(() => (this.currentPost = { ...this.props.currentPost }));
+      .then(this.addScoreChangeToBackEnd);
   };
 
   convertDate = inputFormat => {
