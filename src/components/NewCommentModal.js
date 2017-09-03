@@ -64,6 +64,7 @@ class NewCommentModal extends Component {
       this.props.isCommentModalOpen({
         isCommentModalOpen: false
       });
+      this.newComment = {};
       resolve("Success");
     });
   };
