@@ -34,8 +34,8 @@ class Category extends Component {
   };
 
   onClickSortPostByTimestamp = () => {
-    this.props.isPostSortedByVote({ isPostSortedByVote: false });
     this.props.isPostSortedByTimestamp({ isPostSortedByTimestamp: true });
+    this.props.isPostSortedByVote({ isPostSortedByVote: false });
   };
 
   onClickSortPostByVoteScore = () => {
@@ -61,12 +61,12 @@ class Category extends Component {
     const pad = s => {
       return s < 10 ? "0" + s : s;
     };
-    var d = new Date(inputFormat);
+    const d = new Date(inputFormat);
     return [pad(d.getMonth() + 1), pad(d.getDate()), d.getFullYear()].join("/");
   };
 
   render() {
-    const { catName, posts, category } = this.props;
+    const { catName, posts } = this.props;
     this.sortPosts(posts);
     return (
       <div>
@@ -133,20 +133,9 @@ class Category extends Component {
     );
   }
 }
-function mapStateToProps({
-  modal,
-  posts,
-  postDetail,
-  category,
-  currentPost,
-  sorts
-}) {
+function mapStateToProps({ posts, sorts }) {
   return {
-    modal,
     posts: Object.values(posts),
-    postDetail,
-    category,
-    currentPost,
     sorts
   };
 }
