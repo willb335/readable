@@ -12,13 +12,12 @@ import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { editComment, setCurrentComment } from "../actions/commentActions";
 
 class EditCommentModal extends Component {
-  componentDidMount() {}
-
-  setCurrentComment = currentComment => {
-    return new Promise(resolve => {
-      const payloadComment = { ...currentComment };
-      resolve(payloadComment);
-    });
+  onSubmit = () => {
+    Promise.resolve(this.props.currentComment)
+      .then(this.buildPayload)
+      .then(this.addEditedCommentToStore)
+      .then(this.postPayloadToBackEnd)
+      .then(this.closeModal);
   };
 
   buildPayload = payloadComment => {
@@ -52,28 +51,17 @@ class EditCommentModal extends Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
-      }).then(response => {
-        resolve(payload);
-      });
+      }).then(response => resolve(payload));
     });
   };
 
   closeModal = payload => {
     return new Promise(resolve => {
-      payload = {};
       this.props.isEditCommentModalOpen({
         isEditCommentModalOpen: false
       });
-      resolve();
+      resolve("Success");
     });
-  };
-
-  onSubmit = () => {
-    Promise.resolve(this.props.currentComment)
-      .then(this.buildPayload)
-      .then(this.addEditedCommentToStore)
-      .then(this.postPayloadToBackEnd)
-      .then(this.closeModal);
   };
 
   handleAuthorChange = event => {
@@ -143,20 +131,10 @@ class EditCommentModal extends Component {
   }
 }
 
-function mapStateToProps({
-  modal,
-  posts,
-  category,
-  currentPost,
-  form,
-  currentComment
-}) {
+function mapStateToProps({ modal, form, currentComment }) {
   return {
     modal,
-    posts,
-    category,
     form,
-    currentPost: currentPost.currentPost,
     currentComment: currentComment.currentComment
   };
 }
