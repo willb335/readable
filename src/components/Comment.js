@@ -21,6 +21,23 @@ import {
 import { editBody, editAuthor } from "../actions/editFormAction";
 
 class Comment extends Component {
+  componentDidMount() {
+    Promise.resolve("Start")
+      .then(this.sortByVote)
+      .then(this.getCommentsFromServer)
+      .then(this.addCommentsToStore);
+  }
+
+  sortByVote = () => {
+    return new Promise(resolve => {
+      this.props.isCommentSortedByVote({ isCommentSortedByVote: true });
+      this.props.isCommentSortedByTimestamp({
+        isCommentSortedByTimestamp: false
+      });
+      resolve("Success");
+    });
+  };
+
   getCommentsFromServer = () => {
     return new Promise(resolve => {
       fetch(
@@ -28,42 +45,15 @@ class Comment extends Component {
         {
           headers: { Authorization: "will335" }
         }
-      ).then(response => {
-        resolve(response.json());
-      });
+      ).then(response => resolve(response.json()));
     });
   };
 
   addCommentsToStore = comments => {
     return new Promise(resolve => {
-      comments.forEach(c => {
-        this.props.addComment(c);
-      });
-      resolve();
+      comments.forEach(c => this.props.addComment(c));
+      resolve("Success");
     });
-  };
-
-  componentDidMount() {
-    this.props.isCommentSortedByVote({ isCommentSortedByVote: true });
-    this.props.isCommentSortedByTimestamp({
-      isCommentSortedByTimestamp: false
-    });
-    Promise.resolve("Start")
-      .then(this.getCommentsFromServer)
-      .then(this.addCommentsToStore);
-  }
-
-  convertDate = inputFormat => {
-    function pad(s) {
-      return s < 10 ? "0" + s : s;
-    }
-    var d = new Date(inputFormat);
-    return [pad(d.getMonth() + 1), pad(d.getDate()), d.getFullYear()].join("/");
-  };
-
-  onClickSortCommentByTimestamp = () => {
-    this.props.isCommentSortedByVote({ isCommentSortedByVote: false });
-    this.props.isCommentSortedByTimestamp({ isCommentSortedByTimestamp: true });
   };
 
   onClickSortCommentByVoteScore = () => {
@@ -73,18 +63,9 @@ class Comment extends Component {
     });
   };
 
-  sortComments = commentsToSort => {
-    const { sorts, comments } = this.props;
-    switch (true) {
-      case sorts.isCommentSortedByVote:
-        commentsToSort = comments.sort((b, a) => a.voteScore - b.voteScore);
-        break;
-      case sorts.isCommentSortedByTimestamp:
-        commentsToSort = comments.sort((b, a) => a.timestamp - b.timestamp);
-        break;
-      default:
-        return;
-    }
+  onClickSortCommentByTimestamp = () => {
+    this.props.isCommentSortedByVote({ isCommentSortedByVote: false });
+    this.props.isCommentSortedByTimestamp({ isCommentSortedByTimestamp: true });
   };
 
   onClickNewComment = () => {
@@ -94,6 +75,14 @@ class Comment extends Component {
     this.props.setCurrentCategory({
       currentCategory: this.props.currentPost.category
     });
+  };
+
+  onClickThumbsUp = comment => {
+    Promise.resolve(comment)
+      .then(this.setCurrentComment)
+      .then(this.addThumbsUpToComment)
+      .then(this.addNewCommentScoreToStore)
+      .then(this.addCommentVoteScoreChangeToBackEnd);
   };
 
   setCurrentComment = currentComment => {
@@ -131,16 +120,14 @@ class Comment extends Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
-      }).then(response => {
-        resolve(payload);
-      });
+      }).then(response => resolve(payload));
     });
   };
 
-  onClickThumbsUp = comment => {
+  onClickThumbsDown = comment => {
     Promise.resolve(comment)
       .then(this.setCurrentComment)
-      .then(this.addThumbsUpToComment)
+      .then(this.addThumbsDownToComment)
       .then(this.addNewCommentScoreToStore)
       .then(this.addCommentVoteScoreChangeToBackEnd);
   };
@@ -155,12 +142,11 @@ class Comment extends Component {
     });
   };
 
-  onClickThumbsDown = comment => {
+  onClickDeleteComment = comment => {
     Promise.resolve(comment)
-      .then(this.setCurrentComment)
-      .then(this.addThumbsDownToComment)
-      .then(this.addNewCommentScoreToStore)
-      .then(this.addCommentVoteScoreChangeToBackEnd);
+      .then(this.deleteComment)
+      .then(this.addDeletedCommentToStore)
+      .then(this.postPayloadToBackEnd);
   };
 
   deleteComment = comment => {
@@ -190,31 +176,54 @@ class Comment extends Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
-      }).then(response => {
-        resolve(payload);
-      });
+      }).then(response => resolve(payload));
     });
-  };
-
-  onClickDeleteComment = comment => {
-    Promise.resolve(comment)
-      .then(this.deleteComment)
-      .then(this.addDeletedCommentToStore)
-      .then(this.postPayloadToBackEnd);
   };
 
   onClickEditComment = comment => {
     Promise.resolve(comment)
       .then(this.setCurrentComment)
-      .then(comment => {
-        this.props.editAuthor({ author: comment.author });
-        this.props.editBody({ body: comment.body });
-      })
-      .then(() => {
-        this.props.isEditCommentModalOpen({ isEditCommentModalOpen: true });
-        this.props.isCommentModalOpen({ isCommentModalOpen: false });
-        this.props.isModalOpen({ isEditCommentModalOpen: false });
-      });
+      .then(this.populateEditComment)
+      .then(this.openEditCommentModal);
+  };
+
+  populateEditComment = comment => {
+    return new Promise(resolve => {
+      this.props.editAuthor({ author: comment.author });
+      this.props.editBody({ body: comment.body });
+      resolve("Success");
+    });
+  };
+
+  openEditCommentModal = () => {
+    return new Promise(resolve => {
+      this.props.isEditCommentModalOpen({ isEditCommentModalOpen: true });
+      this.props.isCommentModalOpen({ isCommentModalOpen: false });
+      this.props.isModalOpen({ isEditCommentModalOpen: false });
+      resolve("Success");
+    });
+  };
+
+  convertDate = inputFormat => {
+    function pad(s) {
+      return s < 10 ? "0" + s : s;
+    }
+    const d = new Date(inputFormat);
+    return [pad(d.getMonth() + 1), pad(d.getDate()), d.getFullYear()].join("/");
+  };
+
+  sortComments = commentsToSort => {
+    const { sorts, comments } = this.props;
+    switch (true) {
+      case sorts.isCommentSortedByVote:
+        commentsToSort = comments.sort((b, a) => a.voteScore - b.voteScore);
+        break;
+      case sorts.isCommentSortedByTimestamp:
+        commentsToSort = comments.sort((b, a) => a.timestamp - b.timestamp);
+        break;
+      default:
+        return;
+    }
   };
 
   render() {
@@ -312,25 +321,11 @@ class Comment extends Component {
   }
 }
 
-function mapStateToProps({
-  modal,
-  posts,
-  postDetail,
-  category,
-  currentPost,
-  sorts,
-  comments,
-  currentComment
-}) {
+function mapStateToProps({ currentPost, sorts, comments }) {
   return {
-    modal,
-    posts: Object.values(posts),
-    postDetail,
-    category,
     currentPost: currentPost.currentPost,
     sorts,
-    comments: Object.values(comments),
-    currentComment
+    comments: Object.values(comments)
   };
 }
 
