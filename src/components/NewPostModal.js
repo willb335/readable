@@ -13,21 +13,21 @@ import { isModalOpen } from "../actions/modalActions";
 import { addPost } from "../actions/postActions";
 
 class NewPostModal extends Component {
-  currentPost = {};
+  newPost = {};
 
-  onClose = payload => {
-    this.props.isModalOpen({
-      isModalOpen: false
-    });
-    this.props.history.push(`/${this.props.category.currentCategory}`);
-    payload = {};
+  onSubmit = () => {
+    Promise.resolve(this.newPost)
+      .then(this.buildPayload)
+      .then(this.addPostToStore)
+      .then(this.postPayloadToBackEnd)
+      .then(this.onClose);
   };
 
-  buildPayload = cP => {
+  buildPayload = newPost => {
     return new Promise(resolve => {
       const randomId = uuidv4();
       const payload = {
-        ...cP,
+        ...newPost,
         id: randomId,
         timestamp: Date.now(),
         category: this.props.category.currentCategory,
@@ -55,42 +55,31 @@ class NewPostModal extends Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
-      }).then(response => {
-        resolve(payload);
-      });
+      }).then(response => resolve(payload));
     });
   };
 
-  removeCurrentPayload = payload => {
+  onClose = () => {
     return new Promise(resolve => {
-      payload = {};
-      this.currentPost = {};
-      resolve(payload);
-    });
-  };
-
-  onSubmit = () => {
-    Promise.resolve(this.currentPost)
-      .then(this.buildPayload)
-      .then(this.addPostToStore)
-      .then(this.postPayloadToBackEnd)
-      .then(this.removeCurrentPayload)
-      .then(() => {
-        this.props.isModalOpen({ isModalOpen: false });
-        this.props.history.push(`/${this.props.category.currentCategory}`);
+      this.newPost = {};
+      this.props.isModalOpen({
+        isModalOpen: false
       });
+      this.props.history.push(`/${this.props.category.currentCategory}`);
+      resolve("Success");
+    });
   };
 
   handleAuthorChange = event => {
-    this.currentPost.author = event.target.value;
+    this.newPost.author = event.target.value;
   };
 
   handleTitleChange = event => {
-    this.currentPost.title = event.target.value;
+    this.newPost.title = event.target.value;
   };
 
   hanglePostBodyChange = event => {
-    this.currentPost.body = event.target.value;
+    this.newPost.body = event.target.value;
   };
 
   render() {
@@ -112,7 +101,7 @@ class NewPostModal extends Component {
                 <FormControl
                   type="text"
                   componentClass="textarea"
-                  value={this.currentPost.author}
+                  value={this.newPost.author}
                   placeholder="Enter name"
                   onChange={this.handleAuthorChange}
                 />
@@ -125,7 +114,7 @@ class NewPostModal extends Component {
                 <FormControl
                   type="text"
                   componentClass="textarea"
-                  value={this.currentPost.title}
+                  value={this.newPost.title}
                   placeholder="Enter title"
                   onChange={this.handleTitleChange}
                 />
@@ -136,7 +125,7 @@ class NewPostModal extends Component {
               <FormGroup controlId="formControlsTextarea">
                 <ControlLabel>Enter Post</ControlLabel>
                 <FormControl
-                  value={this.currentPost.body}
+                  value={this.newPost.body}
                   style={{ height: "300px" }}
                   componentClass="textarea"
                   placeholder="Enter Post"
@@ -157,10 +146,9 @@ class NewPostModal extends Component {
   }
 }
 
-function mapStateToProps({ modal, posts, category }) {
+function mapStateToProps({ modal, category }) {
   return {
     modal,
-    posts,
     category
   };
 }
