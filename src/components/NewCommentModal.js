@@ -12,20 +12,21 @@ import { isCommentModalOpen } from "../actions/modalActions";
 import { addComment } from "../actions/commentActions";
 
 class NewCommentModal extends Component {
-  currentComment = {};
+  newComment = {};
 
-  onClose = payload => {
-    this.props.isCommentModalOpen({
-      isCommentModalOpen: false
-    });
-    payload = {};
+  onSubmit = () => {
+    Promise.resolve(this.newComment)
+      .then(this.buildPayload)
+      .then(this.addCommentToStore)
+      .then(this.postPayloadToBackEnd)
+      .then(this.onClose);
   };
 
-  buildPayload = cC => {
+  buildPayload = newComment => {
     return new Promise(resolve => {
       const randomId = uuidv4();
       const payload = {
-        ...cC,
+        ...newComment,
         id: randomId,
         parentId: this.props.currentPost.id,
         timestamp: Date.now(),
@@ -54,37 +55,25 @@ class NewCommentModal extends Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
-      }).then(response => {
-        resolve(payload);
-      });
+      }).then(() => resolve("Success"));
     });
   };
 
-  removeCurrentPayload = payload => {
+  onClose = () => {
     return new Promise(resolve => {
-      payload = {};
-      this.currentComment = {};
-      resolve(payload);
-    });
-  };
-
-  onSubmit = () => {
-    Promise.resolve(this.currentComment)
-      .then(this.buildPayload)
-      .then(this.addCommentToStore)
-      .then(this.postPayloadToBackEnd)
-      .then(this.removeCurrentPayload)
-      .then(() => {
-        this.props.isCommentModalOpen({ isCommentModalOpen: false });
+      this.props.isCommentModalOpen({
+        isCommentModalOpen: false
       });
+      resolve("Success");
+    });
   };
 
   handleAuthorChange = event => {
-    this.currentComment.author = event.target.value;
+    this.newComment.author = event.target.value;
   };
 
   handlePostBodyChange = event => {
-    this.currentComment.body = event.target.value;
+    this.newComment.body = event.target.value;
   };
 
   render() {
@@ -106,7 +95,7 @@ class NewCommentModal extends Component {
                 <FormControl
                   type="text"
                   componentClass="textarea"
-                  value={this.currentComment.author}
+                  value={this.newComment.author}
                   placeholder="Enter name"
                   onChange={this.handleAuthorChange}
                 />
@@ -118,7 +107,7 @@ class NewCommentModal extends Component {
               <FormGroup controlId="formControlsTextarea">
                 <ControlLabel>Enter Comment</ControlLabel>
                 <FormControl
-                  value={this.currentComment.body}
+                  value={this.newComment.body}
                   style={{ height: "300px" }}
                   componentClass="textarea"
                   placeholder="Enter Comment"
@@ -139,11 +128,9 @@ class NewCommentModal extends Component {
   }
 }
 
-function mapStateToProps({ modal, posts, category, currentPost }) {
+function mapStateToProps({ modal, currentPost }) {
   return {
     modal,
-    posts,
-    category,
     currentPost: currentPost.currentPost
   };
 }
