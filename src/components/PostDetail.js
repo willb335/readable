@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Comment from "./Comment";
 import EditPostModal from "./EditPostModal";
 import { withRouter } from "react-router-dom";
-import { isModalOpen, isEditPostModalOpen } from "../actions/modalActions";
+import { isEditPostModalOpen } from "../actions/modalActions";
 import { editPost } from "../actions/postActions";
 import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
 import { setCurrentPost } from "../actions/postActions";
@@ -13,20 +13,34 @@ import { editComment } from "../actions/commentActions";
 class PostDetail extends Component {
   onClickEditPost = () => {
     Promise.resolve(this.props.currentPost)
-      .then(currentPost => {
-        this.props.editAuthor({ author: currentPost.author });
-        this.props.editBody({ body: currentPost.body });
-        this.props.editTitle({ title: currentPost.title });
-      })
+      .then(this.populatePostForm)
       .then(() =>
         this.props.isEditPostModalOpen({ isEditPostModalOpen: true })
       );
   };
 
-  deletePost = cP => {
+  populatePostForm = currentPost => {
+    return new Promise(resolve => {
+      this.props.editAuthor({ author: currentPost.author });
+      this.props.editBody({ body: currentPost.body });
+      this.props.editTitle({ title: currentPost.title });
+      resolve("Success");
+    });
+  };
+
+  onClickDeletePost = () => {
+    Promise.resolve(this.props.currentPost)
+      .then(this.deletePost)
+      .then(this.addDeletedPostToStore)
+      .then(this.postPayloadToBackEnd)
+      .then(this.deleteComments)
+      .then(() => this.props.history.push(`/`));
+  };
+
+  deletePost = currentPost => {
     return new Promise(resolve => {
       const payload = {
-        ...cP,
+        ...currentPost,
         deleted: true
       };
       resolve(payload);
@@ -51,18 +65,33 @@ class PostDetail extends Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
-      }).then(response => {
-        resolve(payload);
-      });
+      }).then(response => resolve(payload));
+    });
+  };
+
+  deleteComments = () => {
+    return new Promise(resolve => {
+      const comments = { ...this.props.comments };
+      const keys = Object.keys(comments);
+      const filtered_keys = keys.filter(
+        key => comments[key].parentId === this.props.currentPost.id
+      );
+      if (filtered_keys.length !== 0) {
+        Promise.resolve("Start")
+          .then(this.deleteFilteredComments)
+          .then(this.addDeletedCommentsToStore)
+          .then(this.postCommentPayloadArrayToBackend);
+      }
+      resolve("Success");
     });
   };
 
   deleteFilteredComments = () => {
     return new Promise(resolve => {
-      let comments = { ...this.props.comments };
+      const comments = { ...this.props.comments };
       let filteredComments = [];
-      let keys = Object.keys(comments);
-      let filtered_keys = keys.filter(
+      const keys = Object.keys(comments);
+      const filtered_keys = keys.filter(
         key => comments[key].parentId === this.props.currentPost.id
       );
       filtered_keys.forEach(key => {
@@ -78,11 +107,9 @@ class PostDetail extends Component {
     });
   };
 
-  addDeletedCommentsToBackend = commentArray => {
+  addDeletedCommentsToStore = commentArray => {
     return new Promise(resolve => {
-      commentArray.forEach(c => {
-        this.props.editComment(c);
-      });
+      commentArray.forEach(c => this.props.editComment(c));
       resolve(commentArray);
     });
   };
@@ -98,29 +125,23 @@ class PostDetail extends Component {
             "Content-Type": "application/json"
           },
           body: JSON.stringify(c)
-        }).then(response => {
-          resolve(commentArray);
-        });
+        }).then(response => resolve("Success"));
       });
     });
   };
 
-  onClickDeletePost = () => {
+  onClickThumbsUp = () => {
     Promise.resolve(this.props.currentPost)
-      .then(this.deletePost)
-      .then(this.addDeletedPostToStore)
-      .then(this.postPayloadToBackEnd)
-      .then(this.deleteFilteredComments)
-      .then(this.addDeletedCommentsToBackend)
-      .then(this.postCommentPayloadArrayToBackend)
-      .then(() => this.props.history.push(`/`));
+      .then(this.addThumbsUpToPost)
+      .then(this.addNewScoreToStore)
+      .then(this.addNewScoreToBackEnd);
   };
 
-  addThumbsUpToPost = cP => {
+  addThumbsUpToPost = currentPost => {
     return new Promise(resolve => {
       const payload = {
-        ...cP,
-        voteScore: cP.voteScore + 1
+        ...currentPost,
+        voteScore: currentPost.voteScore + 1
       };
       resolve(payload);
     });
@@ -134,7 +155,7 @@ class PostDetail extends Component {
     });
   };
 
-  addScoreChangeToBackEnd = payload => {
+  addNewScoreToBackEnd = payload => {
     return new Promise(resolve => {
       fetch(`http://localhost:5001/posts/${payload.id}`, {
         method: "put",
@@ -144,26 +165,7 @@ class PostDetail extends Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
-      }).then(response => {
-        resolve(payload);
-      });
-    });
-  };
-
-  onClickThumbsUp = () => {
-    Promise.resolve(this.props.currentPost)
-      .then(this.addThumbsUpToPost)
-      .then(this.addNewScoreToStore)
-      .then(this.addScoreChangeToBackEnd);
-  };
-
-  addThumbsDownToPost = cP => {
-    return new Promise(resolve => {
-      const payload = {
-        ...cP,
-        voteScore: cP.voteScore - 1
-      };
-      resolve(payload);
+      }).then(() => resolve("Success"));
     });
   };
 
@@ -174,11 +176,19 @@ class PostDetail extends Component {
       .then(this.addScoreChangeToBackEnd);
   };
 
+  addThumbsDownToPost = currentPost => {
+    return new Promise(resolve => {
+      const payload = {
+        ...currentPost,
+        voteScore: currentPost.voteScore - 1
+      };
+      resolve(payload);
+    });
+  };
+
   convertDate = inputFormat => {
-    function pad(s) {
-      return s < 10 ? "0" + s : s;
-    }
-    var d = new Date(inputFormat);
+    const pad = s => (s < 10 ? "0" + s : s);
+    const d = new Date(inputFormat);
     return [pad(d.getMonth() + 1), pad(d.getDate()), d.getFullYear()].join("/");
   };
 
@@ -270,17 +280,15 @@ class PostDetail extends Component {
   }
 }
 
-function mapStateToProps({ currentPost, modal, comments }) {
+function mapStateToProps({ currentPost, comments }) {
   return {
     currentPost: currentPost.currentPost,
-    modal,
     comments
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    isModalOpen: data => dispatch(isModalOpen(data)),
     isEditPostModalOpen: data => dispatch(isEditPostModalOpen(data)),
     editPost: data => dispatch(editPost(data)),
     editComment: data => dispatch(editComment(data)),
