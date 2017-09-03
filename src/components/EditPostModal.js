@@ -16,19 +16,27 @@ import { setCurrentPost } from "../actions/postActions";
 import { setCurrentCategory } from "../actions/categories";
 
 class EditPostModal extends Component {
-  componentDidMount() {}
-
-  onClose = () => {
-    this.props.isEditPostModalOpen({
-      isEditPostModalOpen: false
+  closeModal = payload => {
+    return new Promise(resolve => {
+      this.props.isEditPostModalOpen({ isEditPostModalOpen: false });
+      this.props.isPostDetailOpen({ isPostDetailOpen: false });
+      this.props.history.push("/");
+      resolve("Success");
     });
-    this.props.history.push(`/`);
   };
 
-  buildPayload = cP => {
+  onSubmit = () => {
+    Promise.resolve(this.props.currentPost)
+      .then(this.buildPayload)
+      .then(this.addEditedPostToStore)
+      .then(this.postPayloadToBackEnd)
+      .then(this.closeModal);
+  };
+
+  buildPayload = currentPost => {
     return new Promise(resolve => {
       const payload = {
-        ...cP,
+        ...currentPost,
         title: this.props.form.title,
         author: this.props.form.author,
         body: this.props.form.body,
@@ -56,27 +64,8 @@ class EditPostModal extends Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
-      }).then(response => {
-        resolve(payload);
-      });
+      }).then(response => resolve(payload));
     });
-  };
-
-  closeModal = payload => {
-    return new Promise(resolve => {
-      this.props.isEditPostModalOpen({ isEditPostModalOpen: false });
-      this.props.isPostDetailOpen({ isPostDetailOpen: false });
-      this.props.history.push("/");
-      resolve();
-    });
-  };
-
-  onSubmit = () => {
-    Promise.resolve(this.props.currentPost)
-      .then(this.buildPayload)
-      .then(this.addEditedPostToStore)
-      .then(this.postPayloadToBackEnd)
-      .then(this.closeModal);
   };
 
   handleAuthorChange = event => {
@@ -87,7 +76,7 @@ class EditPostModal extends Component {
     this.props.editTitle({ title: event.target.value });
   };
 
-  hanglePostBodyChange = event => {
+  handlePostBodyChange = event => {
     this.props.editBody({ body: event.target.value });
   };
 
@@ -138,19 +127,17 @@ class EditPostModal extends Component {
                   style={{ height: "300px" }}
                   componentClass="textarea"
                   placeholder="Enter Post"
-                  onChange={this.hanglePostBodyChange}
+                  onChange={this.handlePostBodyChange}
                 />
               </FormGroup>
             </form>
           </Modal.Body>
           <Modal.Footer>
-            {/* <Link to={`/${currentPost.category}`} > */}
             <Button bsStyle="primary" onClick={this.onSubmit}>
               Submit
             </Button>
-            {/* </Link> */}
 
-            <Button onClick={this.onClose}>Close</Button>
+            <Button onClick={this.closeModal}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>
@@ -158,11 +145,9 @@ class EditPostModal extends Component {
   }
 }
 
-function mapStateToProps({ modal, posts, category, currentPost, form }) {
+function mapStateToProps({ modal, currentPost, form }) {
   return {
     modal,
-    posts,
-    category,
     form,
     currentPost: currentPost.currentPost
   };
