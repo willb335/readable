@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "./bootstrap-3.3.7-dist/css/bootstrap.min.css";
+import "./bootstrap-3.3.7-dist/css/bootstrap-theme.min.css";
 import "./index.css";
 import App from "./components/App";
 import { BrowserRouter } from "react-router-dom";
