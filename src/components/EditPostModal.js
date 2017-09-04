@@ -16,13 +16,9 @@ import { setCurrentPost } from "../actions/postActions";
 import { setCurrentCategory } from "../actions/categories";
 
 class EditPostModal extends Component {
-  closeModal = payload => {
-    return new Promise(resolve => {
-      this.props.isEditPostModalOpen({ isEditPostModalOpen: false });
-      this.props.isPostDetailOpen({ isPostDetailOpen: false });
-      this.props.history.push("/");
-      resolve("Success");
-    });
+  onClose = () => {
+    this.props.isEditPostModalOpen({ isEditPostModalOpen: false });
+    this.props.isPostDetailOpen({ isPostDetailOpen: false });
   };
 
   onSubmit = () => {
@@ -65,6 +61,16 @@ class EditPostModal extends Component {
         },
         body: JSON.stringify(payload)
       }).then(response => resolve(payload));
+    });
+  };
+
+  closeModal = payload => {
+    return new Promise(resolve => {
+      const { isEditPostModalOpen, isPostDetailOpen, history } = this.props;
+      isEditPostModalOpen({ isEditPostModalOpen: false });
+      isPostDetailOpen({ isPostDetailOpen: false });
+      history.push(`/${payload.category}/${payload.title}`);
+      resolve("Success");
     });
   };
 
@@ -137,7 +143,7 @@ class EditPostModal extends Component {
               Submit
             </Button>
 
-            <Button onClick={this.closeModal}>Close</Button>
+            <Button onClick={this.onClose}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>
