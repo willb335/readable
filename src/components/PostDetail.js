@@ -196,7 +196,9 @@ class PostDetail extends Component {
     const { currentPost, comments } = this.props;
     let commentKeys = Object.keys(comments);
     let filteredKeys = commentKeys.filter(
-      key => comments[key].parentId === this.props.currentPost.id
+      key =>
+        comments[key].parentId === this.props.currentPost.id &&
+        !comments[key].deleted
     );
 
     return (
