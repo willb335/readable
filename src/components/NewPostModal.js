@@ -21,7 +21,8 @@ class NewPostModal extends Component {
       .then(this.buildPayload)
       .then(this.addPostToStore)
       .then(this.postPayloadToBackEnd)
-      .then(this.onClose);
+      .then(this.onClose)
+      .catch(e => console.log(e));
   };
 
   validateNewPost = newPost => {

@@ -13,7 +13,6 @@ class TopNavbar extends Component {
 
   render() {
     const { categories, fetchRequests } = this.props;
-    console.log("cat", categories);
     return (
       <div>
         {fetchRequests.isComplete && (
