@@ -65,8 +65,6 @@ class Root extends Component {
 
   render() {
     const { fetchRequests, category, currentPost, history } = this.props;
-    console.log("history", history);
-    console.log(`/${category.currentCategory}`);
     const categoryList = () => {
       if (category.categories !== undefined) {
         return (
@@ -114,7 +112,6 @@ class Root extends Component {
     };
     const setUp404 = () => {
       const url = history.location.pathname;
-      category.categories.map(c => {});
       switch (true) {
         case url === "/":
           return true;

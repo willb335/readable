@@ -12,47 +12,43 @@ class TopNavbar extends Component {
   };
 
   render() {
-    const { categories, fetchRequests } = this.props;
+    const { categories } = this.props;
     return (
       <div>
-        {fetchRequests.isComplete && (
-          <Navbar>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <Link to={"/"} style={{ cursor: "pointer", color: "#337ab7" }}>
-                  Readable
-                </Link>
-              </Navbar.Brand>
-            </Navbar.Header>
-            <Nav>
-              <NavDropdown
-                eventKey={3}
-                title="Categories"
-                id="basic-nav-dropdown"
-              >
-                {categories.map((c, i) => (
-                  <LinkContainer
-                    to={`/${c}`}
-                    onClick={() => this.clickCategory(c)}
-                    style={{ cursor: "pointer", color: "#337ab7" }}
-                    key={i}
-                  >
-                    <MenuItem eventKey={`${3}.${i}`}>{c}</MenuItem>
-                  </LinkContainer>
-                ))}
-              </NavDropdown>
-            </Nav>
-          </Navbar>
-        )}
+        <Navbar>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <Link to={"/"} style={{ cursor: "pointer", color: "#337ab7" }}>
+                Readable
+              </Link>
+            </Navbar.Brand>
+          </Navbar.Header>
+          <Nav>
+            <NavDropdown
+              eventKey={3}
+              title="Categories"
+              id="basic-nav-dropdown"
+            >
+              {categories.map((c, i) => (
+                <LinkContainer
+                  to={`/${c}`}
+                  onClick={() => this.clickCategory(c)}
+                  style={{ cursor: "pointer", color: "#337ab7" }}
+                  key={i}
+                >
+                  <MenuItem eventKey={`${3}.${i}`}>{c}</MenuItem>
+                </LinkContainer>
+              ))}
+            </NavDropdown>
+          </Nav>
+        </Navbar>
       </div>
     );
   }
 }
 
-function mapStateToProps({ fetchRequests }) {
-  return {
-    fetchRequests
-  };
+function mapStateToProps() {
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {
