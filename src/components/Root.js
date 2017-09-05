@@ -4,6 +4,7 @@ import { Grid, Row, Col } from "react-bootstrap";
 import Category from "./Category";
 import PostDetail from "./PostDetail";
 import TopNavbar from "./TopNavbar";
+import NotFound from "./NotFound";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { addPost } from "../actions/postActions";
@@ -63,13 +64,16 @@ class Root extends Component {
   };
 
   render() {
-    const { fetchRequests, category, currentPost } = this.props;
+    const { fetchRequests, category, currentPost, history } = this.props;
+    console.log("history", history);
+    console.log(`/${category.currentCategory}`);
     const categoryList = () => {
       if (category.categories !== undefined) {
         return (
           <div>
             {currentPost && (
               <Route
+                exact={true}
                 path={`/${currentPost.category}/${currentPost.title}`}
                 render={() => {
                   return (
@@ -108,11 +112,38 @@ class Root extends Component {
         );
       }
     };
+    const setUp404 = () => {
+      const url = history.location.pathname;
+      category.categories.map(c => {});
+      switch (true) {
+        case url === "/":
+          return true;
+        case url === `/${category.currentCategory}`:
+          return true;
+        case currentPost === undefined:
+          return false;
+        case url === `/${currentPost.category}/${currentPost.title}`:
+          return true;
+
+        default:
+          return false;
+      }
+    };
 
     return (
       <div>
-        <TopNavbar categories={category.categories} />
-        <Grid>{fetchRequests.isComplete && categoryList()}</Grid>
+        {fetchRequests.isComplete && (
+          <div>
+            {setUp404() ? (
+              <div>
+                <TopNavbar categories={category.categories} />
+                <Grid>{categoryList()}</Grid>
+              </div>
+            ) : (
+              <NotFound />
+            )}
+          </div>
+        )}
       </div>
     );
   }
