@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import { Grid, Row, Col } from "react-bootstrap";
 import Category from "./Category";
 import PostDetail from "./PostDetail";
+import TopNavbar from "./TopNavbar";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { addPost } from "../actions/postActions";
@@ -67,7 +68,7 @@ class Root extends Component {
       if (category.categories !== undefined) {
         return (
           <div>
-            {currentPost &&
+            {currentPost && (
               <Route
                 path={`/${currentPost.category}/${currentPost.title}`}
                 render={() => {
@@ -77,14 +78,15 @@ class Root extends Component {
                     </div>
                   );
                 }}
-              />}
+              />
+            )}
             <Route
               exact={true}
               path={`/${category.currentCategory}`}
               render={() => <Category catName={category.currentCategory} />}
             />
 
-            {category.categories.map(c =>
+            {category.categories.map(c => (
               <Route
                 key={c}
                 exact={true}
@@ -101,16 +103,17 @@ class Root extends Component {
                   );
                 }}
               />
-            )}
+            ))}
           </div>
         );
       }
     };
 
     return (
-      <Grid>
-        {fetchRequests.isComplete && categoryList()}
-      </Grid>
+      <div>
+        <TopNavbar />
+        <Grid>{fetchRequests.isComplete && categoryList()}</Grid>
+      </div>
     );
   }
 }
