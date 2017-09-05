@@ -17,10 +17,23 @@ class NewPostModal extends Component {
 
   onSubmit = () => {
     Promise.resolve(this.newPost)
+      .then(this.validateNewPost)
       .then(this.buildPayload)
       .then(this.addPostToStore)
       .then(this.postPayloadToBackEnd)
-      .then(this.onClose);
+      .then(this.onClose)
+      .catch(e => console.log(e));
+  };
+
+  validateNewPost = newPost => {
+    return new Promise((resolve, reject) => {
+      if (newPost.author && newPost.title && newPost.body) {
+        resolve(newPost);
+      } else {
+        window.alert("Please fill in all the fields");
+        reject("Failure");
+      }
+    });
   };
 
   buildPayload = newPost => {

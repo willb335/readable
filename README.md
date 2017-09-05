@@ -2,6 +2,7 @@ Readable is a content and comment web app.  Users are able to post content in pr
 
 State in Readable is managed entirely with Redux, no state is handled by React components.    
 
+To access the Readable API server: https://github.com/udacity/reactnd-project-readable-starter
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 

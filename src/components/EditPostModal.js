@@ -23,10 +23,24 @@ class EditPostModal extends Component {
 
   onSubmit = () => {
     Promise.resolve(this.props.currentPost)
+      .then(this.validateEditPost)
       .then(this.buildPayload)
       .then(this.addEditedPostToStore)
       .then(this.postPayloadToBackEnd)
-      .then(this.closeModal);
+      .then(this.closeModal)
+      .catch(e => console.log(e));
+  };
+
+  validateEditPost = currentPost => {
+    return new Promise((resolve, reject) => {
+      const { form } = this.props;
+      if (form.author && form.title && form.body) {
+        resolve(currentPost);
+      } else {
+        window.alert("Please fill in all the fields");
+        reject("Failure");
+      }
+    });
   };
 
   buildPayload = currentPost => {
