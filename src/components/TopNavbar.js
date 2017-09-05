@@ -1,16 +1,9 @@
 import React, { Component } from "react";
-import { Navbar, Nav, MenuItem, NavDropdown, NavItem } from "react-bootstrap";
+import { Navbar, Nav, MenuItem, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { connect } from "react-redux";
-import Comment from "./Comment";
-import EditPostModal from "./EditPostModal";
 import { withRouter } from "react-router-dom";
-import { isEditPostModalOpen } from "../actions/modalActions";
-import { editPost } from "../actions/postActions";
-import { editTitle, editBody, editAuthor } from "../actions/editFormAction";
-import { setCurrentPost } from "../actions/postActions";
-import { editComment } from "../actions/commentActions";
 import { setCurrentCategory } from "../actions/categories";
 
 class TopNavbar extends Component {
@@ -57,24 +50,14 @@ class TopNavbar extends Component {
   }
 }
 
-function mapStateToProps({ currentPost, comments, category, fetchRequests }) {
+function mapStateToProps({ fetchRequests }) {
   return {
-    currentPost: currentPost.currentPost,
-    comments,
-    category,
     fetchRequests
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    isEditPostModalOpen: data => dispatch(isEditPostModalOpen(data)),
-    editPost: data => dispatch(editPost(data)),
-    editComment: data => dispatch(editComment(data)),
-    setCurrentPost: data => dispatch(setCurrentPost(data)),
-    editAuthor: data => dispatch(editAuthor(data)),
-    editTitle: data => dispatch(editTitle(data)),
-    editBody: data => dispatch(editBody(data)),
     setCurrentCategory: data => dispatch(setCurrentCategory(data))
   };
 }

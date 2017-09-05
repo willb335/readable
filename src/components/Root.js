@@ -111,10 +111,7 @@ class Root extends Component {
 
     return (
       <div>
-        <TopNavbar
-          fetchRequest={fetchRequests}
-          categories={category.categories}
-        />
+        <TopNavbar categories={category.categories} />
         <Grid>{fetchRequests.isComplete && categoryList()}</Grid>
       </div>
     );
