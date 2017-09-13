@@ -28,11 +28,11 @@ class Root extends Component {
 
   getCategoryTypes = () => {
     return new Promise(resolve => {
-      fetch("http://localhost:5001/categories", {
-        headers: { Authorization: "will335" }
-      })
+      fetch(
+        "https://ul3cjjg9oi.execute-api.us-west-2.amazonaws.com/dev/categories"
+      )
         .then(response => response.json())
-        .then(data => data.categories.map(c => c.name))
+        .then(data => data[0].categories)
         .then(categories =>
           this.props.getCategories({ categories: categories })
         )
