@@ -119,15 +119,17 @@ class PostDetail extends Component {
   postCommentPayloadArrayToBackend = commentArray => {
     return new Promise(resolve => {
       commentArray.forEach(c => {
-        fetch(`http://localhost:5001/comments/${c.id}`, {
-          method: "delete",
-          headers: {
-            Authorization: "will335",
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(c)
-        }).then(response => resolve("Success"));
+        fetch(
+          `https://ul3cjjg9oi.execute-api.us-west-2.amazonaws.com/dev/comments/${c.id}`,
+          {
+            method: "put",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(c)
+          }
+        ).then(response => resolve("Success"));
       });
     });
   };
