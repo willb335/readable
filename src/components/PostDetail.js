@@ -179,7 +179,7 @@ class PostDetail extends Component {
     Promise.resolve(this.props.currentPost)
       .then(this.addThumbsDownToPost)
       .then(this.addNewScoreToStore)
-      .then(this.addScoreChangeToBackEnd);
+      .then(this.addNewScoreToBackEnd);
   };
 
   addThumbsDownToPost = currentPost => {
