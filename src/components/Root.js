@@ -50,9 +50,9 @@ class Root extends Component {
 
   getPostsFromServer = () => {
     return new Promise(resolve => {
-      fetch("http://localhost:5001/posts", {
-        headers: { Authorization: "will335" }
-      }).then(response => resolve(response.json()));
+      fetch(
+        "https://ul3cjjg9oi.execute-api.us-west-2.amazonaws.com/dev/posts"
+      ).then(response => resolve(response.json()));
     });
   };
 
