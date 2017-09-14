@@ -172,7 +172,6 @@ class Comment extends Component {
         {
           method: "put",
           headers: {
-            Authorization: "will335",
             Accept: "application/json",
             "Content-Type": "application/json"
           },
