@@ -161,15 +161,17 @@ class PostDetail extends Component {
 
   addNewScoreToBackEnd = payload => {
     return new Promise(resolve => {
-      fetch(`http://localhost:5001/posts/${payload.id}`, {
-        method: "put",
-        headers: {
-          Authorization: "will335",
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      }).then(() => resolve("Success"));
+      fetch(
+        `https://ul3cjjg9oi.execute-api.us-west-2.amazonaws.com/dev/posts/${payload.id}`,
+        {
+          method: "put",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        }
+      ).then(() => resolve("Success"));
     });
   };
 
