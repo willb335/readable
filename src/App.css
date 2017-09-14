@@ -57,6 +57,10 @@
   align-items: center;
 }
 
+.cat-link {
+  margin-right: auto;
+}
+
 .posts-container {
   display: flex;
   flex-direction: column;
