@@ -84,7 +84,7 @@ class Category extends Component {
                 </Link>
               </div>
 
-              <div style={{ margin: "1em" }}>
+              <div style={{ margin: ".25em" }}>
                 <Button
                   bsStyle="primary"
                   onClick={this.onClickSortPostByTimestamp}
@@ -92,7 +92,7 @@ class Category extends Component {
                   Sort By Date
                 </Button>
               </div>
-              <div style={{ margin: "1em" }}>
+              <div style={{ margin: ".25em" }}>
                 <Button
                   bsStyle="primary"
                   onClick={this.onClickSortPostByVoteScore}
@@ -100,7 +100,7 @@ class Category extends Component {
                   Sort by Vote
                 </Button>
               </div>
-              <div style={{ margin: "1em" }}>
+              <div style={{ margin: ".25em" }}>
                 <Link to={`/`} onClick={this.onClickNewPost}>
                   <Button bsStyle="primary">New Post</Button>
                 </Link>
