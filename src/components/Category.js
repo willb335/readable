@@ -74,33 +74,39 @@ class Category extends Component {
         <Panel
           header={
             <div className="category-container">
-              <Link
-                to={`/${catName}`}
-                onClick={this.clickCategory}
-                style={{ cursor: "pointer", color: "#337ab7" }}
-              >
-                {catName}
-              </Link>
+              <div className="cat-link">
+                <Link
+                  to={`/${catName}`}
+                  onClick={this.clickCategory}
+                  style={{ cursor: "pointer", color: "#337ab7" }}
+                >
+                  {catName}
+                </Link>
+              </div>
 
-              <div>
+              <div style={{ margin: ".25em" }}>
                 <Button
+                  className="button-1"
                   bsStyle="primary"
                   onClick={this.onClickSortPostByTimestamp}
                 >
                   Sort By Date
                 </Button>
               </div>
-              <div>
+              <div style={{ margin: ".25em" }}>
                 <Button
+                  className="button-2"
                   bsStyle="primary"
                   onClick={this.onClickSortPostByVoteScore}
                 >
                   Sort by Vote
                 </Button>
               </div>
-              <div>
+              <div style={{ margin: ".25em" }}>
                 <Link to={`/`} onClick={this.onClickNewPost}>
-                  <Button bsStyle="primary">New Post</Button>
+                  <Button className="button-3" bsStyle="primary">
+                    New Post
+                  </Button>
                 </Link>
               </div>
             </div>
@@ -112,19 +118,20 @@ class Category extends Component {
               {posts.map(
                 (p, i) =>
                   p.category === catName &&
-                  !p.deleted &&
-                  <ListGroupItem key={i}>
-                    <Link
-                      to={`/${p.category}/${p.title}`}
-                      onClick={() => this.clickPost(p)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {p.title}
-                    </Link>
+                  !p.deleted && (
+                    <ListGroupItem key={i}>
+                      <Link
+                        to={`/${p.category}/${p.title}`}
+                        onClick={() => this.clickPost(p)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {p.title}
+                      </Link>
 
-                    <div>{`Vote Score is ${p.voteScore}`}</div>
-                    <div>{`Date ${this.convertDate(p.timestamp)}`}</div>
-                  </ListGroupItem>
+                      <div>{`Vote Score is ${p.voteScore}`}</div>
+                      <div>{`Date ${this.convertDate(p.timestamp)}`}</div>
+                    </ListGroupItem>
+                  )
               )}
             </div>
           </ListGroup>

@@ -41,10 +41,7 @@ class Comment extends Component {
   getCommentsFromServer = () => {
     return new Promise(resolve => {
       fetch(
-        `http://localhost:5001/posts/${this.props.currentPost.id}/comments`,
-        {
-          headers: { Authorization: "will335" }
-        }
+        `https://ul3cjjg9oi.execute-api.us-west-2.amazonaws.com/dev/comments`
       ).then(response => resolve(response.json()));
     });
   };
@@ -112,15 +109,17 @@ class Comment extends Component {
 
   addCommentVoteScoreChangeToBackEnd = payload => {
     return new Promise(resolve => {
-      fetch(`http://localhost:5001/comments/${payload.id}`, {
-        method: "put",
-        headers: {
-          Authorization: "will335",
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      }).then(response => resolve(payload));
+      fetch(
+        `https://ul3cjjg9oi.execute-api.us-west-2.amazonaws.com/dev/comments/${payload.id}`,
+        {
+          method: "put",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        }
+      ).then(response => resolve(payload));
     });
   };
 
@@ -168,15 +167,17 @@ class Comment extends Component {
 
   postPayloadToBackEnd = payload => {
     return new Promise(resolve => {
-      fetch(`http://localhost:5001/comments/${payload.id}`, {
-        method: "delete",
-        headers: {
-          Authorization: "will335",
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      }).then(response => resolve(payload));
+      fetch(
+        `https://ul3cjjg9oi.execute-api.us-west-2.amazonaws.com/dev/comments/${payload.id}`,
+        {
+          method: "put",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        }
+      ).then(response => resolve(payload));
     });
   };
 
@@ -237,6 +238,7 @@ class Comment extends Component {
 
         <div className="button-comment-container">
           <Button
+            className="button-9"
             bsSize="xsmall"
             bsStyle="primary"
             onClick={this.onClickSortCommentByTimestamp}
@@ -244,6 +246,7 @@ class Comment extends Component {
             Sort by Date
           </Button>
           <Button
+            className="button-10"
             bsSize="xsmall"
             bsStyle="primary"
             onClick={this.onClickSortCommentByVoteScore}
@@ -251,6 +254,7 @@ class Comment extends Component {
             Sort by Vote Score
           </Button>
           <Button
+            className="button-11"
             bsSize="xsmall"
             bsStyle="primary"
             onClick={this.onClickNewComment}
@@ -263,56 +267,51 @@ class Comment extends Component {
             {comments.map(
               c =>
                 c.parentId === currentPost.id &&
-                !c.deleted &&
-                <ListGroupItem key={c.id}>
-                  <div className="single-comment">
-                    <div className="comment-votes">
-                      <Button
-                        bsSize="xsmall"
-                        bsStyle="primary"
-                        onClick={() => this.onClickThumbsUp(c)}
-                      >
-                        <Glyphicon glyph="thumbs-up" />
-                      </Button>
-
-                      <Button
-                        bsSize="xsmall"
-                        bsStyle="primary"
-                        onClick={() => this.onClickThumbsDown(c)}
-                      >
-                        <Glyphicon glyph="thumbs-down" />
-                      </Button>
-                    </div>
-                    <div>
-                      {c.author}
-                    </div>
-                    <div>
-                      {c.body}
-                    </div>
-                    <div>
-                      {c.voteScore}
-                    </div>
-                    <div>
-                      {this.convertDate(c.timestamp)}
-                      <div className="comment-buttons">
+                !c.deleted && (
+                  <ListGroupItem key={c.id}>
+                    <div className="single-comment">
+                      <div className="comment-votes">
                         <Button
                           bsSize="xsmall"
                           bsStyle="primary"
-                          onClick={() => this.onClickEditComment(c)}
+                          onClick={() => this.onClickThumbsUp(c)}
                         >
-                          Edit
+                          <Glyphicon glyph="thumbs-up" />
                         </Button>
+
                         <Button
                           bsSize="xsmall"
                           bsStyle="primary"
-                          onClick={() => this.onClickDeleteComment(c)}
+                          onClick={() => this.onClickThumbsDown(c)}
                         >
-                          Delete
+                          <Glyphicon glyph="thumbs-down" />
                         </Button>
                       </div>
+                      <div>{c.author}</div>
+                      <div>{c.body}</div>
+                      <div>{c.voteScore}</div>
+                      <div>
+                        {this.convertDate(c.timestamp)}
+                        <div className="comment-buttons">
+                          <Button
+                            bsSize="xsmall"
+                            bsStyle="primary"
+                            onClick={() => this.onClickEditComment(c)}
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            bsSize="xsmall"
+                            bsStyle="primary"
+                            onClick={() => this.onClickDeleteComment(c)}
+                          >
+                            Delete
+                          </Button>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </ListGroupItem>
+                  </ListGroupItem>
+                )
             )}
           </ListGroup>
         </div>

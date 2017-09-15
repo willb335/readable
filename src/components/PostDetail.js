@@ -57,15 +57,17 @@ class PostDetail extends Component {
 
   postPayloadToBackEnd = payload => {
     return new Promise(resolve => {
-      fetch(`http://localhost:5001/posts/${payload.id}`, {
-        method: "delete",
-        headers: {
-          Authorization: "will335",
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      }).then(response => resolve(payload));
+      fetch(
+        `https://ul3cjjg9oi.execute-api.us-west-2.amazonaws.com/dev/posts/${payload.id}`,
+        {
+          method: "put",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        }
+      ).then(response => resolve(payload));
     });
   };
 
@@ -117,15 +119,17 @@ class PostDetail extends Component {
   postCommentPayloadArrayToBackend = commentArray => {
     return new Promise(resolve => {
       commentArray.forEach(c => {
-        fetch(`http://localhost:5001/comments/${c.id}`, {
-          method: "delete",
-          headers: {
-            Authorization: "will335",
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(c)
-        }).then(response => resolve("Success"));
+        fetch(
+          `https://ul3cjjg9oi.execute-api.us-west-2.amazonaws.com/dev/comments/${c.id}`,
+          {
+            method: "put",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(c)
+          }
+        ).then(response => resolve("Success"));
       });
     });
   };
@@ -157,15 +161,17 @@ class PostDetail extends Component {
 
   addNewScoreToBackEnd = payload => {
     return new Promise(resolve => {
-      fetch(`http://localhost:5001/posts/${payload.id}`, {
-        method: "put",
-        headers: {
-          Authorization: "will335",
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      }).then(() => resolve("Success"));
+      fetch(
+        `https://ul3cjjg9oi.execute-api.us-west-2.amazonaws.com/dev/posts/${payload.id}`,
+        {
+          method: "put",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        }
+      ).then(() => resolve("Success"));
     });
   };
 
@@ -173,7 +179,7 @@ class PostDetail extends Component {
     Promise.resolve(this.props.currentPost)
       .then(this.addThumbsDownToPost)
       .then(this.addNewScoreToStore)
-      .then(this.addScoreChangeToBackEnd);
+      .then(this.addNewScoreToBackEnd);
   };
 
   addThumbsDownToPost = currentPost => {
@@ -211,11 +217,16 @@ class PostDetail extends Component {
                 <Panel
                   header={
                     <div>
-                      <Button bsStyle="primary" onClick={this.onClickThumbsUp}>
+                      <Button
+                        className="button-5"
+                        bsStyle="primary"
+                        onClick={this.onClickThumbsUp}
+                      >
                         <Glyphicon glyph="thumbs-up" />
                       </Button>
 
                       <Button
+                        className="button-6"
                         bsStyle="primary"
                         onClick={this.onClickThumbsDown}
                       >
@@ -234,19 +245,13 @@ class PostDetail extends Component {
             <div style={{ height: "1em" }} />
 
             <div>
-              <strong>
-                {currentPost.title}
-              </strong>
+              <strong>{currentPost.title}</strong>
             </div>
             <div>
-              <strong>
-                {currentPost.author}
-              </strong>
+              <strong>{currentPost.author}</strong>
             </div>
             <div>
-              <strong>
-                {this.convertDate(currentPost.timestamp)}
-              </strong>
+              <strong>{this.convertDate(currentPost.timestamp)}</strong>
             </div>
             <div>
               <strong>
@@ -261,12 +266,20 @@ class PostDetail extends Component {
               header={
                 <div className="comment-container">
                   <div>
-                    <Button bsStyle="primary" onClick={this.onClickDeletePost}>
+                    <Button
+                      className="button-7"
+                      bsStyle="primary"
+                      onClick={this.onClickDeletePost}
+                    >
                       Delete Post
                     </Button>
                   </div>
                   <div className="edit-comment">
-                    <Button bsStyle="primary" onClick={this.onClickEditPost}>
+                    <Button
+                      className="button-8"
+                      bsStyle="primary"
+                      onClick={this.onClickEditPost}
+                    >
                       Edit Post
                     </Button>
                   </div>

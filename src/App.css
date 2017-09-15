@@ -57,6 +57,10 @@
   align-items: center;
 }
 
+.cat-link {
+  margin-right: auto;
+}
+
 .posts-container {
   display: flex;
   flex-direction: column;
@@ -101,6 +105,25 @@
 
 .comment-votes {
   float: left;
+}
+
+@media (max-width: 475px) {
+  .button-1,
+  .button-2,
+  .button-3,
+  .button-4,
+  .button-5,
+  .button-6,
+  .button-7,
+  .button-8,
+  .button-9,
+  .button-10,
+  .button-11 {
+    padding: 2px 4px;
+    font-size: 50%;
+    line-height: 2;
+    border-radius: 3px;
+  }
 }
 
 /*.main-comment {
