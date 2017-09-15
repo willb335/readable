@@ -238,6 +238,7 @@ class Comment extends Component {
 
         <div className="button-comment-container">
           <Button
+            className="button-9"
             bsSize="xsmall"
             bsStyle="primary"
             onClick={this.onClickSortCommentByTimestamp}
@@ -245,6 +246,7 @@ class Comment extends Component {
             Sort by Date
           </Button>
           <Button
+            className="button-10"
             bsSize="xsmall"
             bsStyle="primary"
             onClick={this.onClickSortCommentByVoteScore}
@@ -252,6 +254,7 @@ class Comment extends Component {
             Sort by Vote Score
           </Button>
           <Button
+            className="button-11"
             bsSize="xsmall"
             bsStyle="primary"
             onClick={this.onClickNewComment}

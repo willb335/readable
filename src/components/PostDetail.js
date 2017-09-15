@@ -217,11 +217,16 @@ class PostDetail extends Component {
                 <Panel
                   header={
                     <div>
-                      <Button bsStyle="primary" onClick={this.onClickThumbsUp}>
+                      <Button
+                        className="button-5"
+                        bsStyle="primary"
+                        onClick={this.onClickThumbsUp}
+                      >
                         <Glyphicon glyph="thumbs-up" />
                       </Button>
 
                       <Button
+                        className="button-6"
                         bsStyle="primary"
                         onClick={this.onClickThumbsDown}
                       >
@@ -261,12 +266,20 @@ class PostDetail extends Component {
               header={
                 <div className="comment-container">
                   <div>
-                    <Button bsStyle="primary" onClick={this.onClickDeletePost}>
+                    <Button
+                      className="button-7"
+                      bsStyle="primary"
+                      onClick={this.onClickDeletePost}
+                    >
                       Delete Post
                     </Button>
                   </div>
                   <div className="edit-comment">
-                    <Button bsStyle="primary" onClick={this.onClickEditPost}>
+                    <Button
+                      className="button-8"
+                      bsStyle="primary"
+                      onClick={this.onClickEditPost}
+                    >
                       Edit Post
                     </Button>
                   </div>
