@@ -85,7 +85,7 @@ class EditPostModal extends Component {
       const { isEditPostModalOpen, isPostDetailOpen, history } = this.props;
       isEditPostModalOpen({ isEditPostModalOpen: false });
       isPostDetailOpen({ isPostDetailOpen: false });
-      history.push(`/${payload.category}/${payload.title}`);
+      history.push(`/readable/${payload.category}/${payload.title}`);
       resolve("Success");
     });
   };

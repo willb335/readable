@@ -4,6 +4,7 @@ import { Grid, Row, Col } from "react-bootstrap";
 import Category from "./Category";
 import PostDetail from "./PostDetail";
 import TopNavbar from "./TopNavbar";
+import NewPostModal from "./NewPostModal";
 import NotFound from "./NotFound";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -69,10 +70,11 @@ class Root extends Component {
       if (category.categories !== undefined) {
         return (
           <div>
+            <NewPostModal />
             {currentPost && (
               <Route
                 exact={true}
-                path={`/${currentPost.category}/${currentPost.title}`}
+                path={`/readable/${currentPost.category}/${currentPost.title}`}
                 render={() => {
                   return (
                     <div>
@@ -84,7 +86,7 @@ class Root extends Component {
             )}
             <Route
               exact={true}
-              path={`/${category.currentCategory}`}
+              path={`/readable/${category.currentCategory}`}
               render={() => <Category catName={category.currentCategory} />}
             />
 
@@ -92,7 +94,7 @@ class Root extends Component {
               <Route
                 key={c}
                 exact={true}
-                path={"/"}
+                path={"/readable/"}
                 render={() => {
                   return (
                     <Row className="show-category" key={c}>
@@ -113,13 +115,13 @@ class Root extends Component {
     const setUp404 = () => {
       const url = history.location.pathname;
       switch (true) {
-        case url === "/":
+        case url === "/readable/":
           return true;
-        case url === `/${category.currentCategory}`:
+        case url === `/readable/${category.currentCategory}`:
           return true;
         case currentPost === undefined:
           return false;
-        case url === `/${currentPost.category}/${currentPost.title}`:
+        case url === `/readable/${currentPost.category}/${currentPost.title}`:
           return true;
 
         default:

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Panel, ListGroup, ListGroupItem, Button } from "react-bootstrap";
-import NewPostModal from "./NewPostModal";
 import { connect } from "react-redux";
 import { isModalOpen } from "../actions/modalActions";
 import { isPostDetailOpen } from "../actions/postDetailActions";
@@ -70,13 +69,12 @@ class Category extends Component {
     this.sortPosts(posts);
     return (
       <div>
-        <NewPostModal />
         <Panel
           header={
             <div className="category-container">
               <div className="cat-link">
                 <Link
-                  to={`/${catName}`}
+                  to={`/readable/${catName}`}
                   onClick={this.clickCategory}
                   style={{ cursor: "pointer", color: "#337ab7" }}
                 >
@@ -103,7 +101,7 @@ class Category extends Component {
                 </Button>
               </div>
               <div style={{ margin: ".25em" }}>
-                <Link to={`/`} onClick={this.onClickNewPost}>
+                <Link to={`/readable/`} onClick={this.onClickNewPost}>
                   <Button className="button-3" bsStyle="primary">
                     New Post
                   </Button>
@@ -121,7 +119,7 @@ class Category extends Component {
                   !p.deleted && (
                     <ListGroupItem key={i}>
                       <Link
-                        to={`/${p.category}/${p.title}`}
+                        to={`/readable/${p.category}/${p.title}`}
                         onClick={() => this.clickPost(p)}
                         style={{ cursor: "pointer" }}
                       >

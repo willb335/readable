@@ -80,7 +80,9 @@ class NewPostModal extends Component {
       this.props.isModalOpen({
         isModalOpen: false
       });
-      this.props.history.push(`/${this.props.category.currentCategory}`);
+      this.props.history.push(
+        `/readable/${this.props.category.currentCategory}`
+      );
       resolve("Success");
     });
   };

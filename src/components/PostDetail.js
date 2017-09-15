@@ -34,7 +34,7 @@ class PostDetail extends Component {
       .then(this.addDeletedPostToStore)
       .then(this.postPayloadToBackEnd)
       .then(this.deleteComments)
-      .then(() => this.props.history.push(`/`));
+      .then(() => this.props.history.push(`/readable/`));
   };
 
   deletePost = currentPost => {

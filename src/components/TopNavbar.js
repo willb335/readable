@@ -18,7 +18,10 @@ class TopNavbar extends Component {
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to={"/"} style={{ cursor: "pointer", color: "#337ab7" }}>
+              <Link
+                to={"/readable/"}
+                style={{ cursor: "pointer", color: "#337ab7" }}
+              >
                 Readable
               </Link>
             </Navbar.Brand>
@@ -31,7 +34,7 @@ class TopNavbar extends Component {
             >
               {categories.map((c, i) => (
                 <LinkContainer
-                  to={`/${c}`}
+                  to={`/readable/${c}`}
                   onClick={() => this.clickCategory(c)}
                   style={{ cursor: "pointer", color: "#337ab7" }}
                   key={i}
