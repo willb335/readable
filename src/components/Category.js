@@ -86,6 +86,7 @@ class Category extends Component {
 
               <div style={{ margin: ".25em" }}>
                 <Button
+                  className="button-1"
                   bsStyle="primary"
                   onClick={this.onClickSortPostByTimestamp}
                 >
@@ -94,6 +95,7 @@ class Category extends Component {
               </div>
               <div style={{ margin: ".25em" }}>
                 <Button
+                  className="button-2"
                   bsStyle="primary"
                   onClick={this.onClickSortPostByVoteScore}
                 >
@@ -102,7 +104,9 @@ class Category extends Component {
               </div>
               <div style={{ margin: ".25em" }}>
                 <Link to={`/`} onClick={this.onClickNewPost}>
-                  <Button bsStyle="primary">New Post</Button>
+                  <Button className="button-3" bsStyle="primary">
+                    New Post
+                  </Button>
                 </Link>
               </div>
             </div>

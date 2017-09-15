@@ -107,6 +107,17 @@
   float: left;
 }
 
+@media (max-width: 475px) {
+  .button-1,
+  .button-2,
+  .button-3 {
+    padding: 2px 4px;
+    font-size: 50%;
+    line-height: 2;
+    border-radius: 3px;
+  }
+}
+
 /*.main-comment {
   display: flex;
   justify-content: center;
